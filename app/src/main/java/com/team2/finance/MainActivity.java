@@ -2,6 +2,7 @@ package com.team2.finance;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.firebase.FirebaseApp;
@@ -18,5 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
+        Intent goToNextActivity = new Intent(getApplicationContext(), Exchange.class);
+        startActivity(goToNextActivity);
     }
 }
