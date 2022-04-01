@@ -88,3 +88,6 @@ lint/tmp/
 .DS_Store
 .DS_Store?
 ._*
+.idea/.name
+.idea/compiler.xml
+.idea/misc.xml
