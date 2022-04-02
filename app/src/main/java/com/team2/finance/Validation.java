@@ -33,4 +33,11 @@ public class Validation {
         return phone.matches("^[0-9]{10}$");
     }
 
+    public static boolean isEmpty(String password) {
+        if (password.equals("")) {
+            return false;
+        }
+        return true;
+    }
+
 }
