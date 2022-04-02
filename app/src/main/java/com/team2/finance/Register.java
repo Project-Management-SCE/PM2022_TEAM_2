@@ -2,6 +2,7 @@ package com.team2.finance;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,6 +16,11 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Register extends AppCompatActivity {
 
@@ -43,12 +49,13 @@ public class Register extends AppCompatActivity {
         phone_number = (TextView) findViewById(R.id.phoneNumber);
         checkBox = (CheckBox) findViewById(R.id.checkBox);
 
-        Button login = (Button) findViewById(R.id.register);
-        login.setOnClickListener(new View.OnClickListener() {
+        Button register = (Button) findViewById(R.id.register);
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (checkValidation()) {
                     Log.d(TAG, "Valid");
+                    register();
                 } else {
                     Log.d(TAG, "Invalid");
                 }
@@ -146,7 +153,7 @@ public class Register extends AppCompatActivity {
                     checkBox.setButtonTintList(ColorStateList.valueOf(Color.parseColor("#85ff7a")));
                 }
             }
-            });
+        });
     }
 
     private boolean checkValidation() {
@@ -171,12 +178,41 @@ public class Register extends AppCompatActivity {
             phone_number.setError("Invalid phone number");
             validator = false;
         }
-        if(!checkBox.isChecked()){
+        if (!checkBox.isChecked()) {
             checkBox.setButtonTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
             validator = false;
         }
         return validator;
     }
 
+    private void register() {
+        String user_email, user_password;
+        user_email = email.getText().toString();
+        user_password = password.getText().toString();
 
+        mAuth.createUserWithEmailAndPassword(user_email, user_password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                        Map<String, Object> userData = new HashMap<>();
+                        userData.put("Uid", user.getUid());
+                        userData.put("email_address", email.getText().toString());
+                        userData.put("first_name", first_name.getText().toString());
+                        userData.put("last_name", last_name.getText().toString());
+                        userData.put("phone_number", phone_number.getText().toString());
+                        userData.put("type", "register");
+                        userData.put("Vip", false);
+                        db.collection("Users") // Add a new document with a generated ID
+                                .add(userData)
+                                .addOnSuccessListener(documentReference -> {
+                                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                    Intent intent = new Intent(this, WelcomePage.class);
+                                    startActivity(intent);
+                                })
+                                .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
+                    }
+                }).addOnFailureListener(Throwable::printStackTrace);
+    }
 }

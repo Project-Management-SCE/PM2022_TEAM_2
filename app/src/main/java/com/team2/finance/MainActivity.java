@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
 
-        Intent intent = new Intent(this, Login.class);
+        Intent intent = new Intent(this, Register.class);
         startActivity(intent);
     }
 }
