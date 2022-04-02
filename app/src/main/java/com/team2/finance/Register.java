@@ -208,7 +208,7 @@ public class Register extends AppCompatActivity {
                                 .add(userData)
                                 .addOnSuccessListener(documentReference -> {
                                     Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                    Intent intent = new Intent(this, WelcomePage.class);
+                                    Intent intent = new Intent(this, MainActivity.class);
                                     startActivity(intent);
                                 })
                                 .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
