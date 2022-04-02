@@ -31,7 +31,7 @@
             android:id="@+id/password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="60dp"
             android:ems="10"
             android:hint="password"
             android:inputType="textPassword"
@@ -46,7 +46,21 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="Login"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/forgot_password"
+            android:layout_marginBottom="20dp"
+            tools:layout_editor_absoluteX="10dp" />
+
+        <TextView
+            android:id="@+id/forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Forgot your password?"
+            android:textColor="#2196F3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            style="?android:attr/borderlessButtonStyle"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

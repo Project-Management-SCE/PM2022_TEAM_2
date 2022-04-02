@@ -1,7 +1,6 @@
 package com.team2.finance;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.CompoundButtonCompat;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
