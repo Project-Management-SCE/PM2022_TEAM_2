@@ -36,11 +36,9 @@ import java.util.List;
 
 public class Exchange extends AppCompatActivity {
 
-    EditText fromCurrency;
-    TextView toCurrency;
+    EditText fromCurrency,toCurrency;
     Spinner fromDropdown, toDropdown;
     Button convert_bt;
-    private ArrayList<String> foreign_currency =new ArrayList<>(Arrays.asList("USD", "ILS", "EUR"));
     private RequestQueue requestQueue;
     private int user_type = 1;
 
@@ -71,14 +69,17 @@ public class Exchange extends AppCompatActivity {
 
     private void initSpinners() throws JSONException {
         if (user_type == 1){
-//            getCurrency();
-            foreign_currency.addAll(Arrays.asList("AUD","GBP","IDR","CZK","CHF","CAD"));
+            getCurrency();
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, foreign_currency);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        fromDropdown.setAdapter(adapter);
-        toDropdown.setAdapter(adapter);
+        else{
+            ArrayList<String> foreign_currency =new ArrayList<>(Arrays.asList("USD", "ILS", "EUR"));
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item, foreign_currency);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            fromDropdown.setAdapter(adapter);
+            toDropdown.setAdapter(adapter);
+        }
+
     }
 
     private void Convert() {
@@ -119,37 +120,40 @@ public class Exchange extends AppCompatActivity {
 
     }
 
-//    private void getCurrency() throws JSONException {
-//        String url ="https://frankfurter.app/latest";
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-//                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        JSONObject jsonObject = null;
-//                        try {
-//                            jsonObject = response.getJSONObject("rates");
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                        Iterator keysToCopyIterator = jsonObject.keys();
-//                        ArrayList<String> keysList = new ArrayList<String>();
-//                        while(keysToCopyIterator.hasNext()) {
-//                            String key = (String) keysToCopyIterator.next();
-//                            keysList.add(key);
-//                        }
-//                        foreign_currency = (ArrayList<String>) keysList;
-//                    }
-//
-//                }, new Response.ErrorListener() {
-//
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        // TODO: Handle error
-//                    }
-//                });
-//        requestQueue.add(jsonObjectRequest);
-//    }
+    private void getCurrency() throws JSONException {
+        String url ="https://frankfurter.app/latest";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        JSONObject jsonObject = null;
+                        try {
+                            jsonObject = response.getJSONObject("rates");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        Iterator keysToCopyIterator = jsonObject.keys();
+                        ArrayList<String> keysList = new ArrayList<String>();
+                        while(keysToCopyIterator.hasNext()) {
+                            String key = (String) keysToCopyIterator.next();
+                            keysList.add(key);
+                        }
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Exchange.this,android.R.layout.simple_spinner_item, (ArrayList<String>) keysList);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        fromDropdown.setAdapter(adapter);
+                        toDropdown.setAdapter(adapter);
+                    }
+
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                    }
+                });
+        requestQueue.add(jsonObjectRequest);
+    }
 
 
 }
