@@ -4,13 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +34,8 @@ public class Login extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         password = (TextView) findViewById(R.id.password);
-        email = (TextView) findViewById(R.id.emailAddress);
+        email = (TextView) findViewById(R.id.email_address);
+        //TextView forgot_password = (TextView) findViewById(R.id.forgot_password);
 
         Button login = (Button) findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +49,6 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private boolean checkValidation() {
@@ -91,6 +88,10 @@ public class Login extends AppCompatActivity {
 
                     }
                 });
+    }
 
+    public void perform_action(View view) {
+        Intent intent = new Intent(getApplicationContext(), ForgotPassword.class);
+        startActivity(intent);
     }
 }

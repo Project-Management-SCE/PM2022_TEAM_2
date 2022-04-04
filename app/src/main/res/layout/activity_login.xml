@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Register">
+    tools:context=".Login">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:paddingRight="10dp">
 
         <EditText
-            android:id="@+id/emailAddress"
+            android:id="@+id/email_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
@@ -60,7 +60,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            style="?android:attr/borderlessButtonStyle"/>
+            style="?android:attr/borderlessButtonStyle"
+            android:clickable="true"
+            android:onClick="perform_action"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
