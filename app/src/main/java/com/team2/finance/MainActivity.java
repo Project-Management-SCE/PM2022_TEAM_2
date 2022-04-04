@@ -5,11 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private FirebaseAuth mAuth;
 
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        View rootView = getLayoutInflater().inflate(R.layout.activity_main, frameLayout);
 
         FirebaseApp.initializeApp(this);
 
@@ -31,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         } else {
             // TODO
-            FirebaseAuth.getInstance().signOut(); // Debug
         }
 
     }
