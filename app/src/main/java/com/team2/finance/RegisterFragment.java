@@ -1,20 +1,24 @@
 package com.team2.finance;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,9 +26,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Register extends AppCompatActivity {
+
+public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
+    private static final String TAG = "LoginFragment";
+    private View binding;
 
     private TextView first_name;
     private TextView last_name;
@@ -33,34 +40,22 @@ public class Register extends AppCompatActivity {
     private TextView phone_number;
     private CheckBox checkBox;
 
-    private static final String TAG = "Register";
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = inflater.inflate(R.layout.fragment_register, container, false);
+        View view = binding.getRootView();
 
-        mAuth = FirebaseAuth.getInstance();
+        Button register = (Button) view.findViewById(R.id.register);
+        register.setOnClickListener(this);
 
-        first_name = (TextView) findViewById(R.id.firstName);
-        last_name = (TextView) findViewById(R.id.lastName);
-        password = (TextView) findViewById(R.id.password);
-        email = (TextView) findViewById(R.id.emailAddress);
-        phone_number = (TextView) findViewById(R.id.phoneNumber);
-        checkBox = (CheckBox) findViewById(R.id.checkBox);
-
-        Button register = (Button) findViewById(R.id.register);
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkValidation()) {
-                    Log.d(TAG, "Valid");
-                    register();
-                } else {
-                    Log.d(TAG, "Invalid");
-                }
-            }
-        });
+        first_name = (TextView) view.findViewById(R.id.firstName);
+        last_name = (TextView) view.findViewById(R.id.lastName);
+        password = (TextView) view.findViewById(R.id.password);
+        email = (TextView) view.findViewById(R.id.emailAddress);
+        phone_number = (TextView) view.findViewById(R.id.phoneNumber);
+        checkBox = (CheckBox) view.findViewById(R.id.checkBox);
 
         first_name.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
@@ -154,6 +149,56 @@ public class Register extends AppCompatActivity {
                 }
             }
         });
+
+        return view;
+    }
+
+    public RegisterFragment() {
+
+        FirebaseApp.initializeApp(getContext());
+        mAuth = FirebaseAuth.getInstance();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.register:
+                if (checkValidation()) {
+                    mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+                            .addOnCompleteListener(getActivity(), task -> {
+                                if (task.isSuccessful()) {
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                                    Map<String, Object> userData = new HashMap<>();
+                                    userData.put("Uid", user.getUid());
+                                    userData.put("email_address", email.getText().toString());
+                                    userData.put("first_name", first_name.getText().toString());
+                                    userData.put("last_name", last_name.getText().toString());
+                                    userData.put("phone_number", phone_number.getText().toString());
+                                    userData.put("type", "register");
+                                    userData.put("Vip", false);
+                                    db.collection("Users") // Add a new document with a generated ID
+                                            .add(userData)
+                                            .addOnSuccessListener(documentReference -> {
+                                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                                Intent intent = new Intent(getContext(), MainActivity.class);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                startActivity(intent);
+                                            })
+                                            .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
+                                }
+                            }).addOnFailureListener(Throwable::printStackTrace);
+                }
+                break;
+        }
     }
 
     private boolean checkValidation() {
@@ -183,36 +228,5 @@ public class Register extends AppCompatActivity {
             validator = false;
         }
         return validator;
-    }
-
-    private void register() {
-        String user_email, user_password;
-        user_email = email.getText().toString();
-        user_password = password.getText().toString();
-
-        mAuth.createUserWithEmailAndPassword(user_email, user_password)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-                        Map<String, Object> userData = new HashMap<>();
-                        userData.put("Uid", user.getUid());
-                        userData.put("email_address", email.getText().toString());
-                        userData.put("first_name", first_name.getText().toString());
-                        userData.put("last_name", last_name.getText().toString());
-                        userData.put("phone_number", phone_number.getText().toString());
-                        userData.put("type", "register");
-                        userData.put("Vip", false);
-                        db.collection("Users") // Add a new document with a generated ID
-                                .add(userData)
-                                .addOnSuccessListener(documentReference -> {
-                                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                    Intent intent = new Intent(this, MainActivity.class);
-                                    startActivity(intent);
-                                })
-                                .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
-                    }
-                }).addOnFailureListener(Throwable::printStackTrace);
     }
 }

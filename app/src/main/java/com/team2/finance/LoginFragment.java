@@ -1,54 +1,63 @@
 package com.team2.finance;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class Login extends AppCompatActivity {
+public class LoginFragment extends Fragment implements View.OnClickListener {
 
+    private FragmentManager fragmentManager;
     private FirebaseAuth mAuth;
+    private static final String TAG = "Login";
+    private View binding;
 
     private TextView password;
     private TextView email;
+    private TextView forgot_password;
 
-    private static final String TAG = "Login";
+    public LoginFragment(FragmentManager fragmentManager) {
+        FirebaseApp.initializeApp(getContext());
+        mAuth = FirebaseAuth.getInstance();
+        this.fragmentManager = fragmentManager;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        mAuth = FirebaseAuth.getInstance();
+        binding = inflater.inflate(R.layout.fragment_login, container, false);
+        View view = binding.getRootView();
 
-        password = (TextView) findViewById(R.id.password);
-        email = (TextView) findViewById(R.id.email_address);
-        //TextView forgot_password = (TextView) findViewById(R.id.forgot_password);
+        password = (TextView) view.findViewById(R.id.user_password);
+        email = (TextView) view.findViewById(R.id.email_address);
 
-        Button login = (Button) findViewById(R.id.login);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkValidation()) {
-                    Log.d(TAG, "Valid");
-                    login();
-                } else {
-                    Log.d(TAG, "Invalid");
-                }
-            }
-        });
+        Button login = (Button) view.findViewById(R.id.login);
+        forgot_password = (TextView) view.findViewById(R.id.forgot_password);
+
+        login.setOnClickListener(this);
+        forgot_password.setOnClickListener(this);
+
+
+        return view;
     }
 
     private boolean checkValidation() {
@@ -77,21 +86,35 @@ public class Login extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            Intent intent = new Intent(getContext(), MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(getApplicationContext(), "Login failed! Please try again later", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "Login failed! Please try again later", Toast.LENGTH_LONG).show();
                         }
 
                     }
                 });
     }
 
-    public void perform_action(View view) {
-        Intent intent = new Intent(getApplicationContext(), ForgotPassword.class);
-        startActivity(intent);
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.login:
+                if (checkValidation()) {
+                    login();
+                }
+                break;
+            case R.id.forgot_password:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.main_container, new ForgotPasswordFragment(fragmentManager))
+                        .addToBackStack("ForgotPassword")
+                        .commit();
+                break;
+        }
     }
+
 }
