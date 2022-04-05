@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterFragment">
 
-    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -17,14 +18,17 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
+            <ImageButton
+                android:id="@+id/back"
+                style="@style/back_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <EditText
                 android:id="@+id/firstName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text_box"
                 android:layout_marginBottom="30dp"
-                android:ems="10"
-                android:gravity="center"
-                android:hint="First Name"
+                android:hint="@string/first_name"
                 android:inputType="textPersonName"
                 app:layout_constraintBottom_toTopOf="@+id/lastName"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -32,12 +36,9 @@
 
             <EditText
                 android:id="@+id/lastName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text_box"
                 android:layout_marginBottom="30dp"
-                android:ems="10"
-                android:gravity="center"
-                android:hint="Last Name"
+                android:hint="@string/last_name"
                 android:inputType="textPersonName"
                 app:layout_constraintBottom_toTopOf="@+id/emailAddress"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -45,12 +46,9 @@
 
             <EditText
                 android:id="@+id/emailAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text_box"
                 android:layout_marginBottom="30dp"
-                android:ems="10"
-                android:gravity="center"
-                android:hint="Email Address"
+                android:hint="@string/email_address"
                 android:inputType="textEmailAddress"
                 app:layout_constraintBottom_toTopOf="@+id/password"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -58,12 +56,9 @@
 
             <EditText
                 android:id="@+id/password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text_box"
                 android:layout_marginBottom="30dp"
-                android:ems="10"
-                android:gravity="center"
-                android:hint="password"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 app:layout_constraintBottom_toTopOf="@+id/phoneNumber"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -71,12 +66,9 @@
 
             <EditText
                 android:id="@+id/phoneNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text_box"
                 android:layout_marginBottom="30dp"
-                android:ems="10"
-                android:gravity="center"
-                android:hint="Phone number"
+                android:hint="@string/phone_number"
                 android:inputType="phone"
                 app:layout_constraintBottom_toTopOf="@+id/terms"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -94,24 +86,29 @@
 
                 <TextView
                     android:id="@+id/useTerms"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="About terms and conditions" />
+                    android:clickable="true"
+                    android:text="@string/about_terms_and_conditions"
+                    android:textColor="#FFF3B533"
+                    android:textSize="12sp" />
 
                 <CheckBox
                     android:id="@+id/checkBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Accept Conditions" />
+                    android:text="@string/accept_conditions" />
             </LinearLayout>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/register"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Register"
+                style="@style/button"
+                android:layout_marginBottom="15dp"
+                android:text="@string/register"
                 app:layout_constraintBottom_toBottomOf="parent"
-                tools:layout_editor_absoluteX="10dp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

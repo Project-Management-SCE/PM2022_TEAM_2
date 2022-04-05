@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".welcomeFragment">
 
-    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
         android:orientation="vertical"
-        android:paddingLeft="34dp"
-        android:paddingRight="34dp"
+
         tools:context=".MainActivity"
         tools:viewBindingIgnore="true">
 
@@ -24,8 +24,8 @@
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lottie_main"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
                 android:layout_centerInParent="true"
                 app:layout_constraintBottom_toTopOf="@+id/login"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -37,20 +37,23 @@
                 app:lottie_speed="1"
                 tools:ignore="MissingConstraints" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/login"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                style="@style/button"
+                android:text="@string/login"
                 android:layout_marginBottom="20dp"
-                android:text="Login"
-                app:layout_constraintBottom_toTopOf="@+id/register" />
+                app:layout_constraintBottom_toTopOf="@+id/register"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/register"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Register"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                style="@style/button"
+                android:text="@string/register"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
