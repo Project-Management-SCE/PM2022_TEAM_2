@@ -1,5 +1,7 @@
 package com.team2.finance;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -16,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.firebase.FirebaseApp;
@@ -39,6 +42,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private TextView email;
     private TextView phone_number;
     private CheckBox checkBox;
+    private TextView use_terms;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -49,6 +53,13 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         Button register = (Button) view.findViewById(R.id.register);
         register.setOnClickListener(this);
+
+        ImageButton back = (ImageButton) view.findViewById(R.id.back);
+        back.setOnClickListener(this);
+
+        use_terms = (TextView) view.findViewById(R.id.useTerms);
+
+        use_terms.setOnClickListener(this);
 
         first_name = (TextView) view.findViewById(R.id.firstName);
         last_name = (TextView) view.findViewById(R.id.lastName);
@@ -145,7 +156,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    checkBox.setButtonTintList(ColorStateList.valueOf(Color.parseColor("#85ff7a")));
+                    checkBox.setButtonTintList(ColorStateList.valueOf(Color.parseColor("#F3B533")));
                 }
             }
         });
@@ -169,6 +180,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.useTerms:
+                termsPopup();
+                break;
+            case R.id.back:
+                getFragmentManager().popBackStackImmediate();
+                break;
             case R.id.register:
                 if (checkValidation()) {
                     mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
@@ -228,5 +245,50 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             validator = false;
         }
         return validator;
+    }
+
+    public void termsPopup() {
+
+        // Create the object of
+        // AlertDialog Builder class
+        AlertDialog.Builder builder
+                = new AlertDialog
+                .Builder(getContext());
+
+        // Set the message show for the Alert time
+        builder.setMessage(getString(R.string.terms_and_conditions));
+
+        // Set Alert Title
+        builder.setTitle("Terms and conditions");
+
+        // Set Cancelable false
+        // for when the user clicks on the outside
+        // the Dialog Box then it will remain show
+        builder.setCancelable(false);
+
+        // Set the positive button with yes name
+        // OnClickListener method is use of
+        // DialogInterface interface.
+
+        builder
+                .setPositiveButton(
+                        "Done",
+                        new DialogInterface
+                                .OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                dialog.cancel();
+                                // When the user click yes button
+                                // then app will close
+                            }
+                        });
+
+        // Create the Alert dialog
+        AlertDialog alertDialog = builder.create();
+
+        // Show the Alert Dialog box
+        alertDialog.show();
     }
 }

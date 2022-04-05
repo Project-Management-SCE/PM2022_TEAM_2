@@ -1,6 +1,5 @@
 package com.team2.finance;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +37,9 @@ public class ForgotPasswordFragment extends Fragment implements View.OnClickList
         Button reset = (Button) view.findViewById(R.id.reset);
         reset.setOnClickListener(this);
 
+        ImageButton back = (ImageButton) view.findViewById(R.id.back);
+        back.setOnClickListener(this);
+
         return view;
     }
 
@@ -50,6 +53,9 @@ public class ForgotPasswordFragment extends Fragment implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.back:
+                getFragmentManager().popBackStackImmediate();
+                break;
             case R.id.reset:
                 if (checkValidation()) {
                     mAuth.sendPasswordResetEmail(email.getText().toString())

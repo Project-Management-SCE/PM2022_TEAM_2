@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +54,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         Button login = (Button) view.findViewById(R.id.login);
         forgot_password = (TextView) view.findViewById(R.id.forgot_password);
 
+        ImageButton back = (ImageButton) view.findViewById(R.id.back);
+        back.setOnClickListener(this);
+
         login.setOnClickListener(this);
         forgot_password.setOnClickListener(this);
 
@@ -67,7 +71,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             validator = false;
         }
         if (!Validation.isEmpty(password.getText().toString())) {
-            password.setError("Invalid");
+            password.setError("Invalid password");
             validator = false;
         }
         return validator;
@@ -103,6 +107,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.back:
+                getFragmentManager().popBackStackImmediate();
+                break;
             case R.id.login:
                 if (checkValidation()) {
                     login();
@@ -116,5 +123,4 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
-
 }
