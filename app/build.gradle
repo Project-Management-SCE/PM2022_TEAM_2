@@ -45,4 +45,10 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-firestore'
+
+    //for the API (crypto)
+    implementation 'com.android.volley:volley:1.2.1'
+    implementation 'com.google.code.gson:gson:2.4'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+
 }
