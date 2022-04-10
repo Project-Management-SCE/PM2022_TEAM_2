@@ -3,6 +3,7 @@ package com.team2.finance;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         } else { // User exist check fot type and start the necessary activity
             Log.d(TAG, currentUser.getUid());
+            Intent goToNextActivity = new Intent(getApplicationContext(), Exchange.class);
+            startActivity(goToNextActivity);
         }
 
     }
