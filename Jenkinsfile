@@ -14,7 +14,7 @@ pipeline {
                 sh 'adb devices'
             }
         }
-        /*stage('Test') {
+        stage('Test') {
             steps {
                 echo 'Running Test'
                 sh 'emulator -avd first_avd -no-window -no-audio &'
@@ -25,7 +25,7 @@ pipeline {
                     echo 'Running post-test'
                 }
             }
-        }
+        }/*
         stage('Deliver') {
             steps {
                 echo 'Running Deliver'
