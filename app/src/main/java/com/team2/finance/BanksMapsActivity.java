@@ -21,7 +21,7 @@ public class BanksMapsActivity extends AppCompatActivity implements OnMapReadyCa
         setContentView(R.layout.activity_banks_maps);
 
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+// Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);

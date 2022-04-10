@@ -7,6 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BanksMapsActivity"
-    map:uiZoomControls="true"
-    map:uiRotateGestures="true"
+    map:uiZoomControls="false"
+    map:uiRotateGestures="false"
     map:cameraTilt="30"/>

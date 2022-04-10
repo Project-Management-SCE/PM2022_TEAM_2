@@ -5,9 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import org.json.*;
 
@@ -24,6 +21,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,9 +30,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
     private RequestQueue mQueue;
     private FirebaseAuth mAuth;
-    String TAG = "MainActivity-";
+    private String TAG = MainActivity.class.getSimpleName();
     List<LatLng> points = new ArrayList<>();
     private GoogleMap mMap;
+
+    String url = "https://data.gov.il/api/3/action/datastore_search?resource_id=1c5bc716-8210-4ec7-85be-92e6271955c2";
+    String finalUrl;
+    String govURL = "https://data.gov.il";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,26 +50,27 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         jsonParse();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map_);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
     }
 
 
     private void jsonParse() {
-        String url = "https://data.gov.il/api/3/action/datastore_search?resource_id=1c5bc716-8210-4ec7-85be-92e6271955c2&limit=1505";
         JsonObjectRequest request = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             int j = 0;
 
-            /**/
             @Override
             public void onResponse(JSONObject response) {
-                String govURL = "https://data.gov.il";
                 try {
                     JSONObject jsonObject = response.getJSONObject("result");
+                    Log.e(TAG, "Response from url: " + response);
 //                    Log.e("xx", String.valueOf(jsonObject.getJSONObject("_links").get("next")));
 //                    while (!String.valueOf(jsonObject.getJSONObject("_links").get("next")).isEmpty())
 //                    {
 //
 //                    }
+
+
                     JSONArray jsonArray = jsonObject.getJSONArray("records");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject records = jsonArray.getJSONObject(i);
@@ -79,13 +83,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 mMap.addMarker(new MarkerOptions()
                                         .position(bank)
                                         .title(String.valueOf(records.getDouble("X_Coordinate"))));
-                                mMap.moveCamera(CameraUpdateFactory.newLatLng(bank));
                                 j++;
 
                             }
                         }
                     }
-                    String finalUrl = govURL + String.valueOf(jsonObject.getJSONObject("_links").get("next"));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(30.99258, 34.86720)));
+                    mMap.setMinZoomPreference(6.0f);
+                    mMap.setMaxZoomPreference(14.0f);
+                    finalUrl = govURL + String.valueOf(jsonObject.getJSONObject("_links").get("next"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -96,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 error.printStackTrace();
             }
         });
-
+//        url = finalUrl;
         mQueue.add(request);
     }
 
