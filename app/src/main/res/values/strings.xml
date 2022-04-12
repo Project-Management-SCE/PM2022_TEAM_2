@@ -27,5 +27,16 @@
     <string name="forgot_your_password">Forgot your password?</string>
     <string name="reset">Reset</string>
 
-
+    <string name="articles1">
+        <a href="https://www.investopedia.com/tesla-tsla-ceo-elon-musk-again-moves-crypto-prices-5193802">Click Here to read more</a>
+    </string>
+    <string name="articles2">
+        <a href="https://www.investopedia.com/biden-will-reportedly-sign-crypto-executive-order-5221391">Click Here to read more</a>
+    </string>
+    <string name="articles3">
+        <a href="https://www.investopedia.com/russia-may-use-cryptocurrency-to-evade-sanctions-5220265">Click Here to read more</a>
+    </string>
+    <string name="articles4">
+        <a href="https://www.investopedia.com/coinbase-to-suspend-xrp-trading-5093844">Click Here to read more</a>
+    </string>
 </resources>

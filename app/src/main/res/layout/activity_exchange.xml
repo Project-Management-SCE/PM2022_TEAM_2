@@ -7,7 +7,7 @@
     tools:context=".MainActivity"
     android:background="#E8E8E8">
 
-
+<!--#card1-->
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
