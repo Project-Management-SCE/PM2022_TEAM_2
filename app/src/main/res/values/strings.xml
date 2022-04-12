@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Finance</string>
+
+    <string name="articles1">
+        <a href="https://www.coindesk.com/layer2/2022/04/11/elon-musk-twitter-and-running-things-like-a-dao/">Click Here to read more</a>
+    </string>
+    <string name="articles2">articles1</string>
+    <string name="articles3">articles2</string>
 </resources>
