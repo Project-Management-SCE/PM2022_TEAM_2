@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         //go to crypto exchange activity
-        Intent goToNextActivity = new Intent(getApplicationContext(), crypto_articles.class);
+        Intent goToNextActivity = new Intent(getApplicationContext(), crypto_exchange.class);
         startActivity(goToNextActivity);
 
 

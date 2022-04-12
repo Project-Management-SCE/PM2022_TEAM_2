@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                app:srcCompat="@drawable/artcl_one"
+                app:srcCompat="@drawable/article_one"
                 android:layout_marginBottom="30dp" />
 
             <TextView
@@ -129,7 +129,7 @@
                 android:id="@+id/imageView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/actircle_three"
+                app:srcCompat="@drawable/article_three"
                 android:layout_marginBottom="30dp" />
 
             <TextView
@@ -172,7 +172,7 @@
                 android:id="@+id/imageView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/atricle_four"
+                app:srcCompat="@drawable/article_four"
                 android:layout_marginBottom="30dp" />
 
             <TextView
