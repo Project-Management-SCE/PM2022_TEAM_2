@@ -13,6 +13,7 @@ public class crypto_articles extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crypto_articles);
 
+        // set Movment Methods to each link
         TextView Article1_link = (TextView) findViewById(R.id.link_1);
         Article1_link.setMovementMethod(LinkMovementMethod.getInstance());
 

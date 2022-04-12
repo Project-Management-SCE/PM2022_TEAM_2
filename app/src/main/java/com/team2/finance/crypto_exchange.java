@@ -57,10 +57,11 @@ public class crypto_exchange extends AppCompatActivity {
         fromDropdown = findViewById(R.id.fromDropdown);
         toDropdown = findViewById(R.id.toDropdown);
 
-        //result = findViewById(R.id.result);
+
 
         requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
 
+        //on Create first of all to init the Spinners
         try {
             initSpinners();
         } catch (JSONException e) {
@@ -68,6 +69,7 @@ public class crypto_exchange extends AppCompatActivity {
         }
 
 
+        // on tne click of the button run the Convert Function
         convert_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
