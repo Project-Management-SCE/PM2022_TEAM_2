@@ -16,8 +16,6 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String TAG = MainActivity.class.getSimpleName();
 
-    private static final String TAG = "MainActivity";
-
     public static FragmentManager fragmentManager;
 
     @Override

@@ -27,6 +27,9 @@
             android:columnCount="2">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/bank"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="1"
@@ -61,6 +64,9 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/atm"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="1"

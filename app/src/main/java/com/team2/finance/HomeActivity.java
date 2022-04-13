@@ -55,6 +55,24 @@ public class HomeActivity extends BaseActivity {
             }
         });
 
+        CardView bankCard = (CardView) findViewById(R.id.bank);
+        bankCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), BanksMapsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        CardView atmCard = (CardView) findViewById(R.id.atm);
+        atmCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AtmMapsActivity.class);
+                startActivity(intent);
+            }
+        });
+
         final APIInterface apiService = APIClient.getClient().create(APIInterface.class);
         Call<ResponseModel> call = apiService.getLatestNews("crypto", API_KEY);
         call.enqueue(new Callback<ResponseModel>() {
