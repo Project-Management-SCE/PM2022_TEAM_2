@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //super.onCreate(savedInstanceState);
-        //View rootView = getLayoutInflater().inflate(R.layout.activity_main, frameLayout);
 
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
@@ -36,13 +33,12 @@ public class MainActivity extends AppCompatActivity {
         if (currentUser == null) { // User not exist
             fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .add(R.id.main_container, new welcomeFragment(fragmentManager))
+                    .add(R.id.main_container, new WelcomeFragment(fragmentManager))
                     .commit();
         } else { // User exist check fot type and start the necessary activity
             Log.d(TAG, currentUser.getUid());
-            Intent goToNextActivity = new Intent(getApplicationContext(), Exchange.class);
+            Intent goToNextActivity = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(goToNextActivity);
         }
-
     }
 }

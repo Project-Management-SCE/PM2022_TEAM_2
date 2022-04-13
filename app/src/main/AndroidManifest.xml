@@ -13,10 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Finance">
         <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".Exchange"
             android:exported="false" />
         <activity
             android:name=".BaseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CryptoExchange"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -206,7 +206,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                                             .add(userData)
                                             .addOnSuccessListener(documentReference -> {
                                                 Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                                Intent intent = new Intent(getContext(), MainActivity.class);
+                                                Intent intent = new Intent(getContext(), HomeActivity.class);
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 startActivity(intent);
                                             })

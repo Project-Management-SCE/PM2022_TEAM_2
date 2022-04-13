@@ -92,3 +92,4 @@ lint/tmp/
 .idea/compiler.xml
 .idea/misc.xml
 .idea/*
+.idea/misc.xml

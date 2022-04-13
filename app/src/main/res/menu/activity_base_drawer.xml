@@ -10,12 +10,12 @@
                     android:id="@+id/name"
                     android:layout_gravity="left"
                     android:enabled="false"
-                    android:title=""></item>
+                    android:title="" />
                 <item
                     android:id="@+id/type"
                     android:layout_gravity="left"
                     android:enabled="false"
-                    android:title=""></item>
+                    android:title="" />
             </group>
         </menu>
     </item>
@@ -25,14 +25,14 @@
             android:id="@+id/home"
             android:title="Home" />
         <item
-            android:id="@+id/test1"
-            android:title="test" />
+            android:id="@+id/about"
+            android:title="About" />
         <item
-            android:id="@+id/test2"
-            android:title="test" />
+            android:id="@+id/contact"
+            android:title="Contact" />
         <item
-            android:id="@+id/test3"
-            android:title="test" />
+            android:id="@+id/faq"
+            android:title="FAQ" />
     </group>
 
     <item android:title="Find us on GitHub">

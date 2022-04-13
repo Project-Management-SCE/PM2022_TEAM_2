@@ -94,10 +94,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 switch (String.valueOf(document.getData().get("type"))) {
-                                    case "1":
+                                    case "register":
                                         type.setTitle("register");
                                         break;
-                                    case "2":
+                                    case "vip":
                                         type.setTitle("vip");
                                         break;
                                     default:
@@ -111,6 +111,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         } else {
             name.setTitle("User not connected");
+            logout.setTitle("Go to Login page");
         }
     }
 
@@ -120,7 +121,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.home) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, HomeActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else if (id == R.id.git) {

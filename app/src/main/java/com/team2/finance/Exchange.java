@@ -2,11 +2,15 @@ package com.team2.finance;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
+
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,6 +30,7 @@ public class Exchange extends BaseActivity {
     EditText fromCurrency, toCurrency;
     Spinner fromDropdown, toDropdown;
     Button convert_bt;
+    ImageButton menu;
     private RequestQueue requestQueue;
     private int user_type = 1;
     private static final String TAG = "Exchange";
@@ -35,6 +40,7 @@ public class Exchange extends BaseActivity {
         super.onCreate(savedInstanceState);
         View rootView = getLayoutInflater().inflate(R.layout.activity_exchange, frameLayout);
 
+        menu = findViewById(R.id.menu);
         convert_bt = (Button) findViewById(R.id.convert_bt);
         fromCurrency = findViewById(R.id.fromCurrency);
         toCurrency = findViewById(R.id.toCurrency);
@@ -46,6 +52,14 @@ public class Exchange extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.openDrawer(Gravity.LEFT);
+            }
+        });
 
         convert_bt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
