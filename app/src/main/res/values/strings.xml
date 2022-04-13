@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Finance</string>
+    <string name="title_activity_banks_maps">BanksMapsActivity</string>
+    <string name="title_activity_atm_maps">AtmMapsActivity</string>
+    <string name="title_activity_test">Test</string>
     <string name="terms_and_conditions">e. NO WARRANTY: YOU EXPRESSLY ACKNOWLEDGE AND AGREE THAT USE OF THE LICENSED
     APPLICATION IS AT YOUR SOLE RISK. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE
     LICENSED APPLICATION AND ANY SERVICES PERFORMED OR PROVIDED BY THE LICENSED

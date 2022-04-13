@@ -11,9 +11,10 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
 
+public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    private String TAG = MainActivity.class.getSimpleName();
 
     private static final String TAG = "MainActivity";
 
@@ -41,4 +42,5 @@ public class MainActivity extends AppCompatActivity {
             startActivity(goToNextActivity);
         }
     }
+
 }
