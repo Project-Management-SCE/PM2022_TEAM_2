@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="Hello,">
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/name"
+                    android:layout_gravity="left"
+                    android:enabled="false"
+                    android:title="" />
+                <item
+                    android:id="@+id/type"
+                    android:layout_gravity="left"
+                    android:enabled="false"
+                    android:title="" />
+            </group>
+        </menu>
+    </item>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:title="Home" />
+        <item
+            android:id="@+id/about"
+            android:title="About" />
+        <item
+            android:id="@+id/contact"
+            android:title="Contact" />
+        <item
+            android:id="@+id/faq"
+            android:title="FAQ" />
+    </group>
+
+    <item android:title="Find us on GitHub">
+        <menu>
+            <item
+                android:id="@+id/git"
+                android:title="GitHub" />
+
+        </menu>
+    </item>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:layout_gravity="left"
+            android:enabled="false"
+            android:title=""></item>
+        <item
+            android:layout_gravity="left"
+            android:enabled="false"
+            android:title=""></item>
+        <item
+            android:layout_gravity="left"
+            android:enabled="false"
+            android:title=""></item>
+        <item
+            android:id="@+id/logout"
+            android:title="Logout" />
+
+    </group>
+
+</menu>
