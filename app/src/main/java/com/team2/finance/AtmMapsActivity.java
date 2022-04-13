@@ -1,13 +1,11 @@
 package com.team2.finance;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 
 import org.json.*;
 
@@ -21,35 +19,32 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class BanksMapsActivity extends AppCompatActivity implements OnMapReadyCallback {
-    private String TAG = BanksMapsActivity.class.getSimpleName();
+public class AtmMapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+    private String TAG = AtmMapsActivity.class.getSimpleName();
     private GoogleMap mMap;
     private RequestQueue mQueue;
     private String invalidPoints[] = {"33.211031", "34.471063"};
-    private List<BankObject> bankObjList = new ArrayList<>();
-    String url = "https://data.gov.il/api/3/action/datastore_search?resource_id=1c5bc716-8210-4ec7-85be-92e6271955c2&limit=9999";
+    private List<AtmObject> atmObjectList = new ArrayList<>();
+    String url = "https://data.gov.il/api/3/action/datastore_search?resource_id=b9d690de-0a9c-45ef-9ced-3e5957776b26&limit=9999";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_banks_maps);
+        setContentView(R.layout.activity_atm_maps);
 
         mQueue = Volley.newRequestQueue(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map_);
-//        assert mapFragment != null;
+                .findFragmentById(R.id.activity_atm_maps);
         mapFragment.getMapAsync(this);
     }
+
 
     private void jsonParse() {
         JsonObjectRequest request = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -72,14 +67,14 @@ public class BanksMapsActivity extends AppCompatActivity implements OnMapReadyCa
                                             x = y;
                                             y = temp;
                                         }
-                                        BankObject bankObj = new BankObject(String.valueOf(records.getJSONObject(i).get("_id")), String.valueOf(records.getJSONObject(i).get("Bank_Name")),
-                                                String.valueOf(records.getJSONObject(i).get("Branch_Address")), String.valueOf(records.getJSONObject(i).get("City")), x, y);
-                                        bankObjList.add(bankObj);
-                                        LatLng bank = new LatLng(x, y);
-                                        Objects.requireNonNull(mMap.addMarker(new MarkerOptions()
-                                                .position(bank)
-                                                .title(bankObj.Bank_Name + " - " + bankObj.City)))
-                                                .setSnippet(bankObj.Branch_Address);
+                                        AtmObject atmObjectObj = new AtmObject(String.valueOf(records.getJSONObject(i).get("_id")), String.valueOf(records.getJSONObject(i).get("Bank_Name")),
+                                                String.valueOf(records.getJSONObject(i).get("ATM_Address")), String.valueOf(records.getJSONObject(i).get("City")), x, y);
+                                        atmObjectList.add(atmObjectObj);
+                                        LatLng atm = new LatLng(x, y);
+                                        Objects.requireNonNull(mMap.addMarker(new MarkerOptions().draggable(true)
+                                                .position(atm)
+                                                .title(atmObjectObj.Bank_Name + " - " + atmObjectObj.City)))
+                                                .setSnippet(atmObjectObj.Branch_Address);
                                     }
                                 }
                             }
@@ -95,7 +90,6 @@ public class BanksMapsActivity extends AppCompatActivity implements OnMapReadyCa
                 error.printStackTrace();
             }
         });
-//        url = finalUrl;
         mQueue.add(request);
     }
 
@@ -103,6 +97,7 @@ public class BanksMapsActivity extends AppCompatActivity implements OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         jsonParse();
+
         mMap.setMinZoomPreference(5.0f);
         mMap.setMaxZoomPreference(12.5f);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -120,4 +115,3 @@ public class BanksMapsActivity extends AppCompatActivity implements OnMapReadyCa
     }
 }
 
-      

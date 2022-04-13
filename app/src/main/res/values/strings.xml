@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Finance</string>
     <string name="title_activity_banks_maps">BanksMapsActivity</string>
+    <string name="title_activity_atm_maps">AtmMapsActivity</string>
+    <string name="title_activity_test">Test</string>
 </resources>
