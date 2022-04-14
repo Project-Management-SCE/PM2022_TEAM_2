@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'androidsdk/android-30'
+            image 'androidsdk/android-31'
         }
     }
     stages {
