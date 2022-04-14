@@ -14,7 +14,7 @@ pipeline {
                 sh 'adb devices'
             }
         }
-        /*stage('Test') {
+        stage('Test') {
             steps {
                 echo 'Running Test'
                 sh 'emulator -avd first_avd -no-window -no-audio &'
@@ -26,7 +26,7 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') {
+        /*stage('Deliver') {
             steps {
                 echo 'Running Deliver'
                 echo 'Connecting to FireBase... '
