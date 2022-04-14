@@ -1,4 +1,4 @@
-package com.team2.finance;
+package com.team2.finance.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +22,9 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.team2.finance.Pages.HomeActivity;
+import com.team2.finance.R;
+import com.team2.finance.Utility.Validation;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
 

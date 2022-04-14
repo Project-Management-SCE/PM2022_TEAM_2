@@ -1,4 +1,4 @@
-package com.team2.finance;
+package com.team2.finance.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -19,6 +19,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.team2.finance.Model.AtmObject;
+import com.team2.finance.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,8 +75,8 @@ public class AtmMapsActivity extends AppCompatActivity implements OnMapReadyCall
                                         LatLng atm = new LatLng(x, y);
                                         Objects.requireNonNull(mMap.addMarker(new MarkerOptions().draggable(true)
                                                 .position(atm)
-                                                .title(atmObjectObj.Bank_Name + " - " + atmObjectObj.City)))
-                                                .setSnippet(atmObjectObj.Branch_Address);
+                                                .title(atmObjectObj.getBank_Name() + " - " + atmObjectObj.getCity())))
+                                                .setSnippet(atmObjectObj.getBranch_Address());
                                     }
                                 }
                             }

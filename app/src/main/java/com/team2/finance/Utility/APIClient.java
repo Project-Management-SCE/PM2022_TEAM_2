@@ -1,4 +1,4 @@
-package com.team2.finance;
+package com.team2.finance.Utility;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

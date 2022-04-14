@@ -1,4 +1,4 @@
-package com.team2.finance;
+package com.team2.finance.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.team2.finance.Pages.HomeActivity;
+import com.team2.finance.R;
 
 public class WelcomeFragment extends Fragment implements View.OnClickListener {
 

@@ -1,4 +1,6 @@
-package com.team2.finance;
+package com.team2.finance.Utility;
+
+import com.team2.finance.Model.ResponseModel;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

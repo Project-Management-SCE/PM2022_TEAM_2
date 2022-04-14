@@ -1,4 +1,4 @@
-package com.team2.finance;
+package com.team2.finance.Utility;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

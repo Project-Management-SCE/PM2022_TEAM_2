@@ -1,4 +1,4 @@
-package com.team2.finance;
+package com.team2.finance.Model;
 
 import com.google.gson.annotations.SerializedName;
 

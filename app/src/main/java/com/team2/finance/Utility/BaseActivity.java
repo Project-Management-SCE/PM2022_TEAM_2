@@ -1,4 +1,4 @@
-package com.team2.finance;
+package com.team2.finance.Utility;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +16,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.team2.finance.Login.MainActivity;
+import com.team2.finance.Pages.HomeActivity;
+import com.team2.finance.R;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     protected FrameLayout frameLayout;

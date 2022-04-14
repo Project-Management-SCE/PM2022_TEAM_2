@@ -8,4 +8,4 @@
     map:cameraTilt="10"
     map:uiRotateGestures="true"
     map:uiZoomControls="true"
-    tools:context=".BanksMapsActivity" />
+    tools:context=".Map.BanksMapsActivity" />

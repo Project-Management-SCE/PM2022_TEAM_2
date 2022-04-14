@@ -1,13 +1,11 @@
-package com.team2.finance;
+package com.team2.finance.Map;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 
 import org.json.*;
 
@@ -21,11 +19,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
+import com.team2.finance.Model.BankObject;
+import com.team2.finance.R;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -78,8 +74,8 @@ public class BanksMapsActivity extends AppCompatActivity implements OnMapReadyCa
                                         LatLng bank = new LatLng(x, y);
                                         Objects.requireNonNull(mMap.addMarker(new MarkerOptions()
                                                 .position(bank)
-                                                .title(bankObj.Bank_Name + " - " + bankObj.City)))
-                                                .setSnippet(bankObj.Branch_Address);
+                                                .title(bankObj.getBank_Name() + " - " + bankObj.getCity())))
+                                                .setSnippet(bankObj.getBranch_Address());
                                     }
                                 }
                             }

@@ -1,4 +1,4 @@
-package com.team2.finance;
+package com.team2.finance.Login;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -25,6 +25,9 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.team2.finance.Pages.HomeActivity;
+import com.team2.finance.R;
+import com.team2.finance.Utility.Validation;
 
 import java.util.HashMap;
 import java.util.Map;

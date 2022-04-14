@@ -1,4 +1,4 @@
-package com.team2.finance;
+package com.team2.finance.exchnage;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +17,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.team2.finance.R;
+import com.team2.finance.Utility.BaseActivity;
+import com.team2.finance.Utility.Validation;
+import com.team2.finance.Utility.VolleySingleton;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.team2.finance;
+package com.team2.finance.Pages;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,17 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.team2.finance.Adapter.NewsAdapter;
+import com.team2.finance.Map.AtmMapsActivity;
+import com.team2.finance.Map.BanksMapsActivity;
+import com.team2.finance.Model.Article;
+import com.team2.finance.Model.ResponseModel;
+import com.team2.finance.R;
+import com.team2.finance.Utility.APIClient;
+import com.team2.finance.Utility.APIInterface;
+import com.team2.finance.Utility.BaseActivity;
+import com.team2.finance.exchnage.Exchange;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -25,11 +36,12 @@ public class HomeActivity extends BaseActivity {
 
     ImageButton iBmenu;
     private static String TAG = "HomeActivity";
-    private static final String API_KEY = "29e355ddea64445d8303925e4f0567a7";
-    static View.OnClickListener myOnClickListener;
+    private static final String API_KEY = "29e355ddea64445d8303925e4f0567a7"; //Debug only need to be removed
+    public static View.OnClickListener myOnClickListener;
     private static RecyclerView.Adapter adapter;
     private static RecyclerView recyclerView;
     static List<Article> articleList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

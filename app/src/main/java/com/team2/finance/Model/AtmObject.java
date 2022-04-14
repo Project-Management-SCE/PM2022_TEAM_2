@@ -1,6 +1,6 @@
-package com.team2.finance;
+package com.team2.finance.Model;
 
-public class BankObject {
+public class AtmObject {
     String id;
     String Bank_Name;
     String Branch_Address;
@@ -8,10 +8,10 @@ public class BankObject {
     float X_Coordinate;
     float Y_Coordinate;
 
-    public BankObject(String id, String bank_Name, String branch_Address, String city, float x_Coordinate, float y_Coordinate) {
+    public AtmObject(String id, String bank_Name, String ATM_Address, String city, float x_Coordinate, float y_Coordinate) {
         this.id = id;
         Bank_Name = bank_Name;
-        Branch_Address = branch_Address;
+        Branch_Address = ATM_Address;
         City = city;
         X_Coordinate = x_Coordinate;
         Y_Coordinate = y_Coordinate;

@@ -1,4 +1,4 @@
-package com.team2.finance;
+package com.team2.finance.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -10,6 +10,8 @@ import android.util.Log;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.team2.finance.Pages.HomeActivity;
+import com.team2.finance.R;
 
 
 public class MainActivity extends AppCompatActivity {

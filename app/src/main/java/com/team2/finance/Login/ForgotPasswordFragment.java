@@ -1,4 +1,4 @@
-package com.team2.finance;
+package com.team2.finance.Login;
 
 import android.os.Bundle;
 
@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.team2.finance.R;
+import com.team2.finance.Utility.Validation;
 
 public class ForgotPasswordFragment extends Fragment implements View.OnClickListener {
 
