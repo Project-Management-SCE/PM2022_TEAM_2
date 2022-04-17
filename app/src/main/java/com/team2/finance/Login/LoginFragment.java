@@ -94,6 +94,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             Intent intent = new Intent(getContext(), HomeActivity.class);
+                            intent.putExtra("userType", "register");
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         } else {

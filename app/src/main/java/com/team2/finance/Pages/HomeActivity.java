@@ -41,11 +41,13 @@ public class HomeActivity extends BaseActivity {
     private static RecyclerView.Adapter adapter;
     private static RecyclerView recyclerView;
     static List<Article> articleList;
-
+    private String userType =null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userType = getIntent().getStringExtra("userType");
+
         View rootView = getLayoutInflater().inflate(R.layout.activity_home, frameLayout);
 
         myOnClickListener = new MyOnClickListener(this);
@@ -63,6 +65,7 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Exchange.class);
+                intent.putExtra("userType", userType);
                 startActivity(intent);
             }
         });
