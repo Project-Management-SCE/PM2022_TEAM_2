@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Finance">
         <activity
-            android:name=".Pages.PaymentActivity"
+            android:name=".Pages.PayActivity"
             android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
@@ -67,5 +67,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

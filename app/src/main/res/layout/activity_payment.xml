@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Pages.PaymentActivity">
+    tools:context=".Pages.PayActivity">
 
     <ImageButton
         android:id="@+id/back"
@@ -206,7 +206,7 @@
                         app:tint="#EAAF34" />
 
                 </TableLayout>
-                
+
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -308,8 +308,8 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:orientation="vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -318,14 +318,20 @@
         app:layout_constraintTop_toBottomOf="@+id/view_infrastructure_status">
 
         <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="match_parent"
+            android:id="@+id/pay_button"
+            android:layout_width="300dp"
             android:layout_height="60dp"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:padding="15dp"
             android:scaleType="centerInside"
+            android:background="@drawable/paypal_button_background"
             app:layout_constraintTop_toBottomOf="@+id/view_infrastructure_status"
-            app:srcCompat="@drawable/ic_paypal" />
+            app:srcCompat="@drawable/ic_paypal"
+            android:elevation="5dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"/>
+
 
     </LinearLayout>
 

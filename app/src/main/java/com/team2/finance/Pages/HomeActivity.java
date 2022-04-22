@@ -21,7 +21,6 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.team2.finance.Adapter.NewsAdapter;
 import com.team2.finance.Login.MainActivity;
 import com.team2.finance.Map.AtmMapsActivity;
@@ -168,17 +167,16 @@ public class HomeActivity extends BaseActivity {
                         if (task.isSuccessful()) {
 
                             Boolean vip = (Boolean) (task.getResult().getDocuments().get(0).getData().get("Vip"));
-                            if (vip){
+                            if (vip) {
                                 // TODO forward next page
-                            }
-                            else{
+                            } else {
                                 AlertDialog alertDialog = new AlertDialog.Builder(HomeActivity.this)
                                         .setTitle("You are not VIP member")
                                         .setMessage("Go to payment process?")
                                         .setPositiveButton("Go", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-                                                Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
+                                                Intent intent = new Intent(getApplicationContext(), PayActivity.class);
                                                 startActivity(intent);
                                             }
                                         })
