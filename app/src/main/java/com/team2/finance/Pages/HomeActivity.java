@@ -64,7 +64,9 @@ public class HomeActivity extends BaseActivity {
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // I did a change to the Intent in order to jump to my Activity
+
+                //  *************** I did a change to the Intent in order to jump to my Activity ***********
+
                 Intent intent = new Intent(getApplicationContext(), CryptoExchange.class);
                 startActivity(intent);
             }

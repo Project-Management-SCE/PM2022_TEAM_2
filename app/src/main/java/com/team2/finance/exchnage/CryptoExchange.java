@@ -1,5 +1,6 @@
 package com.team2.finance.exchnage;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,6 +19,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+
 import com.team2.finance.R;
 import com.team2.finance.Utility.BaseActivity;
 import com.team2.finance.Utility.Validation;
@@ -28,6 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class CryptoExchange extends BaseActivity {
 
@@ -38,7 +49,9 @@ public class CryptoExchange extends BaseActivity {
     RequestQueue requestQueue;
     ImageButton menu;
 
-    TextView ifnoAboutGraph;
+    //graph
+    TextView infoAboutGraph;
+    private LineChart mChart;
 
 
     @Override
@@ -53,17 +66,22 @@ public class CryptoExchange extends BaseActivity {
         toDropdown = findViewById(R.id.toDropdown);
         menu = findViewById(R.id.menu);
 
-        ifnoAboutGraph = findViewById(R.id.textView1);
+        infoAboutGraph = findViewById(R.id.textView1);
+        mChart = findViewById(R.id.linechart);
+        mChart.setDragEnabled(true);
+        mChart.setScaleEnabled(false);
+
+
 
 
 
 
         requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
 
-        //on Create first of all to init the Spinners
+        //on Create first of all to init the Spinners and graph
         try {
             initSpinners();
-            CryptoGraph();
+            CryptoGraphDefualt();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -200,12 +218,12 @@ public class CryptoExchange extends BaseActivity {
 
     }
 
-    public void CryptoGraph()
+    public void CryptoGraphDefualt()
     {
-        ArrayList<String> History_Values = new ArrayList<>();
-        String url_1m = "https://api.coinstats.app/public/v1/charts?period=1m&coinId=";
+        ArrayList<Float> History_Values = new ArrayList<>();
+
         String url_1w = "https://api.coinstats.app/public/v1/charts?period=1w&coinId=bitcoin";
-        String url_24h = "https://api.coinstats.app/public/v1/charts?period=24h&coinId=";
+
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -216,21 +234,59 @@ public class CryptoExchange extends BaseActivity {
                         JSONArray jsonArray = null;
                         try {
                             jsonArray = response.getJSONArray("chart");
-                            ifnoAboutGraph.setText("This Graph Show the info the Choosen coin to USD");
+                            infoAboutGraph.setText("This Graph Show the info the Choosen coin to USD");
 
 
 
                             for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONArray obj = jsonArray.getJSONArray(i);
-                                double value = obj.getDouble(1);
-                                History_Values.add(String.valueOf(value));
 
+                                if(i%24 == 0)
+                                {
 
+                                    JSONArray obj = jsonArray.getJSONArray(i);
+                                    double value = obj.getDouble(1);
+                                    History_Values.add( (float) value);
 
-                                ifnoAboutGraph.setText(String.valueOf(value));
+                                    infoAboutGraph.append(String.valueOf(History_Values.get(0)) + " ");
+
+                                }
 
 
                             }
+
+
+                            //graph build
+
+                            ArrayList<Entry> y = new ArrayList<>();
+
+                            for(int day = 0 ; day < History_Values.size(); day++)
+                            {
+
+                                y.add(new Entry(day,History_Values.get(day)));
+                                Log.e("dayValue" ,String.valueOf(History_Values.get(day)));
+                            }
+
+                            //Line
+                            LineDataSet set1 = new LineDataSet(y,"Bit Coin to USD");
+                            set1.setFillAlpha(110);
+                            set1.setLineWidth(2f);
+                            set1.setCircleColor(Color.rgb(255,165,0));
+                            set1.setColor(Color.rgb(218,165,32));
+                            set1.setValueTextSize(10f);
+
+
+                            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+                            dataSets.add(set1);
+
+
+                            LineData data = new LineData(dataSets);
+
+                            mChart.setData(data);
+
+
+
+
+
 
 
                         } catch (JSONException e) {
@@ -238,13 +294,7 @@ public class CryptoExchange extends BaseActivity {
                             Log.e("GraphError", "catch inside onResponse function");
                         }
 
-                        //add to the spinners
-//                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(CryptoExchange.this,
-//                                android.R.layout.simple_spinner_item,
-//                                (ArrayList<String>) coins_symbol);
-//                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                        fromDropdown.setAdapter(adapter);
-//                        toDropdown.setAdapter(adapter);
+
 //
 
 
@@ -258,6 +308,9 @@ public class CryptoExchange extends BaseActivity {
 
 
         requestQueue.add(jsonObjectRequest);
+
+
+
 
 
 
