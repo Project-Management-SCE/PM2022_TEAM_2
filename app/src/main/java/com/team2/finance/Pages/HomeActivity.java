@@ -24,6 +24,7 @@ import com.team2.finance.R;
 import com.team2.finance.Utility.APIClient;
 import com.team2.finance.Utility.APIInterface;
 import com.team2.finance.Utility.BaseActivity;
+import com.team2.finance.exchnage.CryptoExchange;
 import com.team2.finance.exchnage.Exchange;
 
 import java.util.List;
@@ -46,6 +47,7 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         View rootView = getLayoutInflater().inflate(R.layout.activity_home, frameLayout);
 
         myOnClickListener = new MyOnClickListener(this);
@@ -62,7 +64,8 @@ public class HomeActivity extends BaseActivity {
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Exchange.class);
+                // I did a change to the Intent in order to jump to my Activity
+                Intent intent = new Intent(getApplicationContext(), CryptoExchange.class);
                 startActivity(intent);
             }
         });

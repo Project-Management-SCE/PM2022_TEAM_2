@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -37,6 +38,8 @@ public class CryptoExchange extends BaseActivity {
     RequestQueue requestQueue;
     ImageButton menu;
 
+    TextView ifnoAboutGraph;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +53,17 @@ public class CryptoExchange extends BaseActivity {
         toDropdown = findViewById(R.id.toDropdown);
         menu = findViewById(R.id.menu);
 
+        ifnoAboutGraph = findViewById(R.id.textView1);
+
+
+
 
         requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
 
         //on Create first of all to init the Spinners
         try {
             initSpinners();
+            CryptoGraph();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -189,6 +197,75 @@ public class CryptoExchange extends BaseActivity {
 
 
         requestQueue.add(jsonObjectRequest);
+
+    }
+
+    public void CryptoGraph()
+    {
+        ArrayList<String> History_Values = new ArrayList<>();
+        String url_1m = "https://api.coinstats.app/public/v1/charts?period=1m&coinId=";
+        String url_1w = "https://api.coinstats.app/public/v1/charts?period=1w&coinId=bitcoin";
+        String url_24h = "https://api.coinstats.app/public/v1/charts?period=24h&coinId=";
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url_1w, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //create array of all the objects innside coins Jsonfile
+                        JSONArray jsonArray = null;
+                        try {
+                            jsonArray = response.getJSONArray("chart");
+                            ifnoAboutGraph.setText("This Graph Show the info the Choosen coin to USD");
+
+
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONArray obj = jsonArray.getJSONArray(i);
+                                double value = obj.getDouble(1);
+                                History_Values.add(String.valueOf(value));
+
+
+
+                                ifnoAboutGraph.setText(String.valueOf(value));
+
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("GraphError", "catch inside onResponse function");
+                        }
+
+                        //add to the spinners
+//                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(CryptoExchange.this,
+//                                android.R.layout.simple_spinner_item,
+//                                (ArrayList<String>) coins_symbol);
+//                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                        fromDropdown.setAdapter(adapter);
+//                        toDropdown.setAdapter(adapter);
+//
+
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+
+
+        requestQueue.add(jsonObjectRequest);
+
+
+
+
+
+
+
+
 
     }
 
