@@ -55,7 +55,7 @@ public class CryptoExchange extends BaseActivity {
 
     EditText fromCurrency, toCurrency;
     Spinner fromDropdown, toDropdown , fromDropdown_graph;
-    Button convert_bt;
+    Button convert_bt , history_bt;
     RequestQueue requestQueue;
     ImageButton menu;
 
@@ -75,6 +75,8 @@ public class CryptoExchange extends BaseActivity {
         View rootView = getLayoutInflater().inflate(R.layout.activity_crypto_exchange, frameLayout);
 
         convert_bt = (Button) findViewById(R.id.convert_bt);
+        history_bt = (Button) findViewById(R.id.history_bt);
+
         fromCurrency = findViewById(R.id.fromCurrency);
         toCurrency = findViewById(R.id.toCurrency);
         fromDropdown = findViewById(R.id.fromDropdown);
@@ -83,6 +85,7 @@ public class CryptoExchange extends BaseActivity {
 
         menu = findViewById(R.id.menu);
 
+        //for the graph
         mChart = findViewById(R.id.linechart);
         mChart.setDragEnabled(true);
         mChart.setScaleEnabled(false);
@@ -92,7 +95,7 @@ public class CryptoExchange extends BaseActivity {
         //on Create first of all to init the Spinners and graph
         try {
             initSpinners();
-            CryptoGraphDefualt();
+            CryptoGraphBuild();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -117,6 +120,15 @@ public class CryptoExchange extends BaseActivity {
                 }
             }
         });
+        // on tne click of the button update the graph to the chosen coin
+        history_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CryptoGraphBuild();
+            }
+        });
+
+
     }
 
     /// function that will convert the chosen crypto coin
@@ -134,18 +146,12 @@ public class CryptoExchange extends BaseActivity {
                             float toprice = 1;
                             float result = 1;
 
+                            //find the selected item and take the price
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject coin = jsonArray.getJSONObject(i);
                                 String type = coin.getString("symbol");
                                 if (fromDropdown.getSelectedItem().toString().equals(type)) {
-                                    //check that the field isnt empty ( if it does put 1)
-                                    if (fromCurrency.getText().toString().equals("")) {
-                                        frompirce = Float.parseFloat(coin.getString("price"));
-                                        fromCurrency.setText("1");
-                                    } else {
-                                        frompirce = Float.parseFloat(coin.getString("price")) * Float.parseFloat(fromCurrency.getText().toString());
-                                    }
-
+                                    frompirce = Float.parseFloat(coin.getString("price")) * Float.parseFloat(fromCurrency.getText().toString());
                                 }
 
                                 if (toDropdown.getSelectedItem().toString().equals(type)) {
@@ -197,7 +203,7 @@ public class CryptoExchange extends BaseActivity {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject coin = jsonArray.getJSONObject(i);
                                 String symbol = coin.getString("symbol");
-                                String name = coin.getString("name");
+                                String name = coin.getString("id").toUpperCase();
                                 coins_symbol.add(symbol);
                                 coins_name.add(name);
 
@@ -239,15 +245,24 @@ public class CryptoExchange extends BaseActivity {
 
     }
 
-    public void CryptoGraphDefualt()
+    public void CryptoGraphBuild()
     {
         ArrayList<Float> History_Values = new ArrayList<>();
-
+        //defualt url
         String url_1w = "https://api.coinstats.app/public/v1/charts?period=1w&coinId=bitcoin";
 
+        String url_1w2 = "https://api.coinstats.app/public/v1/charts?period=1w&coinId=";
+        String CoinName = "bitcoin";
 
+        try {
+            CoinName = fromDropdown_graph.getSelectedItem().toString().toLowerCase();
+            url_1w = url_1w2+CoinName;
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        String finalCoinName = CoinName;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url_1w, null, new Response.Listener<JSONObject>() {
                     @Override
@@ -257,21 +272,16 @@ public class CryptoExchange extends BaseActivity {
                         try {
                             jsonArray = response.getJSONArray("chart");
 
-
-
-
                             for (int i = 0; i < jsonArray.length(); i++) {
-
+                                //get last 7 days values
                                 if(i%24 == 0)
                                 {
-
                                     JSONArray obj = jsonArray.getJSONArray(i);
                                     double value = obj.getDouble(1);
                                     History_Values.add( (float) value);
-
-
                                 }
 
+                                //update the last one to be the most updated no matther what
                                 if(i == jsonArray.length()-1)
                                 {
                                     JSONArray obj = jsonArray.getJSONArray(i);
@@ -282,20 +292,17 @@ public class CryptoExchange extends BaseActivity {
                             }
 
 
-
                             //graph build
-
                             ArrayList<Entry> y = new ArrayList<>();
 
                             for(int day = 0 ; day < 7; day++)
                             {
-
                                 y.add(new Entry(day,History_Values.get(day)));
-                                Log.e("dayValue" ,String.valueOf(History_Values.get(day)));
                             }
 
                             //Line
-                            LineDataSet set1 = new LineDataSet(y,"Bitcoin to USD");
+                            String label = finalCoinName.toUpperCase() +" to UDS";
+                            LineDataSet set1 = new LineDataSet(y,label);
                             set1.setFillAlpha(110);
                             set1.setLineWidth(2f);
                             set1.setCircleColor(Color.rgb(255,165,0));
@@ -323,11 +330,8 @@ public class CryptoExchange extends BaseActivity {
                                 String previousDateStr = simpleDateFormat.format(previousDate);
                                 x.add(previousDateStr);
                             }
-                            //reverse the array
+                            //reverse the array to fit the graph
                             Collections.reverse(x);
-
-
-
 
                             //y - prise
 //                            YAxis leftYAxis = mChart.getAxisLeft();
@@ -349,16 +353,10 @@ public class CryptoExchange extends BaseActivity {
 
 
 
-
-
-
                         } catch (JSONException | ParseException e) {
                             e.printStackTrace();
                             Log.e("GraphError", "catch inside onResponse function");
                         }
-
-
-//
 
 
                     }
@@ -372,18 +370,6 @@ public class CryptoExchange extends BaseActivity {
 
         requestQueue.add(jsonObjectRequest);
 
-
-
-
-
-
-
-
-
-
-
-
     }
-
 
 }
