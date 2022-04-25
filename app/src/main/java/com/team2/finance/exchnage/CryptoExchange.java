@@ -21,7 +21,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.XAxis;
+
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -37,21 +38,35 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class CryptoExchange extends BaseActivity {
 
 
     EditText fromCurrency, toCurrency;
-    Spinner fromDropdown, toDropdown;
+    Spinner fromDropdown, toDropdown , fromDropdown_graph;
     Button convert_bt;
     RequestQueue requestQueue;
     ImageButton menu;
 
     //graph
-    TextView infoAboutGraph;
+
     private LineChart mChart;
+
+    private SimpleDateFormat simpleDateFormat;
+    private String dateTime;
+    private static final long ONE_DAY_MILLI_SECONDS = 24 * 60 * 60 * 1000;
+
 
 
     @Override
@@ -64,17 +79,13 @@ public class CryptoExchange extends BaseActivity {
         toCurrency = findViewById(R.id.toCurrency);
         fromDropdown = findViewById(R.id.fromDropdown);
         toDropdown = findViewById(R.id.toDropdown);
+        fromDropdown_graph = findViewById(R.id.fromDropdown_graph);
+
         menu = findViewById(R.id.menu);
 
-        infoAboutGraph = findViewById(R.id.textView1);
         mChart = findViewById(R.id.linechart);
         mChart.setDragEnabled(true);
         mChart.setScaleEnabled(false);
-
-
-
-
-
 
         requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
 
@@ -170,6 +181,8 @@ public class CryptoExchange extends BaseActivity {
     private void initSpinners() throws JSONException {
         //array of all the Crypto symbols to display at the spinners
         ArrayList<String> coins_symbol = new ArrayList<>();
+        ArrayList<String> coins_name = new ArrayList<>();
+
 
         String url = "https://api.coinstats.app/public/v1/coins?skip=0&limit=20&currency=USD";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -184,7 +197,9 @@ public class CryptoExchange extends BaseActivity {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject coin = jsonArray.getJSONObject(i);
                                 String symbol = coin.getString("symbol");
+                                String name = coin.getString("name");
                                 coins_symbol.add(symbol);
+                                coins_name.add(name);
 
 
                             }
@@ -202,6 +217,12 @@ public class CryptoExchange extends BaseActivity {
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         fromDropdown.setAdapter(adapter);
                         toDropdown.setAdapter(adapter);
+
+                        ArrayAdapter<String> adapter_graph = new ArrayAdapter<String>(CryptoExchange.this,
+                                android.R.layout.simple_spinner_item,
+                                (ArrayList<String>) coins_name);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        fromDropdown_graph.setAdapter(adapter_graph);
 //
 
 
@@ -226,6 +247,7 @@ public class CryptoExchange extends BaseActivity {
 
 
 
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url_1w, null, new Response.Listener<JSONObject>() {
                     @Override
@@ -234,7 +256,7 @@ public class CryptoExchange extends BaseActivity {
                         JSONArray jsonArray = null;
                         try {
                             jsonArray = response.getJSONArray("chart");
-                            infoAboutGraph.setText("This Graph Show the info the Choosen coin to USD");
+
 
 
 
@@ -247,19 +269,25 @@ public class CryptoExchange extends BaseActivity {
                                     double value = obj.getDouble(1);
                                     History_Values.add( (float) value);
 
-                                    infoAboutGraph.append(String.valueOf(History_Values.get(0)) + " ");
 
                                 }
 
+                                if(i == jsonArray.length()-1)
+                                {
+                                    JSONArray obj = jsonArray.getJSONArray(i);
+                                    double value = obj.getDouble(1);
+                                    History_Values.add(6,(float) value);
+                                }
 
                             }
+
 
 
                             //graph build
 
                             ArrayList<Entry> y = new ArrayList<>();
 
-                            for(int day = 0 ; day < History_Values.size(); day++)
+                            for(int day = 0 ; day < 7; day++)
                             {
 
                                 y.add(new Entry(day,History_Values.get(day)));
@@ -267,29 +295,64 @@ public class CryptoExchange extends BaseActivity {
                             }
 
                             //Line
-                            LineDataSet set1 = new LineDataSet(y,"Bit Coin to USD");
+                            LineDataSet set1 = new LineDataSet(y,"Bitcoin to USD");
                             set1.setFillAlpha(110);
                             set1.setLineWidth(2f);
                             set1.setCircleColor(Color.rgb(255,165,0));
                             set1.setColor(Color.rgb(218,165,32));
                             set1.setValueTextSize(10f);
 
+                            // x - days
 
+                            simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+                            //get today
+                            dateTime = java.time.LocalDate.now().toString();
+                            Date date = simpleDateFormat.parse(dateTime);
+
+                            //array of days as string
+                            ArrayList<String> x = new ArrayList<>();
+
+                            //add today to the array
+                            x.add(dateTime);
+
+                            //add the others days to array
+                            for(int i =1 ; i < 7 ; i++)
+                            {
+                                long previousDayMilliSeconds = date.getTime() - (ONE_DAY_MILLI_SECONDS * i);
+                                Date previousDate = new Date(previousDayMilliSeconds);
+                                String previousDateStr = simpleDateFormat.format(previousDate);
+                                x.add(previousDateStr);
+                            }
+                            //reverse the array
+                            Collections.reverse(x);
+
+
+
+
+                            //y - prise
+//                            YAxis leftYAxis = mChart.getAxisLeft();
+//                            YAxis rightYAxis = mChart.getAxisRight();
+//                            leftYAxis.setEnabled(false);
+//                            rightYAxis.setEnabled(false);
+
+
+                            //init
                             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                             dataSets.add(set1);
-
-
                             LineData data = new LineData(dataSets);
 
+                            mChart.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(x));
                             mChart.setData(data);
+                            mChart.notifyDataSetChanged();
+                            mChart.invalidate();
+                            mChart.getDescription().setText("One-week");
 
 
 
 
 
 
-
-                        } catch (JSONException e) {
+                        } catch (JSONException | ParseException e) {
                             e.printStackTrace();
                             Log.e("GraphError", "catch inside onResponse function");
                         }
