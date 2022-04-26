@@ -176,7 +176,7 @@ public class HomeActivity extends BaseActivity {
                                         .setPositiveButton("Go", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-                                                Intent intent = new Intent(getApplicationContext(), PayActivity.class);
+                                                Intent intent = new Intent(getApplicationContext(), CheckoutActivity.class);
                                                 startActivity(intent);
                                             }
                                         })
