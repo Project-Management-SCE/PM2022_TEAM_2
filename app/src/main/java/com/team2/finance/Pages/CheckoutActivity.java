@@ -1,10 +1,10 @@
 package com.team2.finance.Pages;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import android.content.Context;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
@@ -14,12 +14,16 @@ import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.wallet.AutoResolveHelper;
 import com.google.android.gms.wallet.PaymentData;
@@ -28,6 +32,13 @@ import com.google.android.gms.wallet.PaymentsClient;
 import com.google.android.gms.wallet.TransactionInfo;
 import com.google.android.gms.wallet.Wallet;
 import com.google.android.gms.wallet.WalletConstants;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.team2.finance.R;
 import com.team2.finance.Utility.Payment.ConfigHelper;
 import com.team2.finance.Utility.Payment.ExampleApplication;
@@ -62,6 +73,9 @@ public class CheckoutActivity extends AppCompatActivity {
     private PaymentsClient paymentsClient;
     private OrderSheet orderSheet;
 
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
     SharedPreferences preferences;
 
     public static final String Name = "priceKey";
@@ -70,6 +84,11 @@ public class CheckoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
+
+        FirebaseApp.initializeApp(this);
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
         card1 = (CardView) findViewById(R.id.card1);
         card2 = (CardView) findViewById(R.id.card2);
@@ -197,9 +216,10 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void startGooglePayActivity() {
+        String value = preferences.getString(Name, "");
         TransactionInfo transactionInfo = TransactionInfo.newBuilder()
                 .setTotalPriceStatus(WalletConstants.TOTAL_PRICE_STATUS_FINAL)
-                .setTotalPrice("1.00")
+                .setTotalPrice(value)
                 .setCurrencyCode("USD")
                 .build();
 
@@ -278,7 +298,40 @@ public class CheckoutActivity extends AppCompatActivity {
 
     public void showSuccessCharge() {
         showOkDialog(R.string.successful_order_title, getString(R.string.successful_order_message));
-        // TODO update DB
+
+        db.collection("Users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                if (currentUser.getUid().equals(String.valueOf(document.get("Uid")))) {
+                                    DocumentReference ref = db.collection("Users").document(document.getId());
+                                    ref
+                                            .update("Vip", true)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d("TAG", "DocumentSnapshot successfully updated!");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w("TAG", "Error updating document", e);
+                                                }
+                                            });
+                                }
+                            }
+                        } else {
+                            Log.d("check", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }

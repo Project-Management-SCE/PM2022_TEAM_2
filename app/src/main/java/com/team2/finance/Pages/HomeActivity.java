@@ -31,6 +31,7 @@ import com.team2.finance.R;
 import com.team2.finance.Utility.APIClient;
 import com.team2.finance.Utility.APIInterface;
 import com.team2.finance.Utility.BaseActivity;
+import com.team2.finance.exchnage.CryptoExchange;
 import com.team2.finance.exchnage.Exchange;
 
 import java.util.List;
@@ -168,7 +169,8 @@ public class HomeActivity extends BaseActivity {
 
                             Boolean vip = (Boolean) (task.getResult().getDocuments().get(0).getData().get("Vip"));
                             if (vip) {
-                                // TODO forward next page
+                                Intent intent = new Intent(this, CryptoExchange.class);
+                                startActivity(intent);
                             } else {
                                 AlertDialog alertDialog = new AlertDialog.Builder(HomeActivity.this)
                                         .setTitle("You are not VIP member")

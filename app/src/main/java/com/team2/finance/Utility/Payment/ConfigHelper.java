@@ -1,10 +1,7 @@
 package com.team2.finance.Utility.Payment;
 
-import android.util.Log;
-
 import com.squareup.moshi.Moshi;
 
-import java.util.UUID;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.moshi.MoshiConverterFactory;
