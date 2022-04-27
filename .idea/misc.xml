@@ -4,15 +4,34 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../Library/Android/sdk/platforms/android-31/data/res/layout/simple_spinner_item.xml" value="0.18125" />
+        <entry key="app/src/main/res/drawable-v24/gradient_background.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/ic_email.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/ic_forum.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/ic_group_add_black.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1045" />
+        <entry key="app/src/main/res/drawable-v24/ic_nav_bar.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/ic_phone_android_black_24dp.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/buttonstylegradient.xml" value="0.1045" />
+        <entry key="app/src/main/res/drawable/ic_baseline_account_balance_24.xml" value="0.1855" />
+        <entry key="app/src/main/res/drawable/ic_baseline_account_balance_wallet_24.xml" value="0.1855" />
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_ios_24.xml" value="0.1855" />
+        <entry key="app/src/main/res/drawable/ic_baseline_atm_24.xml" value="0.1855" />
+        <entry key="app/src/main/res/drawable/ic_baseline_attach_money_24.xml" value="0.1855" />
+        <entry key="app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.1855" />
+        <entry key="app/src/main/res/drawable/ic_baseline_pending_24.xml" value="0.1855" />
+        <entry key="app/src/main/res/drawable/ic_bitcoin_background.xml" value="0.1855" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3715" />
         <entry key="app/src/main/res/layout/activity_atm_maps.xml" value="0.3605072463768116" />
         <entry key="app/src/main/res/layout/activity_banks_maps.xml" value="0.2625" />
         <entry key="app/src/main/res/layout/activity_base.xml" value="0.33061594202898553" />
         <entry key="app/src/main/res/layout/activity_crypto_articles.xml" value="0.33061594202898553" />
         <entry key="app/src/main/res/layout/activity_crypto_exchange.xml" value="0.18211752786220872" />
+        <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_exchange.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.22972869873046878" />
         <entry key="app/src/main/res/layout/activity_test.xml" value="0.2735562310030395" />
         <entry key="app/src/main/res/layout/app_bar_base.xml" value="0.1361111111111111" />
         <entry key="app/src/main/res/layout/card_view.xml" value="0.33" />

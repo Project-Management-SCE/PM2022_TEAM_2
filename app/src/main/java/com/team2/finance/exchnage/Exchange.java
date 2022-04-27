@@ -3,6 +3,7 @@ package com.team2.finance.exchnage;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -10,6 +11,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
+
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,6 +27,8 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.team2.finance.R;
 import com.team2.finance.Utility.BaseActivity;
 import com.team2.finance.Utility.Validation;
@@ -47,21 +52,30 @@ public class Exchange extends BaseActivity {
     ImageButton menu;
     private LineChart mChart;
     private RequestQueue requestQueue;
-    private String userType = null;
     private static final String TAG = "Exchange";
 
     private String dateTime;
     private Calendar calendar;
     private SimpleDateFormat simpleDateFormat;
 
+
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View rootView = getLayoutInflater().inflate(R.layout.activity_exchange, frameLayout);
-
-        userType = getIntent().getStringExtra("userType");
-
+        FirebaseApp.initializeApp(getApplicationContext());
+        mAuth = FirebaseAuth.getInstance();
         menu = findViewById(R.id.menu);
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.openDrawer(Gravity.LEFT);
+            }
+        });
+
         requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         //Currency convert
         convert_bt = (Button) findViewById(R.id.convert_bt);
@@ -86,7 +100,7 @@ public class Exchange extends BaseActivity {
         //Default values chart
         defaultChart();
         try {
-            initSpinners();
+            initSpinners(mAuth);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -107,23 +121,10 @@ public class Exchange extends BaseActivity {
                 showHistory();
             }
         });
-
-
-//        menu.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//                drawer.openDrawer(Gravity.LEFT);
-//            }
-//        });
-
-
-
-
     }
 
-    private void initSpinners() throws JSONException {
-        if (userType.equals("register")) {
+    private void initSpinners(FirebaseAuth mAuth) throws JSONException {
+        if (mAuth == null) {
             getCurrency();
         } else {
             // Create an ArrayAdapter using the string array and a default spinner layout
@@ -274,8 +275,6 @@ public class Exchange extends BaseActivity {
                         }
                     });
             requestQueue.add(jsonObjectRequest);
-
-
         }
 
     }
