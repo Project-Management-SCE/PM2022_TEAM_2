@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -164,6 +165,11 @@ public class CryptoExchange extends BaseActivity {
 
                             }
 
+                            Toast.makeText(CryptoExchange.this,"Converting "
+                                            +fromDropdown.getSelectedItem().toString()+" to "
+                                            +toDropdown.getSelectedItem().toString()
+                                            ,Toast.LENGTH_SHORT).show();
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -281,7 +287,7 @@ public class CryptoExchange extends BaseActivity {
                                     History_Values.add( (float) value);
                                 }
 
-                                //update the last one to be the most updated no matther what
+                                //update the last one to be the most updated no matter what
                                 if(i == jsonArray.length()-1)
                                 {
                                     JSONArray obj = jsonArray.getJSONArray(i);
@@ -350,6 +356,9 @@ public class CryptoExchange extends BaseActivity {
                             mChart.notifyDataSetChanged();
                             mChart.invalidate();
                             mChart.getDescription().setText("One-week");
+
+                            Toast.makeText(CryptoExchange.this,"Graph updated.. "
+                                    ,Toast.LENGTH_SHORT).show();
 
 
 
