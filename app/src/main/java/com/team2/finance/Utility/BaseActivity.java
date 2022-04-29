@@ -30,6 +30,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     MenuItem name;
     MenuItem type;
     MenuItem logout;
+    MenuItem profile;
 
 
     @Override
@@ -46,6 +47,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         name = menu.findItem(R.id.name);
         type = menu.findItem(R.id.type);
         logout = menu.findItem(R.id.logout);
+        profile = menu.findItem(R.id.profile);
 
         initUserName();
         initUserType();
@@ -116,6 +118,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         } else {
             name.setTitle("User not connected");
             logout.setTitle("Go to Login page");
+            profile.setVisible(false);
         }
     }
 

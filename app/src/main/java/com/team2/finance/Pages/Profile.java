@@ -26,16 +26,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.team2.finance.Map.BanksMapsActivity;
 import com.team2.finance.R;
+import com.team2.finance.Utility.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Profile extends AppCompatActivity {
+public class Profile extends BaseActivity {
 
     ImageView profile_img;
     TextView name,email_address,phoneNumber;
     ImageButton menu;
-    Button edit_bt;
+    ImageButton edit_bt;
     private FirebaseAuth mAuth;
     private String TAG = "Profile";
     private FirebaseFirestore db;
@@ -50,6 +51,27 @@ public class Profile extends AppCompatActivity {
         FirebaseApp.initializeApp(getApplicationContext());
         mAuth = FirebaseAuth.getInstance();
 
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateFields(currentUser);
+
+        profile_img = (ImageView) findViewById(R.id.profile_img);
+        profile_img.setOnClickListener(btnChoosePhotoPressed);
+        name = (TextView) findViewById(R.id.name);
+        email_address = (TextView) findViewById(R.id.email_address);
+        phoneNumber = (TextView) findViewById(R.id.phoneNumber);
+
+
+
+        edit_bt = (ImageButton) findViewById(R.id.edit_bt);
+        edit_bt.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), EditProfile.class);
+                startActivity(intent);
+            }
+        });
+
+
         menu = findViewById(R.id.menu);
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,24 +80,6 @@ public class Profile extends AppCompatActivity {
                 drawer.openDrawer(Gravity.LEFT);
             }
         });
-
-        profile_img = (ImageView) findViewById(R.id.profile_img);
-        profile_img.setOnClickListener(btnChoosePhotoPressed);
-        name = (TextView) findViewById(R.id.name);
-        email_address = (TextView) findViewById(R.id.email_address);
-        phoneNumber = (TextView) findViewById(R.id.phoneNumber);
-
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateFields(currentUser);
-
-        edit_bt = (Button) findViewById(R.id.edit_bt);
-        edit_bt.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), EditProfile.class);
-                startActivity(intent);
-            }
-        });
-
     }
 
     public View.OnClickListener btnChoosePhotoPressed = new View.OnClickListener() {
@@ -125,4 +129,6 @@ public class Profile extends AppCompatActivity {
                 }
         }
     };
+
+
 }

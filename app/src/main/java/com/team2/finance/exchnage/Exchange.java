@@ -124,7 +124,7 @@ public class Exchange extends BaseActivity {
     }
 
     private void initSpinners(FirebaseAuth mAuth) throws JSONException {
-        if (mAuth == null) {
+        if (mAuth != null) {
             getCurrency();
         } else {
             // Create an ArrayAdapter using the string array and a default spinner layout
@@ -262,6 +262,7 @@ public class Exchange extends BaseActivity {
                             LineData lineData = new LineData(iLineDataSets);
                             //String setter in x-Axis
                             mChart.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(dateList));
+                            mChart.getXAxis().setLabelCount(4);
                             mChart.setData(lineData);
                             mChart.notifyDataSetChanged();
                             mChart.invalidate();
