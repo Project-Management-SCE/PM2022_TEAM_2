@@ -39,11 +39,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
@@ -56,7 +58,7 @@ public class CryptoExchange extends BaseActivity {
 
     EditText fromCurrency, toCurrency;
     Spinner fromDropdown, toDropdown , fromDropdown_graph;
-    Button convert_bt , history_bt;
+    Button convert_bt , history_bt , export_graph_btn , export_convert_btn;
     RequestQueue requestQueue;
     ImageButton menu;
 
@@ -68,6 +70,10 @@ public class CryptoExchange extends BaseActivity {
     private String dateTime;
     private static final long ONE_DAY_MILLI_SECONDS = 24 * 60 * 60 * 1000;
 
+    //export
+    ArrayList<Float> Y_graph;
+    ArrayList<String> x_graph;
+
 
 
     @Override
@@ -77,6 +83,8 @@ public class CryptoExchange extends BaseActivity {
 
         convert_bt = (Button) findViewById(R.id.convert_bt);
         history_bt = (Button) findViewById(R.id.history_bt);
+        export_graph_btn = (Button) findViewById(R.id.graphExport_btn);
+        export_convert_btn = (Button) findViewById(R.id.ConvertExport_btn);
 
         fromCurrency = findViewById(R.id.fromCurrency);
         toCurrency = findViewById(R.id.toCurrency);
@@ -128,6 +136,61 @@ public class CryptoExchange extends BaseActivity {
                 CryptoGraphBuild();
             }
         });
+
+        export_convert_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(toCurrency.getText().toString().equals(""))
+                {
+                    Toast.makeText(CryptoExchange.this, "Please Convert before Export", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Convert_export();
+                }
+            }
+        });
+
+        export_graph_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Graph_export();
+
+
+            }
+        });
+
+
+    }
+
+
+    private void Graph_export()
+    {
+
+        Toast.makeText(CryptoExchange.this , x_graph.get(0).toString() ,Toast.LENGTH_SHORT).show();
+        Toast.makeText(CryptoExchange.this , Y_graph.get(0).toString() ,Toast.LENGTH_LONG).show();
+        //Toast.makeText(CryptoExchange.this, "Graph Export Success", Toast.LENGTH_SHORT).show();
+
+
+    }
+
+    private void Convert_export()
+    {
+        //get all the required data
+        String fromCoin = fromDropdown.getSelectedItem().toString();;
+        String toCoin = toDropdown.getSelectedItem().toString();
+
+        String fromValue = fromCurrency.getText().toString();
+        String toValue = toCurrency.getText().toString();
+
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss ");
+        String strDate = dateFormat.format(date);
+
+
+
+        Toast.makeText(CryptoExchange.this, strDate, Toast.LENGTH_SHORT).show();
 
 
     }
@@ -297,6 +360,9 @@ public class CryptoExchange extends BaseActivity {
 
                             }
 
+                            //for the export
+                            Y_graph = History_Values;
+
 
                             //graph build
                             ArrayList<Entry> y = new ArrayList<>();
@@ -305,6 +371,8 @@ public class CryptoExchange extends BaseActivity {
                             {
                                 y.add(new Entry(day,History_Values.get(day)));
                             }
+
+
 
                             //Line
                             String label = finalCoinName.toUpperCase() +" to UDS";
@@ -337,13 +405,18 @@ public class CryptoExchange extends BaseActivity {
                                 x.add(previousDateStr);
                             }
                             //reverse the array to fit the graph
+                            x.set(0,"Today");
                             Collections.reverse(x);
 
-                            //y - prise
+                            //for the export
+                            x_graph = x;
+
+
+                            //y - prise (visability)
 //                            YAxis leftYAxis = mChart.getAxisLeft();
-//                            YAxis rightYAxis = mChart.getAxisRight();
+                           YAxis rightYAxis = mChart.getAxisRight();
 //                            leftYAxis.setEnabled(false);
-//                            rightYAxis.setEnabled(false);
+                            rightYAxis.setEnabled(false);
 
 
                             //init

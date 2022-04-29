@@ -135,7 +135,7 @@
         >
 
         <LinearLayout
-            android:layout_width="401dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
@@ -176,12 +176,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="65dp">
+            android:layout_marginTop="65dp"
+            >
 
             <com.github.mikephil.charting.charts.LineChart
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/linechart"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="0dp"
                 >
 
 
