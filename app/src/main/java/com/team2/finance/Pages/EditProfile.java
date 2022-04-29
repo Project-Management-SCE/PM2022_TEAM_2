@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -47,7 +48,6 @@ public class EditProfile extends AppCompatActivity {
     private TextView first_name;
     private TextView last_name;
     private TextView email;
-    private String email_c;
     private TextView phone_number;
     private ImageView back_bt;
     private ImageView option_bt;
@@ -90,18 +90,20 @@ public class EditProfile extends AppCompatActivity {
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog dialog = onCreateDialogApplyChanges(currentUser);
+                AlertDialog dialog = onCreateDialogApplyChanges();
                 dialog.show();
             }
         });
     }
 
 
-    private void updateDataBaseFields(FirebaseUser currentUser){
-
+    private void updateDataBaseFields(){
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         if (checkValidation()) {
-            if (!email.getText().toString().equals(email_c)){
+
+            if (!email.getText().toString().equals(currentUser.getEmail())){
                 currentUser.updateEmail(email.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -133,11 +135,18 @@ public class EditProfile extends AppCompatActivity {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     });
+
+            Intent intent = new Intent(getApplicationContext(), Profile.class);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    finish();
+                    startActivity(intent);                            }
+            }, 100);
         }
 
 
-//        Intent intent = new Intent(getApplicationContext(), EditProfile.class);
-//        startActivity(intent);
+
     }
 
 
@@ -156,7 +165,6 @@ public class EditProfile extends AppCompatActivity {
                             first_name.setText(document.getData().get("first_name").toString());
                             last_name.setText(document.getData().get("last_name").toString());
                             email.setText(document.getData().get("email_address").toString());
-                            email_c=email.getText().toString();
                             phone_number.setText(document.getData().get("phone_number").toString());
                         }
 
@@ -170,13 +178,13 @@ public class EditProfile extends AppCompatActivity {
 
 
 
-    public AlertDialog onCreateDialogApplyChanges(FirebaseUser currentUser) {
+    public AlertDialog onCreateDialogApplyChanges() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit profile");
         builder.setMessage("Are you sure you want to make changes?");
         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                updateDataBaseFields(currentUser);
+                updateDataBaseFields();
             }
         });
         builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -312,8 +320,8 @@ public class EditProfile extends AppCompatActivity {
                 .setPositiveButton("update", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        if (checkPasswordValidation(new_password)) {
+                            final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             AuthCredential credential = EmailAuthProvider.getCredential(email.getText().toString(), old_password.getText().toString());
                             // Prompt the user to re-provide their sign-in credentials
                             user.reauthenticate(credential)
@@ -323,7 +331,7 @@ public class EditProfile extends AppCompatActivity {
                                             changePassword(user, email.getText().toString(), old_password.getText().toString(), new_password.getText().toString());
                                         }
                                     });
-
+                        }
 
                     }
 
