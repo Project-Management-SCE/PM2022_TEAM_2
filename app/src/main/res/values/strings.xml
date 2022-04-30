@@ -30,6 +30,38 @@
     <string name="forgot_your_password">Forgot your password?</string>
     <string name="reset">Reset</string>
 
+    <string name="map_not_ready">Map is not ready yet</string>
+    <string name="filter_map">City</string>
+
+    <string name="Beer_Sheva">באר שבע</string>
+    <string name="Tel_Aviv">תל אביב</string>
+    <string name="Jerusalem">ירושלים</string>
+    <string name="Haifa">חיפה</string>
+    <string name="Rishon">ראשון לציון</string>
+    <string name="P_tikva">פתח תקווה</string>
+    <string name="Ashdod">אשדוד</string>
+    <string name="Netanaya">נתניה</string>
+    <string name="Eilat">אילת</string>
+    <string name="Holon">חולון</string>
+
+    <string name="Default_City">הכל</string>
+    <string name="Default_Bank">הכל</string>
+
+    <string name="union_bank">בנק אגוד לישראל בע״מ</string>
+    <string name="bank_ostar">בנק אוצר החייל בע״מ</string>
+    <string name="bank_yahav">בנק יהב לעובדי המדינה בע״מ</string>
+    <string name="bank_jerusalem">בנק ירושלים בע״מ</string>
+    <string name="leumi_bank">בנק לאומי לישראל בע״מ</string>
+    <string name="mizrahi_tefahot">בנק מזרחי טפחות בע״מ</string>
+    <string name="poalim_bank">בנק פועלים אגודת ישראל בע״מ</string>
+    <string name="mercantile_bank">בנק מרכנתיל דיסקונט בע״מ</string>
+    <string name="yovnak_bank">יובנק בע״מ</string>
+
+
+
+    <string name="stroke_pattern">Bank</string>
+
+
     <string name="articles1">
         <a href="https://www.investopedia.com/tesla-tsla-ceo-elon-musk-again-moves-crypto-prices-5193802">Click Here to read more</a>
     </string>
@@ -42,4 +74,5 @@
     <string name="articles4">
         <a href="https://www.investopedia.com/coinbase-to-suspend-xrp-trading-5093844">Click Here to read more</a>
     </string>
+
 </resources>
