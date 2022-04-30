@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.team2.finance">
 
     <uses-permission android:name="com.javapapers.currentlocationinmap.permission.MAPS_RECEIVE" />
@@ -12,6 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".Utility.Payment.ExampleApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,6 +21,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Finance">
 
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true"/>
+
+        <meta-data
+            android:name="sqip.SQUARE_APPLICATION_ID"
+            android:value="sandbox-sq0idb-i7un8hXYa-mH5ENdFSX-yQ"/>
+
+
+        <activity
+            android:name=".Pages.CheckoutActivity"
+            android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -52,12 +66,15 @@
         <activity
             android:name=".Utility.BaseActivity"
             android:exported="false" />
+
+
         <activity
             android:name=".exchnage.CryptoExchange"
             android:exported="false" />
         <activity
             android:name=".Login.MainActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
