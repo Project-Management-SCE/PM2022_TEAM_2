@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -81,8 +82,6 @@ dependencies {
     def inAppPaymentsSdkVersion = '1.5.2'
     implementation "com.squareup.sdk.in-app-payments:card-entry:$inAppPaymentsSdkVersion"
     implementation "com.squareup.sdk.in-app-payments:google-pay:$inAppPaymentsSdkVersion"
-
-
 
     androidTestImplementation 'androidx.test:runner:1.4.0'
 }
