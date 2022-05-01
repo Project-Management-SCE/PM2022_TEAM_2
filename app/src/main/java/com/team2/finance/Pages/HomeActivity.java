@@ -67,7 +67,7 @@ public class HomeActivity extends BaseActivity {
 
                 //  *************** I did a change to the Intent in order to jump to my Activity ***********
 
-                Intent intent = new Intent(getApplicationContext(), CryptoExchange.class);
+                Intent intent = new Intent(getApplicationContext(), Exchange.class);
                 startActivity(intent);
             }
         });
