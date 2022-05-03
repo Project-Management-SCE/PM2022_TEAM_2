@@ -1,9 +1,16 @@
 package com.team2.finance.exchnage;
 
+import static java.security.AccessController.getContext;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -16,6 +23,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.team2.finance.Adapter.StocksAdapter;
+import com.team2.finance.Model.Stock;
 import com.team2.finance.R;
 import com.team2.finance.Utility.BaseActivity;
 import com.team2.finance.Utility.VolleySingleton;
@@ -26,6 +35,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 public class StockMarket extends BaseActivity {
 
@@ -36,6 +46,10 @@ public class StockMarket extends BaseActivity {
     ArrayList<String> CommonStocks_symbols = new ArrayList<String>();
     ArrayList<String> CommonStocks_names = new ArrayList<String>();
 
+    //for adapter
+    private ArrayList<Stock> StocksList;
+    private RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +57,19 @@ public class StockMarket extends BaseActivity {
         View rootView = getLayoutInflater().inflate(R.layout.activity_stock_market, frameLayout);
         menu = findViewById(R.id.menu);
         requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
-        //text = findViewById(R.id.textView);
+        recyclerView = findViewById(R.id.recyclerview);
+        StocksList = new ArrayList<>();
 
 
-        //getSymbols();
-        //getStock();
-        getChosenStock();
 
         updateStocks_symbol_names();
+        try {
+            getStocks();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        setAdapter();
+
 
 
         menu.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +79,20 @@ public class StockMarket extends BaseActivity {
                 drawer.openDrawer(Gravity.LEFT);
             }
         });
+    }
+
+    private void setAdapter()
+    {
+        StocksAdapter adapter = new StocksAdapter(StocksList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(),
+        DividerItemDecoration.VERTICAL));
+
+        recyclerView.setAdapter(adapter);
+
     }
 
     private void updateStocks_symbol_names() {
@@ -117,139 +150,158 @@ public class StockMarket extends BaseActivity {
     }
 
 
-    private void getSymbols()
-    {
-        ArrayList<String> stocks_symbols = new ArrayList<>();
+//    private void getSymbols()
+//    {
+//        ArrayList<String> stocks_symbols = new ArrayList<>();
+//
+//        String url = "https://api.twelvedata.com/stocks?source=docs";
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+//                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        //create array of all the objects innside coins Jsonfile
+//                        JSONArray jsonArray = null;
+//                        try {
+//                            jsonArray = response.getJSONArray("data");
+//
+//                            for (int i = 0; i < jsonArray.length(); i++) {
+//                                JSONObject coin = jsonArray.getJSONObject(i);
+//                                String symbol = coin.getString("symbol");
+//
+//                                stocks_symbols.add(symbol);
+//
+//
+//
+//                            }
+//
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                            Log.e("initSpinners", "catch inside onResponse function");
+//                        }
+//
+//                        //text.setText(stocks_symbols.get(0));
+////
+//
+//
+//                    }
+//                }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        error.printStackTrace();
+//                    }
+//                });
+//
+//
+//        requestQueue.add(jsonObjectRequest);
+//
+//    }
+//
+//
+//    private void getStock()
+//    {
+//        ArrayList<String> test = new ArrayList<>();
+//        //final String[] test = new String[1];
+//
+//        String url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AAPL&apikey=8YYZIVV9WKAIA4NW";
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+//                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//
+//                        JSONObject jsonObject = null;
+//
+//                        try {
+//                            jsonObject = response.getJSONObject("Meta Data");
+//                            test.add(jsonObject.getString("2. Symbol"));
+//
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                            Log.e("initSpinners", "catch inside onResponse function");
+//                        }
+//
+//                        //text.setText(test.get(0));
+////
+//
+//
+//                    }
+//                }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        error.printStackTrace();
+//                    }
+//                });
+//
+//
+//        requestQueue.add(jsonObjectRequest);
+//
+//    }
 
-        String url = "https://api.twelvedata.com/stocks?source=docs";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //create array of all the objects innside coins Jsonfile
-                        JSONArray jsonArray = null;
-                        try {
-                            jsonArray = response.getJSONArray("data");
-
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject coin = jsonArray.getJSONObject(i);
-                                String symbol = coin.getString("symbol");
-
-                                stocks_symbols.add(symbol);
 
 
+    private void getStocks() throws InterruptedException {
 
+
+        for(int i = 0 ; i < 4 ; i++)
+        {
+            //StocksList.add(new Stock(CommonStocks_symbols.get(i) , CommonStocks_names.get(i) , "date" , "rate"));
+//            TimeUnit.SECONDS.sleep(1);
+//
+//
+            int finalI = i;
+            String url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol="+CommonStocks_symbols.get(finalI)+"&interval=5min&apikey=8YYZIVV9WKAIA4NW";
+            //https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=AAPL&interval=5min&apikey=8YYZIVV9WKAIA4NW
+
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+
+
+
+
+                            JSONObject jsonObject = null;
+                            Iterator<String> keys = null;
+                            String close = null;
+
+                            try {
+                                jsonObject = response.getJSONObject("Time Series (5min)");
+
+                                keys = jsonObject.keys();
+                                JSONObject obj = jsonObject.getJSONObject(keys.next());
+                                close = obj.getString("4. close");
+
+                                StocksList.add(new Stock(CommonStocks_symbols.get(finalI) , CommonStocks_names.get(finalI) , keys.next(), close));
+                                Log.e("Stock :" , close);
+
+
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.e("Stocks Array list create Faild", "catch inside onResponse function" ,e);
                             }
 
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Log.e("initSpinners", "catch inside onResponse function");
+
                         }
-
-                        //text.setText(stocks_symbols.get(0));
-//
-
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                });
-
-
-        requestQueue.add(jsonObjectRequest);
-
-    }
-
-
-    private void getStock()
-    {
-        ArrayList<String> test = new ArrayList<>();
-        //final String[] test = new String[1];
-
-        String url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AAPL&apikey=8YYZIVV9WKAIA4NW";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        JSONObject jsonObject = null;
-
-                        try {
-                            jsonObject = response.getJSONObject("Meta Data");
-                            test.add(jsonObject.getString("2. Symbol"));
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Log.e("initSpinners", "catch inside onResponse function");
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
                         }
-
-                        //text.setText(test.get(0));
-//
+                    });
 
 
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                });
+            requestQueue.add(jsonObjectRequest);
 
 
-        requestQueue.add(jsonObjectRequest);
-
-    }
-
+        //endfor
+        }
 
 
-    private void getChosenStock()
-    {
-        ArrayList<String> test = new ArrayList<>();
-
-
-        String url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=AAPL&interval=5min&apikey=8YYZIVV9WKAIA4NW";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        JSONObject jsonObject = null;
-                        Iterator<String> keys = null;
-                        String close = null;
-
-                        try {
-                            jsonObject = response.getJSONObject("Time Series (5min)");
-
-
-                            keys = jsonObject.keys();
-                            JSONObject obj = jsonObject.getJSONObject(keys.next());
-                            close = obj.getString("4. close");
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Log.e("initSpinners", "catch inside onResponse function");
-                        }
-
-                        //text.setText(close);
-
-
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                });
-
-
-        requestQueue.add(jsonObjectRequest);
 
     }
 }

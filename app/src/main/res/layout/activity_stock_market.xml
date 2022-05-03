@@ -13,18 +13,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/menu"
-        android:layout_marginTop="30dp">
+
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
             android:layout_width="match_parent"
+            android:layout_below="@id/menu"
             android:layout_height="match_parent"
-            />
+            android:layout_marginTop="20dp"/>
 
-    </ScrollView>
+
 
 
 </RelativeLayout>
