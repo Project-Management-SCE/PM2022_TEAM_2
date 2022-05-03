@@ -142,7 +142,7 @@ public class EditProfile extends AppCompatActivity {
                 public void run() {
                     finish();
                     startActivity(intent);                            }
-            }, 100);
+            }, 1000 );
         }
 
 
