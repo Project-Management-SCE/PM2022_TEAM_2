@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login.MainActivity"
-    android:background="#E8E8E8">
+    android:background="#E8E8E8"
+    tools:context=".Login.MainActivity">
 
     <ImageButton
         android:id="@+id/menu"
@@ -13,20 +13,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--#card1-->
+
+    <!--#card1-->
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:id="@+id/convertCard"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
         app:cardCornerRadius="10dp">
+
 
         <LinearLayout
             android:id="@+id/ll_parent"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_margin="30dp"
@@ -82,18 +83,115 @@
             </LinearLayout>
 
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/convert_bt"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                android:text="Convert"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/convert_bt"
+                    android:layout_width="110dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Convert"
+                    app:cornerRadius="3dp">
+
+
+                </com.google.android.material.button.MaterialButton>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/ConvertExport_btn"
+                    android:layout_width="110dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="2dp"
+                    android:paddingBottom="10dp"
+                    android:text="Export"
+                    app:cornerRadius="3dp">
+
+
+                </com.google.android.material.button.MaterialButton>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/convertCard"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="10dp"
+
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/fromDropdown_graph"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/history_bt"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:text="show"
+                android:paddingBottom="10dp"
                 app:cornerRadius="3dp">
+
+            </com.google.android.material.button.MaterialButton>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/graphExport_btn"
+                android:layout_width="95dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:text="Export"
+                android:paddingBottom="10dp"
+                app:cornerRadius="3dp"
+                android:layout_marginLeft="10dp">
 
             </com.google.android.material.button.MaterialButton>
 
 
         </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="65dp"
+            >
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/linechart"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="0dp"
+                >
+
+
+            </com.github.mikephil.charting.charts.LineChart>
+
+        </LinearLayout>
+
 
     </androidx.cardview.widget.CardView>
 

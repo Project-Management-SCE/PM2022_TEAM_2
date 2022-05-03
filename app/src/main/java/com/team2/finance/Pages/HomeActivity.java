@@ -33,6 +33,7 @@ import com.team2.finance.Utility.APIInterface;
 import com.team2.finance.Utility.BaseActivity;
 import com.team2.finance.exchnage.CryptoExchange;
 import com.team2.finance.exchnage.Exchange;
+import com.team2.finance.exchnage.StockMarket;
 
 import java.util.List;
 
@@ -54,6 +55,7 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         View rootView = getLayoutInflater().inflate(R.layout.activity_home, frameLayout);
 
         FirebaseApp.initializeApp(this);
@@ -73,6 +75,7 @@ public class HomeActivity extends BaseActivity {
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(getApplicationContext(), Exchange.class);
                 startActivity(intent);
             }
