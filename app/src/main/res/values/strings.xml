@@ -29,17 +29,60 @@
     <string name="login">Login</string>
     <string name="forgot_your_password">Forgot your password?</string>
     <string name="reset">Reset</string>
+         
+    <string name="title_activity_profile">Profile</string>
 
-    <string name="articles1">
-        <a href="https://www.investopedia.com/tesla-tsla-ceo-elon-musk-again-moves-crypto-prices-5193802">Click Here to read more</a>
-    </string>
-    <string name="articles2">
-        <a href="https://www.investopedia.com/biden-will-reportedly-sign-crypto-executive-order-5221391">Click Here to read more</a>
-    </string>
-    <string name="articles3">
-        <a href="https://www.investopedia.com/russia-may-use-cryptocurrency-to-evade-sanctions-5220265">Click Here to read more</a>
-    </string>
-    <string name="articles4">
-        <a href="https://www.investopedia.com/coinbase-to-suspend-xrp-trading-5093844">Click Here to read more</a>
-    </string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="map_not_ready">Map is not ready yet</string>
+    <string name="filter_map">City</string>
+
+    <string name="Beer_Sheva">באר שבע</string>
+    <string name="Tel_Aviv">תל אביב</string>
+    <string name="Jerusalem">ירושלים</string>
+    <string name="Haifa">חיפה</string>
+    <string name="Rishon">ראשון לציון</string>
+    <string name="P_tikva">פתח תקווה</string>
+    <string name="Ashdod">אשדוד</string>
+    <string name="Netanaya">נתניה</string>
+    <string name="Eilat">אילת</string>
+    <string name="Holon">חולון</string>
+
+    <string name="Default_City">הכל</string>
+    <string name="Default_Bank">הכל</string>
+
+    <string name="union_bank">בנק אגוד לישראל בע״מ</string>
+    <string name="bank_ostar">בנק אוצר החייל בע״מ</string>
+    <string name="bank_yahav">בנק יהב לעובדי המדינה בע״מ</string>
+    <string name="bank_jerusalem">בנק ירושלים בע״מ</string>
+    <string name="leumi_bank">בנק לאומי לישראל בע״מ</string>
+    <string name="mizrahi_tefahot">בנק מזרחי טפחות בע״מ</string>
+    <string name="poalim_bank">בנק פועלים אגודת ישראל בע״מ</string>
+    <string name="mercantile_bank">בנק מרכנתיל דיסקונט בע״מ</string>
+    <string name="yovnak_bank">יובנק בע״מ</string>
+
+    <string name="stroke_pattern">Bank</string>
+
+    <string name="buy_button">Buy</string>
+    <string name="lauren_nobel">Lauren Nobel</string>
+    <string name="merchant_id_not_set_message"><![CDATA[To request a Google Pay nonce, replace <b>ConfigHelper.GOOGLE_PAY_MERCHANT_ID</b> with your Google Pay Merchant ID.]]></string>
+    <string name="merchant_id_not_set_title">Missing Google Pay Merchant ID</string>
+    <string name="missing_application_id_message"><![CDATA[Please update <b>sqip.SQUARE_APPLICATION_ID</b> in <b>AndroidManifest.xml</b> if you want to be able to create a nonce.]]></string>
+    <string name="missing_application_id_title">Missing Square Application ID</string>
+    <string name="network_failure_title">Network Error</string>
+    <string name="network_failure">There was an error processing the payment, please check your network connection.</string>
+    <string name="pay_with_card">Pay with card</string>
+    <string name="place_your_order">Place your order</string>
+    <string name="price">$1.00</string>
+    <string name="refund_helper_text">You can refund this transaction through contact us page.</string>
+    <string name="retry">Retry</string>
+    <string name="server_host_not_set_message"><![CDATA[Check logcat <b>Info</b> messages for a CURL command to charge the nonce, or replace <b>ConfigHelper.CHARGE_SERVER_HOST</b> with your server host.]]></string>
+    <string name="server_host_not_set_title">Nonce generated but not charged</string>
+    <string name="ship_to">Ship to</string>
+    <string name="successful_order_message">Now you are one of a kind.</string>
+    <string name="successful_order_title">Your order was successful</string>
+    <string name="total">Total</string>
+    <string name="unsuccessful_order">Your order was not successful</string>
+
 </resources>

@@ -66,6 +66,7 @@ public class WelcomeFragment extends Fragment implements View.OnClickListener {
             case R.id.continue_home:
                 Intent intent = new Intent(getContext(), HomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.putExtra("userType", "unregister");
                 startActivity(intent);
                 break;
 
