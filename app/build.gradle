@@ -1,16 +1,11 @@
 plugins {
     id 'com.android.application'
-    //id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
-apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdk 31
     buildToolsVersion "32.0.0"
-
-    testOptions {
-        unitTests.returnDefaultValues = true
-    }
 
     defaultConfig {
         applicationId "com.team2.finance"
@@ -32,8 +27,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    buildFeatures {
-        viewBinding true
+}
+
+repositories {
+    google()
+    jcenter()
+    maven {
+        url 'https://sdk.squareup.com/public/android'
     }
 }
 
@@ -80,4 +80,17 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
 
+    // Play Services Wallet 16.0.1 was published with dependencies on maps & identities 16.0.0.
+    implementation 'com.google.android.gms:play-services-wallet:19.1.0'
+    implementation "com.squareup.moshi:moshi-adapters:1.12.0"
+    implementation "com.squareup.moshi:moshi:1.12.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.7.2"
+
+    def inAppPaymentsSdkVersion = '1.5.2'
+    implementation "com.squareup.sdk.in-app-payments:card-entry:$inAppPaymentsSdkVersion"
+    implementation "com.squareup.sdk.in-app-payments:google-pay:$inAppPaymentsSdkVersion"
+
+    androidTestImplementation 'androidx.test:runner:1.4.0'
 }
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'

@@ -26,7 +26,7 @@ pipeline {
                 }
             }
         }
-        /*stage('Deliver') {
+        stage('Deliver') {
             steps {
                 echo 'Running Deliver'
                 echo 'Connecting to FireBase... '
@@ -38,6 +38,6 @@ pipeline {
                 sh './gradlew'
                 sh 'adb devices'
             }
-        }*/
+        }
     }
 }

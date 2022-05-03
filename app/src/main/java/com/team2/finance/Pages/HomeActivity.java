@@ -1,6 +1,8 @@
 package com.team2.finance.Pages;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +17,12 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.team2.finance.Adapter.NewsAdapter;
+import com.team2.finance.Login.MainActivity;
 import com.team2.finance.Map.AtmMapsActivity;
 import com.team2.finance.Map.BanksMapsActivity;
 import com.team2.finance.Model.Article;
@@ -24,6 +31,7 @@ import com.team2.finance.R;
 import com.team2.finance.Utility.APIClient;
 import com.team2.finance.Utility.APIInterface;
 import com.team2.finance.Utility.BaseActivity;
+import com.team2.finance.exchnage.CryptoExchange;
 import com.team2.finance.exchnage.Exchange;
 
 import java.util.List;
@@ -41,11 +49,16 @@ public class HomeActivity extends BaseActivity {
     private static RecyclerView.Adapter adapter;
     private static RecyclerView recyclerView;
     static List<Article> articleList;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View rootView = getLayoutInflater().inflate(R.layout.activity_home, frameLayout);
+
+        FirebaseApp.initializeApp(this);
+        mAuth = FirebaseAuth.getInstance();
+
         myOnClickListener = new MyOnClickListener(this);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -82,6 +95,15 @@ public class HomeActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+
+        CardView cryptoCard = (CardView) findViewById(R.id.crypto);
+        cryptoCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check();
+            }
+        });
+
 
         final APIInterface apiService = APIClient.getClient().create(APIInterface.class);
         Call<ResponseModel> call = apiService.getLatestNews("crypto", API_KEY);
@@ -130,6 +152,69 @@ public class HomeActivity extends BaseActivity {
             Intent browserIntent =
                     new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(browserIntent);
+        }
+    }
+
+
+    private void check() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        if (currentUser != null) {
+
+            db.collection("Users").whereEqualTo("Uid", currentUser.getUid())
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+
+                            Boolean vip = (Boolean) (task.getResult().getDocuments().get(0).getData().get("Vip"));
+                            if (vip) {
+                                Intent intent = new Intent(this, CryptoExchange.class);
+                                startActivity(intent);
+                            } else {
+                                AlertDialog alertDialog = new AlertDialog.Builder(HomeActivity.this)
+                                        .setTitle("You are not VIP member")
+                                        .setMessage("Go to payment process?")
+                                        .setPositiveButton("Go", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                Intent intent = new Intent(getApplicationContext(), CheckoutActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        })
+                                        //set negative button
+                                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                //set what should happen when negative button is clicked
+                                            }
+                                        })
+                                        .show();
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    });
+        } else {
+            AlertDialog alertDialog = new AlertDialog.Builder(HomeActivity.this)
+                    .setTitle("You must login to activate this functionality")
+                    .setMessage("Go to login screen?")
+                    .setPositiveButton("Go", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //set what would happen when positive button is clicked
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    //set negative button
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //set what should happen when negative button is clicked
+                        }
+                    })
+                    .show();
         }
     }
 }
