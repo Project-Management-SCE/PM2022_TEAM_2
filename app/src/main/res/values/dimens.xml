@@ -12,4 +12,6 @@
     <dimen name="sheetSeparatorHeight">1dp</dimen>
     <dimen name="order_sheet_padding">8dp</dimen>
     <dimen name="order_sheet_info_horizontal_padding">40dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
+

@@ -27,5 +27,4 @@
     <style name="Theme.Finance.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.Finance.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-
 </resources>

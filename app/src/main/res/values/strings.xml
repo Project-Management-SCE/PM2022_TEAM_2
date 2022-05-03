@@ -29,6 +29,11 @@
     <string name="login">Login</string>
     <string name="forgot_your_password">Forgot your password?</string>
     <string name="reset">Reset</string>
+         
+    <string name="title_activity_profile">Profile</string>
+
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
 
     <string name="map_not_ready">Map is not ready yet</string>
     <string name="filter_map">City</string>
