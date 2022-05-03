@@ -90,7 +90,7 @@ public class CryptoExchange extends BaseActivity {
     //export
     ArrayList<Float> Y_graph;
     ArrayList<String> x_graph = new ArrayList<>();
-    private Object Workbook;
+
 
 
     @Override

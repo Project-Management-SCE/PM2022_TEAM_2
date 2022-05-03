@@ -66,9 +66,7 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                //  *************** I did a change to the Intent in order to jump to my Activity ***********
-
-                Intent intent = new Intent(getApplicationContext(), StockMarket.class);
+                Intent intent = new Intent(getApplicationContext(), Exchange.class);
                 startActivity(intent);
             }
         });

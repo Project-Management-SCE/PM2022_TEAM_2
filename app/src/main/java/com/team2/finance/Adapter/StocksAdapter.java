@@ -4,13 +4,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.team2.finance.Model.Stock;
 import com.team2.finance.R;
-
 import java.util.ArrayList;
 
 public class StocksAdapter extends RecyclerView.Adapter<StocksAdapter.MyViewHolder> {
@@ -25,7 +22,6 @@ public class StocksAdapter extends RecyclerView.Adapter<StocksAdapter.MyViewHold
     {
         private TextView symbol;
         private TextView name;
-        private TextView date;
         private TextView closeRate;
 
         public MyViewHolder(final View view)
@@ -33,7 +29,7 @@ public class StocksAdapter extends RecyclerView.Adapter<StocksAdapter.MyViewHold
             super(view);
             symbol = view.findViewById(R.id.symbol);
             name = view.findViewById(R.id.name);
-            date = view.findViewById(R.id.date);
+
             closeRate = view.findViewById(R.id.closerate);
         }
     }
@@ -48,12 +44,11 @@ public class StocksAdapter extends RecyclerView.Adapter<StocksAdapter.MyViewHold
     public void onBindViewHolder(@NonNull StocksAdapter.MyViewHolder holder, int position) {
         String symbol = stocks.get(position).getSymbol();
         String name = stocks.get(position).getName();
-        String date = stocks.get(position).getDate();
+
         String closeRate = stocks.get(position).getCloseRate();
 
         holder.symbol.setText(symbol);
         holder.name.setText(name);
-        holder.date.setText(date);
         holder.closeRate.setText(closeRate);
 
     }

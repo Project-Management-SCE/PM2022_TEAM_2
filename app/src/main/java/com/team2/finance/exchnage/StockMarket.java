@@ -1,8 +1,8 @@
 package com.team2.finance.exchnage;
 
-import static java.security.AccessController.getContext;
 
-import androidx.appcompat.app.AppCompatActivity;
+
+
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -10,19 +10,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
+
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ArrayAdapter;
+
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
+
 import com.team2.finance.Adapter.StocksAdapter;
 import com.team2.finance.Model.Stock;
 import com.team2.finance.R;
@@ -32,16 +31,14 @@ import com.team2.finance.Utility.VolleySingleton;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.concurrent.TimeUnit;
+
 
 public class StockMarket extends BaseActivity {
 
     ImageButton menu;
     RequestQueue requestQueue;
-    TextView text;
+
 
     ArrayList<String> CommonStocks_symbols = new ArrayList<String>();
     ArrayList<String> CommonStocks_names = new ArrayList<String>();
@@ -49,6 +46,7 @@ public class StockMarket extends BaseActivity {
     //for adapter
     private ArrayList<Stock> StocksList;
     private RecyclerView recyclerView;
+    private StocksAdapter adapter;
 
 
     @Override
@@ -61,14 +59,16 @@ public class StockMarket extends BaseActivity {
         StocksList = new ArrayList<>();
 
 
+        setAdapter();
 
         updateStocks_symbol_names();
         try {
             getStocks();
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        setAdapter();
+
 
 
 
@@ -83,7 +83,7 @@ public class StockMarket extends BaseActivity {
 
     private void setAdapter()
     {
-        StocksAdapter adapter = new StocksAdapter(StocksList);
+        adapter = new StocksAdapter(StocksList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -243,64 +243,41 @@ public class StockMarket extends BaseActivity {
     private void getStocks() throws InterruptedException {
 
 
-        for(int i = 0 ; i < 4 ; i++)
+        for(int i = 0 ; i < CommonStocks_symbols.size() ; i++)
         {
-            //StocksList.add(new Stock(CommonStocks_symbols.get(i) , CommonStocks_names.get(i) , "date" , "rate"));
-//            TimeUnit.SECONDS.sleep(1);
-//
-//
-            int finalI = i;
-            String url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol="+CommonStocks_symbols.get(finalI)+"&interval=5min&apikey=8YYZIVV9WKAIA4NW";
-            //https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=AAPL&interval=5min&apikey=8YYZIVV9WKAIA4NW
-
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-
-
-
-
-                            JSONObject jsonObject = null;
-                            Iterator<String> keys = null;
-                            String close = null;
-
-                            try {
-                                jsonObject = response.getJSONObject("Time Series (5min)");
-
-                                keys = jsonObject.keys();
-                                JSONObject obj = jsonObject.getJSONObject(keys.next());
-                                close = obj.getString("4. close");
-
-                                StocksList.add(new Stock(CommonStocks_symbols.get(finalI) , CommonStocks_names.get(finalI) , keys.next(), close));
-                                Log.e("Stock :" , close);
-
-
-
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Log.e("Stocks Array list create Faild", "catch inside onResponse function" ,e);
-                            }
-
-
-
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            error.printStackTrace();
-                        }
-                    });
-
-
-            requestQueue.add(jsonObjectRequest);
-
-
-        //endfor
+            String url = "https://cloud.iexapis.com/stable/tops?token=pk_e6ffb40cd31543e78dae6296e3e740fa&symbols="+CommonStocks_symbols.get(i);
+            addToStockList(url,i);
         }
 
+    }
+
+    private void addToStockList(String url, int i) {
+
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        try {
+                            JSONObject obj = (JSONObject) jsonArray.get(0);
+
+                            String data = obj.getString("lastSalePrice");;
+                            StocksList.add(new Stock(CommonStocks_symbols.get(i),CommonStocks_names.get(i),data));
+                            adapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+        requestQueue.add(jsonArrayRequest);
 
 
     }
