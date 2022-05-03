@@ -26,6 +26,7 @@ import com.team2.finance.Utility.APIInterface;
 import com.team2.finance.Utility.BaseActivity;
 import com.team2.finance.exchnage.CryptoExchange;
 import com.team2.finance.exchnage.Exchange;
+import com.team2.finance.exchnage.StockMarket;
 
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class HomeActivity extends BaseActivity {
 
                 //  *************** I did a change to the Intent in order to jump to my Activity ***********
 
-                Intent intent = new Intent(getApplicationContext(), Exchange.class);
+                Intent intent = new Intent(getApplicationContext(), StockMarket.class);
                 startActivity(intent);
             }
         });
