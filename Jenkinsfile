@@ -18,7 +18,7 @@ pipeline {
             steps {
                 echo 'Running Test'
                 sh 'emulator -avd first_avd -no-window -no-audio &'
-                sh './gradlew runUnitTests'
+                sh './gradlew test'
             }
             post {
                 always {
