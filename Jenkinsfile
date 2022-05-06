@@ -18,7 +18,7 @@ pipeline {
             steps {
                 echo 'Running Test'
                 sh 'emulator -avd first_avd -no-window -no-audio &'
-                sh './gradlew test'
+                sh './gradlew test[Flavor]UnitTestCoverage'
             }
             post {
                 always {
