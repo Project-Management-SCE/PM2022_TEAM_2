@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.team2.finance.AboutActivity;
 import com.team2.finance.Login.MainActivity;
 import com.team2.finance.Pages.HomeActivity;
 import com.team2.finance.Pages.Profile;
@@ -144,6 +145,15 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.logout) {
             SingOut();
         }
+
+        else if (id == R.id.about) {
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+        }
+
+
+        
+
         return true;
     }
 
