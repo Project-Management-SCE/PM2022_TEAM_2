@@ -22,6 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Finance">
         <activity
+            android:name=".FAQ_Activity"
+            android:exported="false" />
+        <activity
             android:name=".AboutActivity"
             android:exported="false"
             android:label="@string/title_activity_about"

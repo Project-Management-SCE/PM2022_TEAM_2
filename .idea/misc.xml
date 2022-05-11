@@ -5,6 +5,7 @@
       <map>
         <entry key="../../../../../../../layout/custom_preview.xml" value="0.22552083333333334" />
         <entry key="../../../../../Library/Android/sdk/platforms/android-31/data/res/layout/simple_spinner_item.xml" value="0.18125" />
+        <entry key="../../.gradle/caches/transforms-3/f7c1771293a328ebbf93f8b80672aa6f/transformed/expandablelayout-1.0.7/res/drawable/ic_arrow_down.xml" value="0.214" />
         <entry key="app/src/main/res/drawable-v24/background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/gradient_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/ic_email.xml" value="0.1" />
@@ -27,6 +28,7 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3715" />
         <entry key="app/src/main/res/layout-w1240dp/content_faqactivity2.xml" value="0.175" />
         <entry key="app/src/main/res/layout-w600dp/content_faqactivity2.xml" value="0.23333333333333334" />
+        <entry key="app/src/main/res/layout/activity_about.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_atm_maps.xml" value="0.3605072463768116" />
         <entry key="app/src/main/res/layout/activity_banks_maps.xml" value="0.2625" />
         <entry key="app/src/main/res/layout/activity_base.xml" value="0.33061594202898553" />
@@ -34,9 +36,13 @@
         <entry key="app/src/main/res/layout/activity_crypto_exchange.xml" value="0.18211752786220872" />
         <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_exchange.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_expandable_relative_layout.xml" value="0.13728470111448834" />
+        <entry key="app/src/main/res/layout/activity_faq.xml" value="0.35555555555555557" />
+        <entry key="app/src/main/res/layout/activity_faqactivity.xml" value="0.2028985507246377" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_recycler_view.xml" value="0.21965579710144928" />
         <entry key="app/src/main/res/layout/activity_test.xml" value="0.2735562310030395" />
         <entry key="app/src/main/res/layout/app_bar_base.xml" value="0.1361111111111111" />
         <entry key="app/src/main/res/layout/card_view.xml" value="0.33" />
@@ -46,6 +52,9 @@
         <entry key="app/src/main/res/layout/dialog_delete_user.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/dialog_img_update.xml" value="0.12962962962962962" />
         <entry key="app/src/main/res/layout/dialog_update_password.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/faq_activity_layout.xml" value="0.29891304347826086" />
+        <entry key="app/src/main/res/layout/faq_layout_parent.xml" value="0.35555555555555557" />
+        <entry key="app/src/main/res/layout/faq_layout_second.xml" value="0.35555555555555557" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2520263424518744" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.3736413043478261" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.1" />
@@ -53,6 +62,7 @@
         <entry key="app/src/main/res/layout/img_update_dialot.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/layout/profile.xml" value="0.21708526611328122" />
         <entry key="app/src/main/res/menu/activity_base_drawer.xml" value="0.5177083333333333" />
+        <entry key="app/src/main/res/menu/menu_about.xml" value="0.39114583333333336" />
       </map>
     </option>
   </component>
