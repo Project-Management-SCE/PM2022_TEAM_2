@@ -1,5 +1,6 @@
 package com.team2.finance.Pages;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,9 +19,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.team2.finance.Adapter.NewsAdapter;
 import com.team2.finance.Login.MainActivity;
 import com.team2.finance.Map.AtmMapsActivity;
@@ -33,8 +36,9 @@ import com.team2.finance.Utility.APIInterface;
 import com.team2.finance.Utility.BaseActivity;
 import com.team2.finance.exchnage.CryptoExchange;
 import com.team2.finance.exchnage.Exchange;
-import com.team2.finance.exchnage.StockMarket;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -51,6 +55,9 @@ public class HomeActivity extends BaseActivity {
     private static RecyclerView recyclerView;
     static List<Article> articleList;
     FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+    private FirebaseFirestore db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +67,8 @@ public class HomeActivity extends BaseActivity {
 
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
         myOnClickListener = new MyOnClickListener(this);
 
@@ -70,6 +79,8 @@ public class HomeActivity extends BaseActivity {
         //layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        checkVIExpireDate();
 
         CardView cardView = (CardView) findViewById(R.id.exchange);
         cardView.setOnClickListener(new View.OnClickListener() {
@@ -160,9 +171,6 @@ public class HomeActivity extends BaseActivity {
 
 
     private void check() {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
         if (currentUser != null) {
 
             db.collection("Users").whereEqualTo("Uid", currentUser.getUid())
@@ -219,5 +227,47 @@ public class HomeActivity extends BaseActivity {
                     })
                     .show();
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void checkVIExpireDate() {
+        db.collection("Users").whereEqualTo("Uid", currentUser.getUid())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<String> list = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d(TAG, document.getId());
+
+                            Timestamp timestamp = (Timestamp) document.getData().get("expired");
+
+                            Date date = new Date(timestamp.toDate().getTime());
+                            Date date1 = new Date(Timestamp.now().toDate().getTime());
+                            long diff = date.getTime() - date1.getTime();
+                            if ((diff / (1000 * 60 * 60 * 24) + 1) <= 0) {
+                                updateUserStatus();
+                            }
+                        }
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
+                    }
+                });
+    }
+
+    private void updateUserStatus() {
+        db.collection("Users").whereEqualTo("Uid", currentUser.getUid())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<String> list = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d(TAG, document.getId());
+                            db.collection("Users").document(document.getId()).update(
+                                    "Vip", false);
+                        }
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
+                    }
+                });
     }
 }

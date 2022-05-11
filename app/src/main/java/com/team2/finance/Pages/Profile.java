@@ -3,6 +3,7 @@ package com.team2.finance.Pages;
 import androidx.appcompat.app.AlertDialog;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,13 +33,16 @@ import com.team2.finance.Utility.BaseActivity;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Profile extends BaseActivity {
 
     ImageView profile_img;
-    TextView name, email_address, phoneNumber;
+    TextView name, email_address, phoneNumber, date, daysLeft;
     ImageButton menu;
     ImageButton edit_bt;
     LinearLayout vip_layout;
@@ -54,13 +59,14 @@ public class Profile extends BaseActivity {
         FirebaseApp.initializeApp(getApplicationContext());
         mAuth = FirebaseAuth.getInstance();
 
-
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateFields(currentUser);
 
+        date = findViewById(R.id.date1);
+        daysLeft = findViewById(R.id.date2);
+
         vip_layout = findViewById(R.id.vip);
         checkIfUserVIP();
-
 
         profile_img = (ImageView) findViewById(R.id.profile_img);
         profile_img.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +80,6 @@ public class Profile extends BaseActivity {
         email_address = (TextView) findViewById(R.id.email_address);
         phoneNumber = (TextView) findViewById(R.id.phoneNumber);
 
-
         edit_bt = (ImageButton) findViewById(R.id.edit_bt);
         edit_bt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -82,7 +87,6 @@ public class Profile extends BaseActivity {
                 startActivity(intent);
             }
         });
-
 
         menu = findViewById(R.id.menu);
         menu.setOnClickListener(new View.OnClickListener() {
@@ -92,8 +96,6 @@ public class Profile extends BaseActivity {
                 drawer.openDrawer(Gravity.LEFT);
             }
         });
-
-
     }
 
     private void updateFields(FirebaseUser currentUser) {
@@ -138,7 +140,6 @@ public class Profile extends BaseActivity {
                     }
                 });
     }
-
 
     public AlertDialog updateUserImgDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -198,7 +199,7 @@ public class Profile extends BaseActivity {
                         if (task.isSuccessful()) {
                             Boolean vip = (Boolean) (task.getResult().getDocuments().get(0).getData().get("Vip"));
                             if (vip) {
-                                updateVIExpireDate();
+                                updateVIExpireDate(currentUser);
                                 vip_layout.setVisibility(View.VISIBLE);
                             } else {
 
@@ -207,11 +208,36 @@ public class Profile extends BaseActivity {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     });
-        } else {
         }
     }
 
-    private void updateVIExpireDate() {
-        
+    @SuppressLint("SetTextI18n")
+    private void updateVIExpireDate(FirebaseUser currentUser) {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Users").whereEqualTo("Uid", currentUser.getUid())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<String> list = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d(TAG, document.getId());
+
+                            Timestamp timestamp = (Timestamp) document.getData().get("expired");
+
+                            Date date = new Date(timestamp.toDate().getTime());
+                            @SuppressLint("SimpleDateFormat") DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+                            String formatted = format.format(date);
+                            this.date.setText(formatted);
+
+                            Date date1 = new Date(Timestamp.now().toDate().getTime());
+                            long diff = date.getTime() - date1.getTime();
+                            daysLeft.setText("(" + diff / (1000 * 60 * 60 * 24) + ")");
+
+                        }
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
+                    }
+                });
     }
 }

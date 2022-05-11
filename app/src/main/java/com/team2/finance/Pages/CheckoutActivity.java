@@ -1,6 +1,5 @@
 package com.team2.finance.Pages;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -21,9 +20,6 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.wallet.AutoResolveHelper;
 import com.google.android.gms.wallet.PaymentData;
@@ -35,15 +31,18 @@ import com.google.android.gms.wallet.WalletConstants;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.team2.finance.R;
 import com.team2.finance.Utility.Payment.ConfigHelper;
 import com.team2.finance.Utility.Payment.ExampleApplication;
 import com.team2.finance.Utility.Payment.GooglePayChargeClient;
 import com.team2.finance.Utility.Payment.OrderSheet;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import sqip.CardEntry;
 import sqip.GooglePay;
@@ -77,6 +76,8 @@ public class CheckoutActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     SharedPreferences preferences;
+
+    private Date date;
 
     public static final String Name = "priceKey";
 
@@ -156,11 +157,10 @@ public class CheckoutActivity extends AppCompatActivity {
                 confetti1.setVisibility(View.VISIBLE);
                 confetti2.setVisibility(View.INVISIBLE);
                 confetti3.setVisibility(View.INVISIBLE);
-
+                date = addDay(new Date(), 30);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString(Name, "12.99");
                 editor.apply();
-
             }
         });
         card2.setOnClickListener(new View.OnClickListener() {
@@ -169,7 +169,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 confetti1.setVisibility(View.INVISIBLE);
                 confetti2.setVisibility(View.VISIBLE);
                 confetti3.setVisibility(View.INVISIBLE);
-
+                date = addMonth(new Date(), 6);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString(Name, "59.99");
                 editor.apply();
@@ -182,7 +182,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 confetti1.setVisibility(View.INVISIBLE);
                 confetti2.setVisibility(View.INVISIBLE);
                 confetti3.setVisibility(View.VISIBLE);
-
+                date = addYear(new Date(), 1);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString(Name, "99.99");
                 editor.apply();
@@ -299,39 +299,21 @@ public class CheckoutActivity extends AppCompatActivity {
     public void showSuccessCharge() {
         showOkDialog(R.string.successful_order_title, getString(R.string.successful_order_message));
 
-        db.collection("Users")
+        db.collection("Users").whereEqualTo("Uid", currentUser.getUid())
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                if (currentUser.getUid().equals(String.valueOf(document.get("Uid")))) {
-                                    DocumentReference ref = db.collection("Users").document(document.getId());
-                                    ref
-                                            .update("Vip", true)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    Log.d("TAG", "DocumentSnapshot successfully updated!");
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Log.w("TAG", "Error updating document", e);
-                                                }
-                                            });
-                                }
-                            }
-                        } else {
-                            Log.d("check", "Error getting documents: ", task.getException());
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<String> list = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d(TAG, document.getId());
+                            db.collection("Users").document(document.getId()).update(
+                                    "expired", this.date,
+                                    "Vip", true);
                         }
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
                     }
                 });
-
-
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
@@ -372,4 +354,24 @@ public class CheckoutActivity extends AppCompatActivity {
         orderSheet.onRestoreInstanceState(this, savedInstanceState);
     }
 
+    public static Date addDay(Date date, int i) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DAY_OF_YEAR, i);
+        return cal.getTime();
+    }
+
+    public static Date addMonth(Date date, int i) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.MONTH, i);
+        return cal.getTime();
+    }
+
+    public static Date addYear(Date date, int i) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.YEAR, i);
+        return cal.getTime();
+    }
 }
