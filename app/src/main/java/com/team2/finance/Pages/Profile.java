@@ -28,6 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.team2.finance.Login.MainActivity;
 import com.team2.finance.R;
 import com.team2.finance.Utility.BaseActivity;
 
@@ -43,9 +44,8 @@ public class Profile extends BaseActivity {
 
     ImageView profile_img;
     TextView name, email_address, phoneNumber, date, daysLeft;
-    ImageButton menu;
-    ImageButton edit_bt;
-    LinearLayout vip_layout;
+    ImageButton menu, cancel, edit_bt;
+    LinearLayout vip_layout, cancel_layout;
     private FirebaseAuth mAuth;
     private String TAG = "Profile";
     private FirebaseFirestore db;
@@ -66,6 +66,7 @@ public class Profile extends BaseActivity {
         daysLeft = findViewById(R.id.date2);
 
         vip_layout = findViewById(R.id.vip);
+        cancel_layout = findViewById(R.id.cancel_view);
         checkIfUserVIP();
 
         profile_img = (ImageView) findViewById(R.id.profile_img);
@@ -94,6 +95,31 @@ public class Profile extends BaseActivity {
             public void onClick(View view) {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.openDrawer(Gravity.LEFT);
+            }
+        });
+
+        cancel = findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(Profile.this)
+                        .setTitle("Cancel subscription")
+                        .setMessage("Are you sure?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //set what would happen when positive button is clicked
+
+                            }
+                        })
+                        //set negative button
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //set what should happen when negative button is clicked
+                            }
+                        })
+                        .show();
             }
         });
     }
@@ -201,6 +227,7 @@ public class Profile extends BaseActivity {
                             if (vip) {
                                 updateVIExpireDate(currentUser);
                                 vip_layout.setVisibility(View.VISIBLE);
+                                cancel_layout.setVisibility(View.VISIBLE);
                             } else {
 
                             }
