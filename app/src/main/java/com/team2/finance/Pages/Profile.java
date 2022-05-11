@@ -28,7 +28,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.team2.finance.Login.MainActivity;
 import com.team2.finance.R;
 import com.team2.finance.Utility.BaseActivity;
 
@@ -42,12 +41,15 @@ import java.util.List;
 
 public class Profile extends BaseActivity {
 
+    private String TAG = "Profile";
+
     ImageView profile_img;
     TextView name, email_address, phoneNumber, date, daysLeft;
     ImageButton menu, cancel, edit_bt;
     LinearLayout vip_layout, cancel_layout;
+
     private FirebaseAuth mAuth;
-    private String TAG = "Profile";
+    private FirebaseUser currentUser;
     private FirebaseFirestore db;
 
     @Override
@@ -58,6 +60,8 @@ public class Profile extends BaseActivity {
 
         FirebaseApp.initializeApp(getApplicationContext());
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateFields(currentUser);
@@ -108,8 +112,9 @@ public class Profile extends BaseActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                //set what would happen when positive button is clicked
-
+                                cancelSubscription();
+                                finish();
+                                startActivity(getIntent());
                             }
                         })
                         //set negative button
@@ -126,7 +131,6 @@ public class Profile extends BaseActivity {
 
     private void updateFields(FirebaseUser currentUser) {
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users").whereEqualTo("Uid", currentUser.getUid())
                 .get()
                 .addOnCompleteListener(task -> {
@@ -150,7 +154,6 @@ public class Profile extends BaseActivity {
 
     public void updateImg(String url) {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users").whereEqualTo("Uid", user.getUid())
                 .get()
                 .addOnCompleteListener(task -> {
@@ -261,6 +264,23 @@ public class Profile extends BaseActivity {
                             long diff = date.getTime() - date1.getTime();
                             daysLeft.setText("(" + diff / (1000 * 60 * 60 * 24) + ")");
 
+                        }
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
+                    }
+                });
+    }
+
+    private void cancelSubscription() {
+        db.collection("Users").whereEqualTo("Uid", currentUser.getUid())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<String> list = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d(TAG, document.getId());
+                            db.collection("Users").document(document.getId()).update(
+                                    "Vip", false);
                         }
                     } else {
                         Log.d(TAG, "Error getting documents: ", task.getException());
