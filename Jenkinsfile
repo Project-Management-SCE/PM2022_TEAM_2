@@ -20,11 +20,6 @@ pipeline {
                 sh 'emulator -avd first_avd -no-window -no-audio &'
                 sh './gradlew test'
             }
-            post {
-                always {
-                    echo 'Running post-test'
-                }
-            }
         }
         stage('Deliver') {
             steps {
