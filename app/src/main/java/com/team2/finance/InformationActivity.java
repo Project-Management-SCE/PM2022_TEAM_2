@@ -1,34 +1,22 @@
 package com.team2.finance;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageButton;
 
 import com.skydoves.expandablelayout.ExpandableLayout;
 
-public class FAQ_Activity extends AppCompatActivity {
+public class InformationActivity extends AppCompatActivity {
+
     int g = 0;
-    ImageButton iBmenu;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_faq);
+        setContentView(R.layout.activity_information);
 
-
-//        iBmenu = findViewById(R.id.menu);
-//        iBmenu.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//                drawer.openDrawer(Gravity.LEFT);
-//            }
-//        });
 
         ExpandableLayout Question1
                 = (ExpandableLayout) findViewById(R.id.expandable_q1);
@@ -102,8 +90,6 @@ public class FAQ_Activity extends AppCompatActivity {
                 }
             }
         });
-
-
 
 
     }

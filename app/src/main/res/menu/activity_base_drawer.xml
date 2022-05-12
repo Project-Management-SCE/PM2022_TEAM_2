@@ -36,6 +36,9 @@
         <item
             android:id="@+id/faq"
             android:title="FAQ" />
+        <item
+            android:id="@+id/information"
+            android:title="Information" />
     </group>
 
     <item android:title="Find us on GitHub">

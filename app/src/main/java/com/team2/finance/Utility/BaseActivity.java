@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.team2.finance.AboutActivity;
 import com.team2.finance.FAQ_Activity;
+import com.team2.finance.InformationActivity;
 import com.team2.finance.Login.MainActivity;
 import com.team2.finance.Pages.HomeActivity;
 import com.team2.finance.Pages.Profile;
@@ -149,12 +150,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.faq) {
             Intent intent = new Intent(this, FAQ_Activity.class);
             startActivity(intent);
+        } else if (id == R.id.information) {
+            Intent intent = new Intent(this, InformationActivity.class);
+            startActivity(intent);
         }
-
-//        else if (id == R.id.information) {
-        //Intent intent = new Intent(this, AboutActivity.class);
-        //startActivity(intent);
-//        }
 
 
         return true;
