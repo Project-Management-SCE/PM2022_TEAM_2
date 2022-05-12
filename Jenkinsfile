@@ -5,7 +5,7 @@ pipeline {
         }
     }
     stages {
-        stage('Build') {
+        /*stage('Build') {
             steps {
                 echo 'Running build'
                 sh 'chmod +x gradlew && ./gradlew --no-daemon --stacktrace clean'
@@ -20,7 +20,7 @@ pipeline {
                 sh 'emulator -avd first_avd -no-window -no-audio &'
                 sh './gradlew test'
             }
-        }
+        }*/
         stage('Deliver') {
             steps {
                 echo 'Running Deliver'
