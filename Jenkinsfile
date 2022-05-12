@@ -25,9 +25,7 @@ pipeline {
             steps {
                 echo 'Running Deliver'
                 sh 'emulator -avd first_avd -no-window -no-audio &'
-                sh './gradlew assembleRelease'
-                sh 'pwd'
-                sh 'cd /var/jenkins_home/workspace/Team_2/Finance/app/build/outputs/apk/release && ls'
+                sh './gradlew assembleRelease appDistributionUploadRelease'
             }
         }
     }
