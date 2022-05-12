@@ -29,14 +29,8 @@ pipeline {
         stage('Deliver') {
             steps {
                 echo 'Running Deliver'
-                echo 'Connecting to FireBase... '
                 sh 'emulator -avd first_avd -no-window -no-audio &'
-                sh './gradlew'
-
-                echo 'Connecting to Data Base... '
-                sh 'emulator -avd first_avd -no-window -no-audio &'
-                sh './gradlew'
-                sh 'adb devices'
+                sh './gradlew assembleRelease'
             }
         }
     }
