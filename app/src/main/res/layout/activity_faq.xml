@@ -10,27 +10,103 @@
     <ImageButton
         android:id="@+id/menu"
         style="@style/menu"
-        android:paddingTop="10dp"
+        android:paddingTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <com.skydoves.expandablelayout.ExpandableLayout
-        android:id="@+id/expandable"
+        android:id="@+id/expandable_a"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         app:expandable_duration="300"
-        app:expandable_isExpanded="false"
-        app:expandable_parentLayout="@layout/faq_layout_parent"
-        app:expandable_secondLayout="@layout/faq_layout_second"
+        app:expandable_isExpanded="true"
+        app:expandable_parentLayout="@layout/q1_faq_layout_parent"
+        app:expandable_secondLayout="@layout/q1_faq_layout_child"
         app:expandable_showSpinner="true"
         app:expandable_spinner="@drawable/ic_arrow_down"
         app:expandable_spinner_animate="true"
         app:expandable_spinner_gravity="start"
         app:expandable_spinner_margin="14dp"
         app:expandable_spinner_size="32dp" />
+
+
+    <com.skydoves.expandablelayout.ExpandableLayout
+        android:id="@+id/expandable_a1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        app:expandable_duration="300"
+        app:expandable_isExpanded="true"
+        app:expandable_parentLayout="@layout/q2_faq_layout_parent"
+        app:expandable_secondLayout="@layout/q2_faq_layout_child"
+        app:expandable_showSpinner="true"
+        app:expandable_spinner="@drawable/ic_arrow_down"
+        app:expandable_spinner_animate="true"
+        app:expandable_spinner_gravity="start"
+        app:expandable_spinner_margin="14dp"
+        app:expandable_spinner_size="32dp" />
+
+    <com.skydoves.expandablelayout.ExpandableLayout
+        android:id="@+id/expandable_a2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        app:expandable_duration="300"
+        app:expandable_isExpanded="true"
+        app:expandable_parentLayout="@layout/q3_faq_layout_parent"
+        app:expandable_secondLayout="@layout/q3_faq_layout_child"
+        app:expandable_showSpinner="true"
+        app:expandable_spinner="@drawable/ic_arrow_down"
+        app:expandable_spinner_animate="true"
+        app:expandable_spinner_gravity="start"
+        app:expandable_spinner_margin="14dp"
+        app:expandable_spinner_size="32dp" />
+
+    <com.skydoves.expandablelayout.ExpandableLayout
+        android:id="@+id/expandable_a3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        app:expandable_duration="300"
+        app:expandable_isExpanded="true"
+        app:expandable_parentLayout="@layout/q4_faq_layout_parent"
+        app:expandable_secondLayout="@layout/q4_faq_layout_child"
+        app:expandable_showSpinner="true"
+        app:expandable_spinner="@drawable/ic_arrow_down"
+        app:expandable_spinner_animate="true"
+        app:expandable_spinner_gravity="start"
+        app:expandable_spinner_margin="14dp"
+        app:expandable_spinner_size="32dp" />
+
+    <com.skydoves.expandablelayout.ExpandableLayout
+        android:id="@+id/expandable_a4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        app:expandable_duration="300"
+        app:expandable_isExpanded="true"
+        app:expandable_parentLayout="@layout/q5_faq_layout_parent"
+        app:expandable_secondLayout="@layout/q5_faq_layout_child"
+        app:expandable_showSpinner="true"
+        app:expandable_spinner="@drawable/ic_arrow_down"
+        app:expandable_spinner_animate="true"
+        app:expandable_spinner_gravity="start"
+        app:expandable_spinner_margin="14dp"
+        app:expandable_spinner_size="32dp" />
+
+
+
 
 </LinearLayout>
