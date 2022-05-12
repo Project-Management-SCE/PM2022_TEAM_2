@@ -25,8 +25,7 @@ pipeline {
             steps {
                 echo 'Running Deliver'
                 sh 'emulator -avd first_avd -no-window -no-audio &'
-                sh './gradlew assembleRelease'
-                sh 'pwd'
+                sh './gradlew assembleRelease appDistributionUploadRelease'
             }
         }
     }

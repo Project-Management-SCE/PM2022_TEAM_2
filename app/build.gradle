@@ -1,11 +1,12 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 plugins {
     id 'com.android.application'
     //id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' version '2.0.1' apply false
 }
-
+apply plugin: 'com.google.firebase.appdistribution'
 
 android {
     compileSdk 31
@@ -61,19 +62,37 @@ android {
         }
     }
 
+    signingConfigs {
+        release {
+            storeFile file("$rootDir/release_keystore")
+            storePassword KEYSTORE_PASSWORD
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
+        }
+    }
+
     buildTypes {
 //        debug {
 //            testCoverageEnabled true
 //        }
         release {
+
+            firebaseAppDistribution {
+                releaseNotes = " "
+                serviceCredentialsFile = "$rootDir/finance-8960c-65e16bb86684.json"
+                groups "Developers"
+            }
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
 
     buildFeatures {
         viewBinding true
