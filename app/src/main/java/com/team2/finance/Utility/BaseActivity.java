@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.team2.finance.Login.MainActivity;
+import com.team2.finance.Pages.ContactActivity;
 import com.team2.finance.Pages.HomeActivity;
 import com.team2.finance.Pages.Profile;
 import com.team2.finance.R;
@@ -71,8 +72,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                                 if (currentUser.getUid().equals(String.valueOf(document.getData().get("Uid")))) {
                                     String first_name = (String) document.getData().get("first_name");
                                     String last_name = (String) document.getData().get("last_name");
-                                    name.setTitle(first_name + " " + last_name);
-                                }
+                                    if (document.getData().get("Vip").toString().equals("true")){
+                                        String s = new String(Character.toChars(0x2B50));
+                                        name.setTitle(s+first_name + " " + last_name+s);
+                                    }
+                                    else{
+                                        name.setTitle(first_name + " " + last_name);
+                                    } }
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -134,6 +140,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
         else if (id == R.id.profile) {
             Intent intent = new Intent(this, Profile.class);
+            startActivity(intent);
+        }
+        else if ( id == R.id.contact){
+            Intent intent = new Intent(this, ContactActivity.class);
             startActivity(intent);
         }
         else if (id == R.id.git) {

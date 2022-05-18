@@ -21,32 +21,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Finance">
+        <activity
+            android:name=".Pages.ContactActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"
-            android:value="true"/>
-
+            android:value="true" />
         <meta-data
             android:name="sqip.SQUARE_APPLICATION_ID"
-            android:value="sandbox-sq0idb-i7un8hXYa-mH5ENdFSX-yQ"/>
-
+            android:value="sandbox-sq0idb-i7un8hXYa-mH5ENdFSX-yQ" />
 
         <activity
             android:name=".Pages.CheckoutActivity"
             android:exported="false" />
-      
         <activity
             android:name=".Pages.EditProfile"
             android:exported="false" />
-      
         <activity
             android:name=".Pages.Profile"
             android:exported="false" />
-      
-              <activity
+        <activity
             android:name=".exchnage.StockMarket"
             android:exported="false" />
-
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -80,15 +77,12 @@
         <activity
             android:name=".Utility.BaseActivity"
             android:exported="false" />
-
-
         <activity
             android:name=".exchnage.CryptoExchange"
             android:exported="false" />
         <activity
             android:name=".Login.MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
