@@ -21,12 +21,43 @@ pipeline {
                 sh './gradlew test'
             }
         }
-        stage('Deliver') {
+        
+        stages {
+        stage('Error') {
+            when {
+                expression { doError == '1' }
+            }
+            steps {
+                echo "Failure"
+                error "failure test."
+            }
+        }
+        
+        stage('Success') {
+            when {
+                expression { doError == '0' }
+            }
+            steps {
+                echo "ok"
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Current build emailext'
+            
+            emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+                recipientProviders: ['alonte1@ac.sce.ac.il'],
+                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+            
+        }
+    }
+        /*stage('Deliver') {
             steps {
                 echo 'Running Deliver'
                 sh 'emulator -avd first_avd -no-window -no-audio &'
                 sh './gradlew assembleRelease appDistributionUploadRelease'
             }
         }
-    }
+    }*/
 }
