@@ -23,6 +23,7 @@ pipeline {
         }
         
 
+        stage('Post') {
         post {
           always {
             echo 'I will always say Hello again!'
@@ -31,8 +32,9 @@ pipeline {
                 recipientProviders: ["alonte1@ac.sce.ac.il"],
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
             
-          }
-       }
+           }
+         }
+        }
         
         
         /*stage('Deliver') {
