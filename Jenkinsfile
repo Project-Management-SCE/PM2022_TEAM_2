@@ -21,10 +21,17 @@ pipeline {
                 sh './gradlew test'
             }
         }
-        
-
-        stage('Post') {
-        post {
+               
+        /*stage('Deliver') {
+            steps {
+                echo 'Running Deliver'
+                sh 'emulator -avd first_avd -no-window -no-audio &'
+                sh './gradlew assembleRelease appDistributionUploadRelease'
+            }
+        }*/
+    }
+    
+       post {
           always {
             echo 'I will always say Hello again!'
             
@@ -34,15 +41,4 @@ pipeline {
             
            }
          }
-        }
-        
-        
-        /*stage('Deliver') {
-            steps {
-                echo 'Running Deliver'
-                sh 'emulator -avd first_avd -no-window -no-audio &'
-                sh './gradlew assembleRelease appDistributionUploadRelease'
-            }
-        }*/
-    }
 }
