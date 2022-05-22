@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+        android:text="From the Home screen, press on the 'Exchange' or 'Crypto' icon then locate chart area, choose Currency A And Currency B, Click on the 'SHOW' Button then Historic rates will appear on the chart above. *Please note: Crypto services is limited to Renewable annual subscription"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,3 +18,5 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+

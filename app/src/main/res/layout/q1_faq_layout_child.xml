@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+        android:text="App Finance is the one app you need for all your international currency needs including Cryptographic coins. Check the latest foreign exchange rates for over 50 global currencies including latest news and information that belongs to these worlds."
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
