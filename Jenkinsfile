@@ -42,7 +42,7 @@ pipeline {
           always {
             script {
                 emailext subject: '$DEFAULT_SUBJECT', mimeType: 'text/html',
-                       to: "${params.MailingList},${env.DEFUALT_MAIL_LIST}", body: '${SCRIPT, template="groovy-html.template"}'
+                       to: "${env.DEFUALT_MAIL_LIST}", body: '${SCRIPT, template="groovy-html.template"}'
               
             }
         }
