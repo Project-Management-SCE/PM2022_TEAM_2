@@ -48,7 +48,7 @@ pipeline {
             archiveArtifacts artifacts: 'unTagResources_Details.csv', onlyIfSuccessful: true
             script {
                 if(params.MailingList || env.DEFUALT_MAIL_LIST){
-                    emailext subject: '$DEFAULT_SUBJECT', mimeType: 'text/html', attachmentsPattern: 'unTagResources_Details.csv',
+                    emailext subject: '$DEFAULT_SUBJECT', mimeType: 'text/html',
                             to: "${params.MailingList},${env.DEFUALT_MAIL_LIST}", body: '${SCRIPT, template="groovy-html.template"}'
                 }
             }
