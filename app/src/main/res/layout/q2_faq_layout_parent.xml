@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="     How can I get started on using Finance app?"
+        android:text="    How can I get started on using Finance app?"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"

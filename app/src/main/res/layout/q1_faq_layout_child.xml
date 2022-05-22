@@ -12,6 +12,7 @@
         android:paddingRight="10dp"
         android:text="App Finance is the one app you need for all your international currency needs including Cryptographic coins. Check the latest foreign exchange rates for over 50 global currencies including latest news and information that belongs to these worlds."
         android:textColor="@color/white"
+        android:maxLines="6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

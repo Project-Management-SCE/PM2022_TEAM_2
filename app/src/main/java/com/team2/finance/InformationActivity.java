@@ -1,22 +1,35 @@
 package com.team2.finance;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.skydoves.expandablelayout.ExpandableLayout;
+import com.team2.finance.Utility.BaseActivity;
 
-public class InformationActivity extends AppCompatActivity {
+public class InformationActivity extends BaseActivity {
 
     int g = 0;
+    ImageButton menu;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_information);
+        View rootView = getLayoutInflater().inflate(R.layout.activity_information, frameLayout);
 
+        menu = findViewById(R.id.information_menu);
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.openDrawer(Gravity.LEFT);
+            }
+        });
 
         ExpandableLayout Question1
                 = (ExpandableLayout) findViewById(R.id.expandable_q1);

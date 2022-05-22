@@ -12,6 +12,7 @@
         android:paddingRight="10dp"
         android:text="No, you won’t have to log in unless you want to change your profile information or use VIP features. Once you are logged in with your credentials, you can check exchange rates without needing to log in every time."
         android:textColor="@color/white"
+        android:maxLines="6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

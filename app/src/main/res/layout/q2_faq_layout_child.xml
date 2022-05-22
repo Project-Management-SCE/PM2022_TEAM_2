@@ -12,6 +12,7 @@
         android:paddingRight="10dp"
         android:text="You’ve already taken the first step by downloading the app. Next, you’ll create your unique user ID (your email address) and password. You will use these credentials to access a variety of Finance App services on your device."
         android:textColor="@color/white"
+        android:maxLines="6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
