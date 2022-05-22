@@ -1,4 +1,16 @@
 pipeline {
+    
+    options {
+        buildDiscarder logRotator( numToKeepStr: '5')
+    }
+    environment{
+        DEFUALT_MAIL_LIST = 'alonte1@ac.sce.ac.il'
+    }
+    parameters {
+        string(name:'MailingList', defaultValue: '',description: 'Email mailing list', trim: true)
+    }
+    
+    
     agent {
         docker {
             image 'androidsdk/android-31'
@@ -33,12 +45,13 @@ pipeline {
     
        post {
           always {
-            echo 'I will always say Hello again!'
-            
-            emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
-                recipientProviders: ["alonte1@ac.sce.ac.il"],
-                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
-            
-           }
-         }
+            archiveArtifacts artifacts: 'unTagResources_Details.csv', onlyIfSuccessful: true
+            script {
+                if(params.MailingList || env.DEFUALT_MAIL_LIST){
+                    emailext subject: '$DEFAULT_SUBJECT', mimeType: 'text/html', attachmentsPattern: 'unTagResources_Details.csv',
+                            to: "${params.MailingList},${env.DEFUALT_MAIL_LIST}", body: '${SCRIPT, template="groovy-html.template"}'
+                }
+            }
+        }
+     }
 }
