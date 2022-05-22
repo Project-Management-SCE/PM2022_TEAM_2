@@ -1,4 +1,5 @@
 pipeline {
+        
     agent {
         docker {
             image 'androidsdk/android-31'
@@ -20,24 +21,26 @@ pipeline {
                 sh 'emulator -avd first_avd -no-window -no-audio &'
                 sh './gradlew test'
             }
-            post {
-                always {
-                    echo 'Running post-test'
-                }
-            }
         }
+               
         stage('Deliver') {
             steps {
                 echo 'Running Deliver'
-                echo 'Connecting to FireBase... '
                 sh 'emulator -avd first_avd -no-window -no-audio &'
-                sh './gradlew'
-
-                echo 'Connecting to Data Base... '
-                sh 'emulator -avd first_avd -no-window -no-audio &'
-                sh './gradlew'
-                sh 'adb devices'
+                sh './gradlew assembleRelease appDistributionUploadRelease'
             }
         }
     }
+    /*post {
+		failure{
+			mail to: 'alonte1@ac.sce.ac.il',
+			subject: "Failed: Job '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']",
+			body: "Failed: Job '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']: Check console output at '${env.BUILD_URL}' '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']"
+		}
+		success{
+			mail to: 'alonte1@ac.sce.ac.il',
+			subject: "SUCCESS: Job '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']",
+			body: "SUCCESS: Job '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']: Check console output at '${env.BUILD_URL}' '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']"
+		}
+	}*/
 }
