@@ -38,6 +38,6 @@ pipeline {
                 sh 'emulator -avd first_avd -no-window -no-audio &'
                 sh './gradlew assembleRelease appDistributionUploadRelease'
             }
-        }
-    }*/
+        }*/
+    }
 }
