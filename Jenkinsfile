@@ -4,7 +4,7 @@ pipeline {
             image 'androidsdk/android-31'
         }
     }
-    stages {
+    /*stages {
         stage('Build') {
             steps {
                 echo 'Running build'
