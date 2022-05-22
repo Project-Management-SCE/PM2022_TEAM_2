@@ -9,42 +9,26 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Running build'
-                //sh 'chmod +x gradlew && ./gradlew --no-daemon --stacktrace clean'
-                //sh 'echo no | avdmanager create avd -n first_avd --abi google_apis/x86_64 -k "system-images;android-31;google_apis;x86_64"'
-                //sh 'emulator -avd first_avd -no-window -no-audio &'
-                //sh 'adb devices'
+                sh 'chmod +x gradlew && ./gradlew --no-daemon --stacktrace clean'
+                sh 'echo no | avdmanager create avd -n first_avd --abi google_apis/x86_64 -k "system-images;android-31;google_apis;x86_64"'
+                sh 'emulator -avd first_avd -no-window -no-audio &'
+                sh 'adb devices'
             }
         }
-        /*stage('Test') {
+        stage('Test') {
             steps {
                 echo 'Running Test'
                 sh 'emulator -avd first_avd -no-window -no-audio &'
                 sh './gradlew test'
             }
-        }*/
+        }
                
-        /*stage('Deliver') {
+        stage('Deliver') {
             steps {
                 echo 'Running Deliver'
                 sh 'emulator -avd first_avd -no-window -no-audio &'
                 sh './gradlew assembleRelease appDistributionUploadRelease'
             }
-        }*/
-    }
-        options {
-        buildDiscarder logRotator( numToKeepStr: '5')
-    }
-    environment{
-        DEFUALT_MAIL_LIST = 'alonte1@ac.sce.ac.il'
-    }
-    
-       post {
-          always {
-            script {
-                emailext subject: '$DEFAULT_SUBJECT', mimeType: 'text/html',
-                       to: "${env.DEFUALT_MAIL_LIST}", body: '${SCRIPT, template="groovy-html.template"}'
-              
-            }
         }
-     }
+    }
 }
