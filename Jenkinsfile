@@ -22,27 +22,7 @@ pipeline {
             }
         }
         
-        stages {
-        stage('Error') {
-            when {
-                expression { doError == '1' }
-            }
-            steps {
-                echo "Failure"
-                error "failure test."
-            }
-        }
-        
-        stage('Success') {
-            when {
-                expression { doError == '0' }
-            }
-            steps {
-                echo "ok"
-            }
-        }
-    }
-    post {
+      post {
         always {
             echo 'Current build emailext'
             
