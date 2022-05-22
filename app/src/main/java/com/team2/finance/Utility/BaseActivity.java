@@ -16,6 +16,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.team2.finance.AboutActivity;
+import com.team2.finance.FAQ_Activity;
+import com.team2.finance.InformationActivity;
 import com.team2.finance.Login.MainActivity;
 import com.team2.finance.Pages.HomeActivity;
 import com.team2.finance.Pages.Profile;
@@ -131,19 +134,28 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, HomeActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-        }
-        else if (id == R.id.profile) {
+        } else if (id == R.id.profile) {
             Intent intent = new Intent(this, Profile.class);
             startActivity(intent);
-        }
-        else if (id == R.id.git) {
+        } else if (id == R.id.git) {
             String url = "https://github.com/Project-Management-SCE/PM2022_TEAM_2";
             Intent browserIntent =
                     new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(browserIntent);
         } else if (id == R.id.logout) {
             SingOut();
+        } else if (id == R.id.about) {
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.faq) {
+            Intent intent = new Intent(this, FAQ_Activity.class);
+            startActivity(intent);
+        } else if (id == R.id.information) {
+            Intent intent = new Intent(this, InformationActivity.class);
+            startActivity(intent);
         }
+
+
         return true;
     }
 

@@ -159,6 +159,10 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
     implementation files('libs/poi-3.7.jar')
+
+    implementation "com.github.skydoves:expandablelayout:1.0.7"
+
+
 }
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
