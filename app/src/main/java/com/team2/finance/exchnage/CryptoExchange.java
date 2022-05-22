@@ -68,6 +68,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+//facebook
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
+
 
 
 public class CryptoExchange extends BaseActivity {

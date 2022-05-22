@@ -140,6 +140,8 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
     implementation files('libs/poi-3.7.jar')
+
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
 }
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
