@@ -1,16 +1,5 @@
 pipeline {
-    
-    options {
-        buildDiscarder logRotator( numToKeepStr: '5')
-    }
-    environment{
-        DEFUALT_MAIL_LIST = 'alonte1@ac.sce.ac.il'
-    }
-    parameters {
-        string(name:'MailingList', defaultValue: '',description: 'Email mailing list', trim: true)
-    }
-    
-    
+        
     agent {
         docker {
             image 'androidsdk/android-31'
@@ -42,15 +31,20 @@ pipeline {
             }
         }*/
     }
+        options {
+        buildDiscarder logRotator( numToKeepStr: '5')
+    }
+    environment{
+        DEFUALT_MAIL_LIST = 'alonte1@ac.sce.ac.il'
+    }
     
        post {
           always {
             archiveArtifacts artifacts: 'unTagResources_Details.csv', onlyIfSuccessful: true
             script {
-                if(params.MailingList || env.DEFUALT_MAIL_LIST){
-                    emailext subject: '$DEFAULT_SUBJECT', mimeType: 'text/html',
-                            to: "${params.MailingList},${env.DEFUALT_MAIL_LIST}", body: '${SCRIPT, template="groovy-html.template"}'
-                }
+                emailext subject: '$DEFAULT_SUBJECT', mimeType: 'text/html',
+                       to: "${params.MailingList},${env.DEFUALT_MAIL_LIST}", body: '${SCRIPT, template="groovy-html.template"}'
+              
             }
         }
      }
