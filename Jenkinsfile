@@ -31,7 +31,7 @@ pipeline {
             }
         }
     }
-    post {
+    /*post {
 		failure{
 			mail to: 'alonte1@ac.sce.ac.il',
 			subject: "Failed: Job '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']",
@@ -42,5 +42,5 @@ pipeline {
 			subject: "SUCCESS: Job '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']",
 			body: "SUCCESS: Job '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']: Check console output at '${env.BUILD_URL}' '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']"
 		}
-	}
+	}*/
 }
