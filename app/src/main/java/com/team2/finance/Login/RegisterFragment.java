@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -204,6 +205,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                                     userData.put("last_name", last_name.getText().toString());
                                     userData.put("phone_number", phone_number.getText().toString());
                                     userData.put("type", "register");
+                                    userData.put("expired", Timestamp.now());
                                     userData.put("Vip", false);
                                     db.collection("Users") // Add a new document with a generated ID
                                             .add(userData)
