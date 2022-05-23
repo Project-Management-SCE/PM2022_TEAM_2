@@ -1,5 +1,6 @@
 package com.team2.finance.exchnage;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.android.volley.Request;
@@ -20,6 +22,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.github.mikephil.charting.charts.LineChart;
 
 
@@ -48,6 +55,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -96,12 +104,24 @@ public class CryptoExchange extends BaseActivity {
     ArrayList<Float> Y_graph;
     ArrayList<String> x_graph = new ArrayList<>();
 
+    //facebook
+    private CallbackManager callbackManager;
+    private LoginButton loginButton;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         View rootView = getLayoutInflater().inflate(R.layout.activity_crypto_exchange, frameLayout);
+
+        //facebook
+        callbackManager = CallbackManager.Factory.create();
+        loginButton = findViewById(R.id.login_button);
+
+
+
 
         convert_bt = (Button) findViewById(R.id.convert_bt);
         history_bt = (Button) findViewById(R.id.history_bt);
@@ -188,6 +208,28 @@ public class CryptoExchange extends BaseActivity {
                     e.printStackTrace();
                 }
 
+
+            }
+        });
+
+        loginButton.setPermissions(Arrays.asList("user_gender , user_friends"));
+
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Toast.makeText(getApplicationContext(),"GOOD",Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getApplicationContext(),"Cancel",Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onError(@NonNull FacebookException e) {
+                Toast.makeText(getApplicationContext(),"EROOR",Toast.LENGTH_LONG).show();
 
             }
         });
@@ -874,4 +916,11 @@ public class CryptoExchange extends BaseActivity {
 
     }
 
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

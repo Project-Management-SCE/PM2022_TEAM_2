@@ -14,6 +14,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="100dp"/>
+
+
     <!--#card1-->
     <androidx.cardview.widget.CardView
         android:id="@+id/convertCard"
