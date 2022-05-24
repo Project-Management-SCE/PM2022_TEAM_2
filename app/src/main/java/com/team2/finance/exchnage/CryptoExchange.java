@@ -1,6 +1,8 @@
 package com.team2.finance.exchnage;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -12,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.android.volley.Request;
@@ -20,6 +23,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import com.facebook.CallbackManager;
+
+import com.facebook.share.model.ShareHashtag;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareButton;
 import com.github.mikephil.charting.charts.LineChart;
 
 
@@ -48,6 +56,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -67,6 +76,11 @@ import java.io.File;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+//facebook
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
 
 
 
@@ -91,12 +105,24 @@ public class CryptoExchange extends BaseActivity {
     ArrayList<Float> Y_graph;
     ArrayList<String> x_graph = new ArrayList<>();
 
+    //facebook
+    private CallbackManager callbackManager;
+    ShareButton sbLink;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         View rootView = getLayoutInflater().inflate(R.layout.activity_crypto_exchange, frameLayout);
+
+        //facebook
+        callbackManager = CallbackManager.Factory.create();
+        sbLink = findViewById(R.id.share_link);
+
+
+
 
         convert_bt = (Button) findViewById(R.id.convert_bt);
         history_bt = (Button) findViewById(R.id.history_bt);
@@ -186,6 +212,16 @@ public class CryptoExchange extends BaseActivity {
 
             }
         });
+
+
+
+
+        ShareLinkContent shareLinkContent = new ShareLinkContent.Builder()
+                .setContentUrl(Uri.parse("https://www.facebook.com/profile.php?id=100081171311088"))
+                .setShareHashtag(new ShareHashtag.Builder()
+                        .setHashtag("FinanceApp").build())
+                .build();
+        sbLink.setShareContent(shareLinkContent);
 
 
     }
@@ -869,4 +905,12 @@ public class CryptoExchange extends BaseActivity {
 
     }
 
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
 }

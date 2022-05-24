@@ -14,6 +14,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <com.facebook.share.widget.ShareButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share Link"
+            android:id="@+id/share_link"
+            android:layout_marginLeft="150dp">
+
+        </com.facebook.share.widget.ShareButton>
+
+
+
+    </LinearLayout>
+
+
     <!--#card1-->
     <androidx.cardview.widget.CardView
         android:id="@+id/convertCard"
