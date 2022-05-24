@@ -184,7 +184,7 @@ public class Exchange extends BaseActivity {
     }
 
     private void initSpinners(FirebaseAuth mAuth) throws JSONException {
-        if (mAuth != null) {
+        if (mAuth.getCurrentUser() != null) {
             getCurrency();
         } else {
             // Create an ArrayAdapter using the string array and a default spinner layout
