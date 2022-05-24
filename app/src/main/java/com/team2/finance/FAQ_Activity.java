@@ -101,9 +101,5 @@ public class FAQ_Activity extends BaseActivity {
                 }
             }
         });
-
-
-
-
     }
 }

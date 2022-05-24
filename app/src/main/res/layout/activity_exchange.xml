@@ -135,15 +135,14 @@
                 android:layout_centerInParent="true"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="30dp"
-                app:cardCornerRadius="10dp"
-                >
+                app:cardCornerRadius="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
+
                     <LinearLayout
                         android:id="@+id/historical_linear"
                         android:layout_width="wrap_content"
@@ -151,14 +150,12 @@
                         android:layout_centerInParent="true"
                         android:layout_margin="30dp"
                         android:orientation="horizontal"
-                        android:layout_gravity="center"
-                        >
+                        android:layout_gravity="center">
 
                         <Spinner
                             android:id="@+id/fromDropdown_h"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            />
+                            android:layout_height="wrap_content" />
 
                         <Space
                             android:layout_width="50dp"
@@ -167,8 +164,7 @@
                         <Spinner
                             android:id="@+id/toDropdown_h"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            />
+                            android:layout_height="wrap_content" />
 
 
                     </LinearLayout>
@@ -180,8 +176,8 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:scrollbars="horizontal"
-                        android:layout_weight="3"
-                        >
+                        android:layout_weight="3">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
@@ -195,9 +191,7 @@
 
                         </LinearLayout>
 
-
                     </ScrollView>
-
 
                     <LinearLayout
                         android:layout_width="match_parent"

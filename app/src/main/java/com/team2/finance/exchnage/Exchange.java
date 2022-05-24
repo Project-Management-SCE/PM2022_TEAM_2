@@ -46,7 +46,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -58,6 +57,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -65,11 +65,11 @@ import java.io.IOException;
 public class Exchange extends BaseActivity {
 
     EditText fromCurrency, toCurrency;
-    Spinner fromDropdown, toDropdown,fromDropdown_h,toDropdown_h;
+    Spinner fromDropdown, toDropdown, fromDropdown_h, toDropdown_h;
     Button convert_bt;
     Button history_bt;
     //export
-    Button export_graph_btn , export_convert_btn;
+    Button export_graph_btn, export_convert_btn;
     private static final long ONE_DAY_MILLI_SECONDS = 24 * 60 * 60 * 1000;
     ArrayList<Float> Y_graph;
     ArrayList<String> x_graph = new ArrayList<>();
@@ -106,20 +106,19 @@ public class Exchange extends BaseActivity {
         convert_bt = (Button) findViewById(R.id.convert_bt);
         fromCurrency = findViewById(R.id.fromCurrency);
         toCurrency = findViewById(R.id.toCurrency);
-        fromDropdown = (Spinner)findViewById(R.id.fromDropdown);
-        toDropdown = (Spinner)findViewById(R.id.toDropdown);
+        fromDropdown = (Spinner) findViewById(R.id.fromDropdown);
+        toDropdown = (Spinner) findViewById(R.id.toDropdown);
 
         //export
         export_convert_btn = (Button) findViewById(R.id.ConvertExport_btn);
         export_graph_btn = (Button) findViewById(R.id.graphExport_btn);
 
 
-
         //Historical rate
         history_bt = (Button) findViewById(R.id.history_bt);
-        fromDropdown_h = (Spinner)findViewById(R.id.fromDropdown_h);
-        toDropdown_h = (Spinner)findViewById(R.id.toDropdown_h);
-        mChart = (LineChart)findViewById(R.id.historical_chart);
+        fromDropdown_h = (Spinner) findViewById(R.id.fromDropdown_h);
+        toDropdown_h = (Spinner) findViewById(R.id.toDropdown_h);
+        mChart = (LineChart) findViewById(R.id.historical_chart);
         mChart.setDragEnabled(true);
         mChart.setScaleEnabled(false);
         mChart.setTouchEnabled(true);
@@ -150,12 +149,9 @@ public class Exchange extends BaseActivity {
         export_convert_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(toCurrency.getText().toString().equals(""))
-                {
+                if (toCurrency.getText().toString().equals("")) {
                     Toast.makeText(Exchange.this, "Please Convert before Export", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     try {
 
                         Convert_export();
@@ -182,8 +178,6 @@ public class Exchange extends BaseActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
             }
         });
 
@@ -288,7 +282,7 @@ public class Exchange extends BaseActivity {
             calendar = Calendar.getInstance();
             simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             dateTime = simpleDateFormat.format(calendar.getTime()).toString();
-            String url = "https://api.frankfurter.app/2022-04-01"+".."+ dateTime + "?&from=" + fromDropdown_h.getSelectedItem().toString() + "&to=" + toDropdown_h.getSelectedItem().toString();
+            String url = "https://api.frankfurter.app/2022-04-01" + ".." + dateTime + "?&from=" + fromDropdown_h.getSelectedItem().toString() + "&to=" + toDropdown_h.getSelectedItem().toString();
 
 
             //for export
@@ -315,7 +309,7 @@ public class Exchange extends BaseActivity {
                                 x_graph.add(date);
                                 try {
                                     Double currency_rate = jsonObject.getJSONObject(date).getDouble(toDropdown_h.getSelectedItem().toString());
-                                    rateList.add(new Entry(x,currency_rate.floatValue()));
+                                    rateList.add(new Entry(x, currency_rate.floatValue()));
                                     //for export
                                     History_Values.add(currency_rate.floatValue());
                                 } catch (JSONException e) {
@@ -327,13 +321,13 @@ public class Exchange extends BaseActivity {
                             //for export
                             Y_graph = History_Values;
 
-                            LineDataSet lineDataSet = new LineDataSet(rateList,"Rates");
+                            LineDataSet lineDataSet = new LineDataSet(rateList, "Rates");
                             //customize line
                             lineDataSet.setLineWidth(2f);
                             lineDataSet.setValueTextSize(10f);
-                            lineDataSet.setCircleColor(Color.rgb(255,165,0));
-                            lineDataSet.setColor(Color.rgb(218,165,32));
-                            ArrayList<ILineDataSet> iLineDataSets= new ArrayList<>();
+                            lineDataSet.setCircleColor(Color.rgb(255, 165, 0));
+                            lineDataSet.setColor(Color.rgb(218, 165, 32));
+                            ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
                             iLineDataSets.add(lineDataSet);
                             LineData lineData = new LineData(iLineDataSets);
                             //String setter in x-Axis
@@ -356,25 +350,25 @@ public class Exchange extends BaseActivity {
 
     }
 
-    void defaultChart(){
+    void defaultChart() {
         calendar = Calendar.getInstance();
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateTime = simpleDateFormat.format(calendar.getTime()).toString();
-        ArrayList<String> x = new ArrayList<>(Arrays.asList(dateTime,dateTime,dateTime,dateTime));
+        ArrayList<String> x = new ArrayList<>(Arrays.asList(dateTime, dateTime, dateTime, dateTime));
         ArrayList<Entry> y = new ArrayList<>();
-        y.add(new Entry(0,1.0f));
-        y.add(new Entry(1,1.0f));
-        y.add(new Entry(2,1.0f));
-        y.add(new Entry(3,1.0f));
+        y.add(new Entry(0, 1.0f));
+        y.add(new Entry(1, 1.0f));
+        y.add(new Entry(2, 1.0f));
+        y.add(new Entry(3, 1.0f));
 
 
-        LineDataSet lineDataSet = new LineDataSet(y,"Rates");
+        LineDataSet lineDataSet = new LineDataSet(y, "Rates");
         //customize line
         lineDataSet.setLineWidth(2f);
         lineDataSet.setValueTextSize(10f);
-        lineDataSet.setCircleColor(Color.rgb(255,165,0));
-        lineDataSet.setColor(Color.rgb(218,165,32));
-        ArrayList<ILineDataSet> iLineDataSets= new ArrayList<>();
+        lineDataSet.setCircleColor(Color.rgb(255, 165, 0));
+        lineDataSet.setColor(Color.rgb(218, 165, 32));
+        ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
         iLineDataSets.add(lineDataSet);
         LineData lineData = new LineData(iLineDataSets);
         //String setter in x-Axis
@@ -578,11 +572,9 @@ public class Exchange extends BaseActivity {
     private void Graph_export() throws IOException {
 
         if (fromDropdown_h.getSelectedItem().toString().equals(toDropdown_h.getSelectedItem().toString())) {
-            Toast.makeText(getApplicationContext(),"Export failed - Please select two different coins",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Export failed - Please select two different coins", Toast.LENGTH_LONG).show();
 
-        }
-        else
-        {
+        } else {
             boolean file_exist = false;
 
             try {
@@ -590,12 +582,9 @@ public class Exchange extends BaseActivity {
                 FileInputStream myInput = new FileInputStream(file);
                 file_exist = true;
 
-            }catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
 
 
             Date date = Calendar.getInstance().getTime();
@@ -606,13 +595,12 @@ public class Exchange extends BaseActivity {
             // WRITE TO EXEL ------
 
             //check if the file is exist
-            if(file_exist)
-            {
+            if (file_exist) {
 
                 // Creating Input Stream
                 File file = new File(getExternalFilesDir(null), "Graph History.xls");
                 FileInputStream myInput = new FileInputStream(file);
-                FileOutputStream outputStream=null;
+                FileOutputStream outputStream = null;
 
                 // Create a POIFSFileSystem object
                 POIFSFileSystem myFileSystem = new POIFSFileSystem(myInput);
@@ -626,15 +614,15 @@ public class Exchange extends BaseActivity {
                 int lastRow = mySheet.getLastRowNum();
 
 
-                Cell cell=null;
-                CellStyle cellStyle=myWorkBook.createCellStyle();
+                Cell cell = null;
+                CellStyle cellStyle = myWorkBook.createCellStyle();
                 cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
                 cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 
 
-                Row row_header = mySheet.createRow(lastRow+2);
-                Row row_x = mySheet.createRow(lastRow+3);
-                Row row_y = mySheet.createRow(lastRow +4);
+                Row row_header = mySheet.createRow(lastRow + 2);
+                Row row_x = mySheet.createRow(lastRow + 3);
+                Row row_y = mySheet.createRow(lastRow + 4);
 
 
                 cell = row_header.createCell(0);
@@ -662,17 +650,15 @@ public class Exchange extends BaseActivity {
                 cell.setCellStyle(cellStyle);
 
 
-                for ( int i = 0 ; i < Y_graph.size() ; i++)
-                {
-                    cell = row_x.createCell(i+1);
+                for (int i = 0; i < Y_graph.size(); i++) {
+                    cell = row_x.createCell(i + 1);
                     cell.setCellValue(x_graph.get(i));
                     cell.setCellStyle(cellStyle);
                 }
 
                 //Collections.reverse(Y_graph);
-                for(int i = 0 ; i < Y_graph.size() ; i++)
-                {
-                    cell = row_y.createCell(i+1);
+                for (int i = 0; i < Y_graph.size(); i++) {
+                    cell = row_y.createCell(i + 1);
                     cell.setCellValue(String.valueOf(Y_graph.get(i)));
                     cell.setCellStyle(cellStyle);
                 }
@@ -685,16 +671,15 @@ public class Exchange extends BaseActivity {
                 mySheet.setColumnWidth(5, (10 * 300));
 
 
-
                 try {
 
-                    outputStream=new FileOutputStream(file);
+                    outputStream = new FileOutputStream(file);
                     myWorkBook.write(outputStream);
-                    Toast.makeText(getApplicationContext(),"Saved on the Graph History File",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Saved on the Graph History File", Toast.LENGTH_LONG).show();
                 } catch (java.io.IOException e) {
                     e.printStackTrace();
 
-                    Toast.makeText(getApplicationContext(),"NO OK",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "NO OK", Toast.LENGTH_LONG).show();
                     try {
                         outputStream.close();
                     } catch (IOException ex) {
@@ -703,11 +688,8 @@ public class Exchange extends BaseActivity {
                 }
 
 
-
-
                 //if end
-            }
-            else {
+            } else {
                 //workbook
                 Workbook myWorkBook = new HSSFWorkbook();
                 Cell cell = null;
@@ -753,17 +735,15 @@ public class Exchange extends BaseActivity {
                 cell.setCellStyle(cellStyle);
 
 
-                for ( int i = 0 ; i < Y_graph.size() ; i++)
-                {
-                    cell = row_x.createCell(i+1);
+                for (int i = 0; i < Y_graph.size(); i++) {
+                    cell = row_x.createCell(i + 1);
                     cell.setCellValue(x_graph.get(i));
                     cell.setCellStyle(cellStyle);
                 }
 
 
-                for(int i = 0 ; i < Y_graph.size() ; i++)
-                {
-                    cell = row_y.createCell(i+1);
+                for (int i = 0; i < Y_graph.size(); i++) {
+                    cell = row_y.createCell(i + 1);
                     cell.setCellValue(String.valueOf(Y_graph.get(i)));
                     cell.setCellStyle(cellStyle);
                 }
@@ -780,13 +760,12 @@ public class Exchange extends BaseActivity {
 
                 try {
 
-                    outputStream=new FileOutputStream(file);
+                    outputStream = new FileOutputStream(file);
                     myWorkBook.write(outputStream);
 
                     Toast.makeText(getApplicationContext(), "Saved on the Graph History File", Toast.LENGTH_LONG).show();
 
-                } catch (java.io.IOException e)
-                {
+                } catch (java.io.IOException e) {
                     e.printStackTrace();
 
                     Toast.makeText(getApplicationContext(), "NO OK", Toast.LENGTH_LONG).show();
@@ -796,19 +775,12 @@ public class Exchange extends BaseActivity {
                         ex.printStackTrace();
                     }
                 }
-
-
                 //else finish
             }
         }
 
 
-
-
-
     }
-
-
 
 
 }

@@ -80,8 +80,6 @@ public class HomeActivity extends BaseActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        checkVIExpireDate();
-
         CardView cardView = (CardView) findViewById(R.id.exchange);
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,7 +170,7 @@ public class HomeActivity extends BaseActivity {
 
     private void check() {
         if (currentUser != null) {
-
+            checkVIExpireDate();
             db.collection("Users").whereEqualTo("Uid", currentUser.getUid())
                     .get()
                     .addOnCompleteListener(task -> {

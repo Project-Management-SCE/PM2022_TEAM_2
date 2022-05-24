@@ -26,43 +26,35 @@
             android:title="Home" />
         <item
             android:id="@+id/profile"
-            android:title="Profile"/>
+            android:title="Profile" />
         <item
-            android:id="@+id/about"
-            android:title="About" />
+            android:id="@+id/stocks"
+            android:title="Stocks" />
         <item
-            android:id="@+id/contact"
-            android:title="Contact" />
+            android:id="@+id/information"
+            android:title="Information" />
         <item
             android:id="@+id/faq"
             android:title="FAQ" />
         <item
-            android:id="@+id/information"
-            android:title="Information" />
+            android:id="@+id/contact"
+            android:title="Contact" />
+        <item
+            android:id="@+id/about"
+            android:title="About" />
     </group>
 
-    <item android:title="Find us on GitHub">
+    <item android:title="Share facebook page">
         <menu>
             <item
-                android:id="@+id/git"
-                android:title="GitHub" />
+                android:id="@+id/share"
+                android:title="Share facebook page" />
 
         </menu>
     </item>
 
     <group android:checkableBehavior="single">
-        <item
-            android:layout_gravity="left"
-            android:enabled="false"
-            android:title=""></item>
-        <item
-            android:layout_gravity="left"
-            android:enabled="false"
-            android:title=""></item>
-        <item
-            android:layout_gravity="left"
-            android:enabled="false"
-            android:title=""></item>
+        <item android:title="" />
         <item
             android:id="@+id/logout"
             android:title="Logout" />

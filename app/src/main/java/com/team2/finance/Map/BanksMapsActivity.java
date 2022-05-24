@@ -226,9 +226,9 @@ public class BanksMapsActivity extends AppCompatActivity implements AdapterView.
                                         atmObjectList.add(atmObjectObj);
                                         LatLng atm = new LatLng(x, y);
                                         Objects.requireNonNull(mMap.addMarker(new MarkerOptions().draggable(true)
-                                                .position(atm)
-                                                .icon(vectorToBitmap(R.drawable.ic_baseline_account_balance_24, Color.parseColor("#F3B533")))
-                                                .title(atmObjectObj.getBank_Name() + " - " + atmObjectObj.getCity())))
+                                                        .position(atm)
+                                                        .icon(vectorToBitmap(R.drawable.ic_baseline_account_balance_24, Color.parseColor("#F3B533")))
+                                                        .title(atmObjectObj.getBank_Name() + " - " + atmObjectObj.getCity())))
                                                 .setSnippet(atmObjectObj.getBranch_Address());
                                     }
                                 }
@@ -300,9 +300,9 @@ public class BanksMapsActivity extends AppCompatActivity implements AdapterView.
         for (int j = 0; j < atmObjectList.size(); j++) {
             atm = new LatLng(atmObjectList.get(j).getX_Coordinate(), atmObjectList.get(j).getY_Coordinate());
             Objects.requireNonNull(mMap.addMarker(new MarkerOptions().draggable(true)
-                    .position(atm)
-                    .icon(vectorToBitmap(R.drawable.ic_baseline_local_atm_24, Color.parseColor("#F3B533")))
-                    .title(atmObjectList.get(j).getBank_Name() + " - " + atmObjectList.get(j).getCity())))
+                            .position(atm)
+                            .icon(vectorToBitmap(R.drawable.ic_baseline_local_atm_24, Color.parseColor("#F3B533")))
+                            .title(atmObjectList.get(j).getBank_Name() + " - " + atmObjectList.get(j).getCity())))
                     .setSnippet(atmObjectList.get(j).getBranch_Address());
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selectedCity, 7));
@@ -315,9 +315,9 @@ public class BanksMapsActivity extends AppCompatActivity implements AdapterView.
             if (atmObjectList.get(j).getCity().equals(cityName)) {
                 atm = new LatLng(atmObjectList.get(j).getX_Coordinate(), atmObjectList.get(j).getY_Coordinate());
                 Objects.requireNonNull(mMap.addMarker(new MarkerOptions().draggable(true)
-                        .position(atm)
-                        .icon(vectorToBitmap(R.drawable.ic_baseline_local_atm_24, Color.parseColor("#F3B533")))
-                        .title(atmObjectList.get(j).getBank_Name() + " - " + atmObjectList.get(j).getCity())))
+                                .position(atm)
+                                .icon(vectorToBitmap(R.drawable.ic_baseline_local_atm_24, Color.parseColor("#F3B533")))
+                                .title(atmObjectList.get(j).getBank_Name() + " - " + atmObjectList.get(j).getCity())))
                         .setSnippet(atmObjectList.get(j).getBranch_Address());
             }
         }
@@ -330,9 +330,9 @@ public class BanksMapsActivity extends AppCompatActivity implements AdapterView.
             if (atmObjectList.get(j).getBank_Name().equals(bankName)) {
                 atm = new LatLng(atmObjectList.get(j).getX_Coordinate(), atmObjectList.get(j).getY_Coordinate());
                 Objects.requireNonNull(mMap.addMarker(new MarkerOptions().draggable(true)
-                        .position(atm)
-                        .icon(vectorToBitmap(R.drawable.ic_baseline_local_atm_24, Color.parseColor("#F3B533")))
-                        .title(atmObjectList.get(j).getBank_Name() + " - " + atmObjectList.get(j).getCity())))
+                                .position(atm)
+                                .icon(vectorToBitmap(R.drawable.ic_baseline_local_atm_24, Color.parseColor("#F3B533")))
+                                .title(atmObjectList.get(j).getBank_Name() + " - " + atmObjectList.get(j).getCity())))
                         .setSnippet(atmObjectList.get(j).getBranch_Address());
             }
         }

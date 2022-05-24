@@ -117,5 +117,8 @@
     <string name="action_settings">Settings</string>
   
     <string name="cancel_vip_subscription">Cancel vip subscription</string>
+    <string name="subject">Subject</string>
+    <string name="name">Name</string>
+    <string name="message">Message</string>
 
 </resources>

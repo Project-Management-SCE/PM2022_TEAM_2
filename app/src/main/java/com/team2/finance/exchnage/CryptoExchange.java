@@ -1,8 +1,6 @@
 package com.team2.finance.exchnage;
 
-import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -14,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.android.volley.Request;
@@ -23,11 +20,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-import com.facebook.CallbackManager;
-
-import com.facebook.share.model.ShareHashtag;
-import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.widget.ShareButton;
 import com.github.mikephil.charting.charts.LineChart;
 
 
@@ -62,7 +54,6 @@ import java.util.Collections;
 import java.util.Date;
 
 
-
 //export exel
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -77,19 +68,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-//facebook
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
-
-
-
-
 public class CryptoExchange extends BaseActivity {
 
 
     EditText fromCurrency, toCurrency;
-    Spinner fromDropdown, toDropdown , fromDropdown_graph;
-    Button convert_bt , history_bt , export_graph_btn , export_convert_btn;
+    Spinner fromDropdown, toDropdown, fromDropdown_graph;
+    Button convert_bt, history_bt, export_graph_btn, export_convert_btn;
     RequestQueue requestQueue;
     ImageButton menu;
 
@@ -105,23 +89,12 @@ public class CryptoExchange extends BaseActivity {
     ArrayList<Float> Y_graph;
     ArrayList<String> x_graph = new ArrayList<>();
 
-    //facebook
-    private CallbackManager callbackManager;
-    ShareButton sbLink;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         View rootView = getLayoutInflater().inflate(R.layout.activity_crypto_exchange, frameLayout);
-
-        //facebook
-        callbackManager = CallbackManager.Factory.create();
-        sbLink = findViewById(R.id.share_link);
-
-
 
 
         convert_bt = (Button) findViewById(R.id.convert_bt);
@@ -183,12 +156,9 @@ public class CryptoExchange extends BaseActivity {
         export_convert_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(toCurrency.getText().toString().equals(""))
-                {
+                if (toCurrency.getText().toString().equals("")) {
                     Toast.makeText(CryptoExchange.this, "Please Convert before Export", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     try {
 
                         Convert_export();
@@ -213,17 +183,6 @@ public class CryptoExchange extends BaseActivity {
             }
         });
 
-
-
-
-        ShareLinkContent shareLinkContent = new ShareLinkContent.Builder()
-                .setContentUrl(Uri.parse("https://www.facebook.com/profile.php?id=100081171311088"))
-                .setShareHashtag(new ShareHashtag.Builder()
-                        .setHashtag("FinanceApp").build())
-                .build();
-        sbLink.setShareContent(shareLinkContent);
-
-
     }
 
 
@@ -236,13 +195,13 @@ public class CryptoExchange extends BaseActivity {
             FileInputStream myInput = new FileInputStream(file);
             file_exist = true;
 
-        }catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
 
-        String fromCoin = fromDropdown.getSelectedItem().toString();;
+        String fromCoin = fromDropdown.getSelectedItem().toString();
+        ;
         String toCoin = toDropdown.getSelectedItem().toString();
 
         String fromValue = fromCurrency.getText().toString();
@@ -256,13 +215,12 @@ public class CryptoExchange extends BaseActivity {
         // WRITE TO EXEL ------
 
         //check if the file is exist
-        if(file_exist)
-        {
+        if (file_exist) {
 
             // Creating Input Stream
             File file = new File(getExternalFilesDir(null), "Graph History.xls");
             FileInputStream myInput = new FileInputStream(file);
-            FileOutputStream outputStream=null;
+            FileOutputStream outputStream = null;
 
             // Create a POIFSFileSystem object
             POIFSFileSystem myFileSystem = new POIFSFileSystem(myInput);
@@ -276,15 +234,15 @@ public class CryptoExchange extends BaseActivity {
             int lastRow = mySheet.getLastRowNum();
 
 
-            Cell cell=null;
-            CellStyle cellStyle=myWorkBook.createCellStyle();
+            Cell cell = null;
+            CellStyle cellStyle = myWorkBook.createCellStyle();
             cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
             cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 
 
-            Row row_header = mySheet.createRow(lastRow+2);
-            Row row_x = mySheet.createRow(lastRow+3);
-            Row row_y = mySheet.createRow(lastRow +4);
+            Row row_header = mySheet.createRow(lastRow + 2);
+            Row row_x = mySheet.createRow(lastRow + 3);
+            Row row_y = mySheet.createRow(lastRow + 4);
 
 
             cell = row_header.createCell(0);
@@ -304,17 +262,15 @@ public class CryptoExchange extends BaseActivity {
             cell.setCellStyle(cellStyle);
 
 
-            for ( int i = 0 ; i < 7 ; i++)
-            {
-                cell = row_x.createCell(i+1);
+            for (int i = 0; i < 7; i++) {
+                cell = row_x.createCell(i + 1);
                 cell.setCellValue(x_graph.get(i));
                 cell.setCellStyle(cellStyle);
             }
 
             Collections.reverse(Y_graph);
-            for(int i = 0 ; i < 7 ; i++)
-            {
-                cell = row_y.createCell(i+1);
+            for (int i = 0; i < 7; i++) {
+                cell = row_y.createCell(i + 1);
                 cell.setCellValue(String.valueOf(Y_graph.get(i)));
                 cell.setCellStyle(cellStyle);
             }
@@ -327,16 +283,15 @@ public class CryptoExchange extends BaseActivity {
             mySheet.setColumnWidth(5, (10 * 300));
 
 
-
             try {
 
-                outputStream=new FileOutputStream(file);
+                outputStream = new FileOutputStream(file);
                 myWorkBook.write(outputStream);
-                Toast.makeText(getApplicationContext(),"Saved on the Graph History File",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Saved on the Graph History File", Toast.LENGTH_LONG).show();
             } catch (java.io.IOException e) {
                 e.printStackTrace();
 
-                Toast.makeText(getApplicationContext(),"NO OK",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "NO OK", Toast.LENGTH_LONG).show();
                 try {
                     outputStream.close();
                 } catch (IOException ex) {
@@ -345,11 +300,8 @@ public class CryptoExchange extends BaseActivity {
             }
 
 
-
-
             //if end
-        }
-        else {
+        } else {
             //workbook
             Workbook myWorkBook = new HSSFWorkbook();
             Cell cell = null;
@@ -387,17 +339,15 @@ public class CryptoExchange extends BaseActivity {
             cell.setCellStyle(cellStyle);
 
 
-            for ( int i = 0 ; i < 7 ; i++)
-            {
-                cell = row_x.createCell(i+1);
+            for (int i = 0; i < 7; i++) {
+                cell = row_x.createCell(i + 1);
                 cell.setCellValue(x_graph.get(i));
                 cell.setCellStyle(cellStyle);
             }
 
             Collections.reverse(Y_graph);
-            for(int i = 0 ; i < 7 ; i++)
-            {
-                cell = row_y.createCell(i+1);
+            for (int i = 0; i < 7; i++) {
+                cell = row_y.createCell(i + 1);
                 cell.setCellValue(String.valueOf(Y_graph.get(i)));
                 cell.setCellStyle(cellStyle);
             }
@@ -414,13 +364,12 @@ public class CryptoExchange extends BaseActivity {
 
             try {
 
-                outputStream=new FileOutputStream(file);
+                outputStream = new FileOutputStream(file);
                 myWorkBook.write(outputStream);
 
                 Toast.makeText(getApplicationContext(), "Saved on the Graph History File", Toast.LENGTH_LONG).show();
 
-            } catch (java.io.IOException e)
-            {
+            } catch (java.io.IOException e) {
                 e.printStackTrace();
 
                 Toast.makeText(getApplicationContext(), "NO OK", Toast.LENGTH_LONG).show();
@@ -436,7 +385,6 @@ public class CryptoExchange extends BaseActivity {
         }
 
 
-
     }
 
     private void Convert_export() throws IOException {
@@ -448,13 +396,13 @@ public class CryptoExchange extends BaseActivity {
             FileInputStream myInput = new FileInputStream(file);
             file_exist = true;
 
-        }catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
 
-        String fromCoin = fromDropdown.getSelectedItem().toString();;
+        String fromCoin = fromDropdown.getSelectedItem().toString();
+        ;
         String toCoin = toDropdown.getSelectedItem().toString();
 
         String fromValue = fromCurrency.getText().toString();
@@ -468,13 +416,12 @@ public class CryptoExchange extends BaseActivity {
         // WRITE TO EXEL ------
 
         //check if the file is exist
-        if(file_exist)
-        {
+        if (file_exist) {
 
-                // Creating Input Stream
+            // Creating Input Stream
             File file = new File(getExternalFilesDir(null), "Converts.xls");
             FileInputStream myInput = new FileInputStream(file);
-            FileOutputStream outputStream=null;
+            FileOutputStream outputStream = null;
 
             // Create a POIFSFileSystem object
             POIFSFileSystem myFileSystem = new POIFSFileSystem(myInput);
@@ -488,57 +435,56 @@ public class CryptoExchange extends BaseActivity {
             int lastRow = mySheet.getLastRowNum();
 
 
-            Cell cell=null;
-            CellStyle cellStyle=myWorkBook.createCellStyle();
+            Cell cell = null;
+            CellStyle cellStyle = myWorkBook.createCellStyle();
             cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
             cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 
 
-            Row row_conver =mySheet.createRow(lastRow+1);
+            Row row_conver = mySheet.createRow(lastRow + 1);
 
-            cell=row_conver.createCell(0);
+            cell = row_conver.createCell(0);
             cell.setCellValue(strDate);
             cell.setCellStyle(cellStyle);
 
-            cell=row_conver.createCell(1);
+            cell = row_conver.createCell(1);
             cell.setCellValue(fromValue);
             cell.setCellStyle(cellStyle);
 
-            cell=row_conver.createCell(2);
+            cell = row_conver.createCell(2);
             cell.setCellValue(fromCoin);
             cell.setCellStyle(cellStyle);
 
-            cell=row_conver.createCell(3);
+            cell = row_conver.createCell(3);
             cell.setCellValue("=");
             cell.setCellStyle(cellStyle);
 
-            cell=row_conver.createCell(4);
+            cell = row_conver.createCell(4);
             cell.setCellValue(toValue);
             cell.setCellStyle(cellStyle);
 
-            cell=row_conver.createCell(5);
+            cell = row_conver.createCell(5);
             cell.setCellValue(toCoin);
             cell.setCellStyle(cellStyle);
 
 
-            mySheet.setColumnWidth(0,(10*600));
-            mySheet.setColumnWidth(1,(10*300));
-            mySheet.setColumnWidth(2,(10*150));
-            mySheet.setColumnWidth(3,(10*50));
-            mySheet.setColumnWidth(4,(10*300));
-            mySheet.setColumnWidth(5,(10*150));
-
+            mySheet.setColumnWidth(0, (10 * 600));
+            mySheet.setColumnWidth(1, (10 * 300));
+            mySheet.setColumnWidth(2, (10 * 150));
+            mySheet.setColumnWidth(3, (10 * 50));
+            mySheet.setColumnWidth(4, (10 * 300));
+            mySheet.setColumnWidth(5, (10 * 150));
 
 
             try {
 
-               outputStream=new FileOutputStream(file);
-               myWorkBook.write(outputStream);
-                Toast.makeText(getApplicationContext(),"Saved on the Converts File",Toast.LENGTH_LONG).show();
+                outputStream = new FileOutputStream(file);
+                myWorkBook.write(outputStream);
+                Toast.makeText(getApplicationContext(), "Saved on the Converts File", Toast.LENGTH_LONG).show();
             } catch (java.io.IOException e) {
                 e.printStackTrace();
 
-                Toast.makeText(getApplicationContext(),"NO OK",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "NO OK", Toast.LENGTH_LONG).show();
                 try {
                     outputStream.close();
                 } catch (IOException ex) {
@@ -547,11 +493,8 @@ public class CryptoExchange extends BaseActivity {
             }
 
 
-
-
             //if end
-        }
-        else {
+        } else {
             //workbook
             Workbook myWorkBook = new HSSFWorkbook();
             Cell cell = null;
@@ -613,13 +556,12 @@ public class CryptoExchange extends BaseActivity {
 
             try {
 
-            outputStream=new FileOutputStream(file);
-            myWorkBook.write(outputStream);
+                outputStream = new FileOutputStream(file);
+                myWorkBook.write(outputStream);
 
-            Toast.makeText(getApplicationContext(), "Saved on the Converts File", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Saved on the Converts File", Toast.LENGTH_LONG).show();
 
-            } catch (java.io.IOException e)
-            {
+            } catch (java.io.IOException e) {
                 e.printStackTrace();
 
                 Toast.makeText(getApplicationContext(), "NO OK", Toast.LENGTH_LONG).show();
@@ -631,9 +573,8 @@ public class CryptoExchange extends BaseActivity {
             }
 
 
-        //else finish
+            //else finish
         }
-
 
 
     }
@@ -671,10 +612,10 @@ public class CryptoExchange extends BaseActivity {
 
                             }
 
-                            Toast.makeText(CryptoExchange.this,"Converting "
-                                            +fromDropdown.getSelectedItem().toString()+" to "
-                                            +toDropdown.getSelectedItem().toString()
-                                            ,Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CryptoExchange.this, "Converting "
+                                            + fromDropdown.getSelectedItem().toString() + " to "
+                                            + toDropdown.getSelectedItem().toString()
+                                    , Toast.LENGTH_SHORT).show();
 
 
                         } catch (JSONException e) {
@@ -757,8 +698,7 @@ public class CryptoExchange extends BaseActivity {
 
     }
 
-    public void CryptoGraphBuild()
-    {
+    public void CryptoGraphBuild() {
         ArrayList<Float> History_Values = new ArrayList<>();
         //defualt url
         String url_1w = "https://api.coinstats.app/public/v1/charts?period=1w&coinId=bitcoin";
@@ -768,7 +708,7 @@ public class CryptoExchange extends BaseActivity {
 
         try {
             CoinName = fromDropdown_graph.getSelectedItem().toString().toLowerCase();
-            url_1w = url_1w2+CoinName;
+            url_1w = url_1w2 + CoinName;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -786,19 +726,17 @@ public class CryptoExchange extends BaseActivity {
 
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 //get last 7 days values
-                                if(i%24 == 0)
-                                {
+                                if (i % 24 == 0) {
                                     JSONArray obj = jsonArray.getJSONArray(i);
                                     double value = obj.getDouble(1);
-                                    History_Values.add( (float) value);
+                                    History_Values.add((float) value);
                                 }
 
                                 //update the last one to be the most updated no matter what
-                                if(i == jsonArray.length()-1)
-                                {
+                                if (i == jsonArray.length() - 1) {
                                     JSONArray obj = jsonArray.getJSONArray(i);
                                     double value = obj.getDouble(1);
-                                    History_Values.add(6,(float) value);
+                                    History_Values.add(6, (float) value);
                                 }
 
                             }
@@ -810,20 +748,18 @@ public class CryptoExchange extends BaseActivity {
                             //graph build
                             ArrayList<Entry> y = new ArrayList<>();
 
-                            for(int day = 0 ; day < 7; day++)
-                            {
-                                y.add(new Entry(day,History_Values.get(day)));
+                            for (int day = 0; day < 7; day++) {
+                                y.add(new Entry(day, History_Values.get(day)));
                             }
 
 
-
                             //Line
-                            String label = finalCoinName.toUpperCase() +" to UDS";
-                            LineDataSet set1 = new LineDataSet(y,label);
+                            String label = finalCoinName.toUpperCase() + " to UDS";
+                            LineDataSet set1 = new LineDataSet(y, label);
                             set1.setFillAlpha(110);
                             set1.setLineWidth(2f);
-                            set1.setCircleColor(Color.rgb(255,165,0));
-                            set1.setColor(Color.rgb(218,165,32));
+                            set1.setCircleColor(Color.rgb(255, 165, 0));
+                            set1.setColor(Color.rgb(218, 165, 32));
                             set1.setValueTextSize(10f);
 
                             // x - days
@@ -841,8 +777,7 @@ public class CryptoExchange extends BaseActivity {
 
 
                             //add the others days to array
-                            for(int i =1 ; i < 7 ; i++)
-                            {
+                            for (int i = 1; i < 7; i++) {
                                 long previousDayMilliSeconds = date.getTime() - (ONE_DAY_MILLI_SECONDS * i);
                                 Date previousDate = new Date(previousDayMilliSeconds);
                                 String previousDateStr = simpleDateFormat.format(previousDate);
@@ -850,22 +785,19 @@ public class CryptoExchange extends BaseActivity {
                             }
                             //reverse the array to fit the graph
 
-                            for(int i = 0 ; i < 7 ; i++)
-                            {
-                                x_graph.add(i,x.get(i));
+                            for (int i = 0; i < 7; i++) {
+                                x_graph.add(i, x.get(i));
                             }
 
-                            x.set(0,"Today");
+                            x.set(0, "Today");
                             Collections.reverse(x);
 
                             //for the export
 
 
-
-
                             //y - prise (visability)
 //                            YAxis leftYAxis = mChart.getAxisLeft();
-                           YAxis rightYAxis = mChart.getAxisRight();
+                            YAxis rightYAxis = mChart.getAxisRight();
 //                            leftYAxis.setEnabled(false);
                             rightYAxis.setEnabled(false);
 
@@ -881,9 +813,8 @@ public class CryptoExchange extends BaseActivity {
                             mChart.invalidate();
                             mChart.getDescription().setText("One-week");
 
-                            Toast.makeText(CryptoExchange.this,"Graph updated.. "
-                                    ,Toast.LENGTH_SHORT).show();
-
+                            Toast.makeText(CryptoExchange.this, "Graph updated.. "
+                                    , Toast.LENGTH_SHORT).show();
 
 
                         } catch (JSONException | ParseException e) {
@@ -902,15 +833,6 @@ public class CryptoExchange extends BaseActivity {
 
 
         requestQueue.add(jsonObjectRequest);
-
-    }
-
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
 
     }
 }

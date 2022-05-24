@@ -3,39 +3,29 @@ package com.team2.finance.Pages;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.team2.finance.Login.LoginFragment;
 import com.team2.finance.Login.MainActivity;
 import com.team2.finance.R;
 import com.team2.finance.Utility.Validation;
@@ -96,14 +86,13 @@ public class EditProfile extends AppCompatActivity {
         });
     }
 
-
-    private void updateDataBaseFields(){
+    private void updateDataBaseFields() {
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         if (checkValidation()) {
 
-            if (!email.getText().toString().equals(currentUser.getEmail())){
+            if (!email.getText().toString().equals(currentUser.getEmail())) {
                 currentUser.updateEmail(email.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -115,7 +104,6 @@ public class EditProfile extends AppCompatActivity {
                     }
                 });
             }
-
 
             db.collection("Users").whereEqualTo("Uid", currentUser.getUid())
                     .get()
@@ -141,17 +129,15 @@ public class EditProfile extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 public void run() {
                     finish();
-                    startActivity(intent);                            }
-            }, 1000 );
+                    startActivity(intent);
+                }
+            }, 1000);
         }
-
 
 
     }
 
-
-
-    private void updateFields(FirebaseUser currentUser){
+    private void updateFields(FirebaseUser currentUser) {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -174,10 +160,6 @@ public class EditProfile extends AppCompatActivity {
                 });
     }
 
-
-
-
-
     public AlertDialog onCreateDialogApplyChanges() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit profile");
@@ -195,16 +177,13 @@ public class EditProfile extends AppCompatActivity {
         return builder.create();
     }
 
-
-
-
     public AlertDialog DeleteUserDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // Get the layout inflater
         LayoutInflater inflater = LayoutInflater.from(this);
         View mView = inflater.inflate(R.layout.dialog_delete_user, null);
-        EditText email = (EditText)mView.findViewById(R.id.email_address);
-        EditText password = (EditText)mView.findViewById(R.id.password);
+        EditText email = (EditText) mView.findViewById(R.id.email_address);
+        EditText password = (EditText) mView.findViewById(R.id.password);
 
         builder.setView(mView)
                 // Add action buttons
@@ -276,9 +255,8 @@ public class EditProfile extends AppCompatActivity {
         return builder.create();
     }
 
-
-    private void changePassword(FirebaseUser currentUser,String email,String old_password,String new_password){
-        AuthCredential credential = EmailAuthProvider.getCredential(email,old_password);
+    private void changePassword(FirebaseUser currentUser, String email, String old_password, String new_password) {
+        AuthCredential credential = EmailAuthProvider.getCredential(email, old_password);
         // Prompt the user to re-provide their sign-in credentials
 
         currentUser.reauthenticate(credential)
@@ -301,19 +279,16 @@ public class EditProfile extends AppCompatActivity {
                         }
                     }
                 });
-
     }
-
-
 
     public AlertDialog ChangeUserPasswordDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // Get the layout inflater
         LayoutInflater inflater = LayoutInflater.from(this);
         View mView = inflater.inflate(R.layout.dialog_update_password, null);
-        EditText email = (EditText)mView.findViewById(R.id.email_address);
-        EditText old_password = (EditText)mView.findViewById(R.id.old_password);
-        EditText new_password = (EditText)mView.findViewById(R.id.new_password);
+        EditText email = (EditText) mView.findViewById(R.id.email_address);
+        EditText old_password = (EditText) mView.findViewById(R.id.old_password);
+        EditText new_password = (EditText) mView.findViewById(R.id.new_password);
 
         builder.setView(mView)
                 // Add action buttons
@@ -350,7 +325,7 @@ public class EditProfile extends AppCompatActivity {
         builder.setTitle("Options")
                 .setItems(R.array.edit_profile_options, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        switch(which) {
+                        switch (which) {
                             case 0:
                                 AlertDialog update_password_dialog = ChangeUserPasswordDialog(null);
                                 update_password_dialog.show();
@@ -366,7 +341,6 @@ public class EditProfile extends AppCompatActivity {
                 });
         return builder.create();
     }
-
 
     private boolean checkValidation() {
         boolean validator = true;

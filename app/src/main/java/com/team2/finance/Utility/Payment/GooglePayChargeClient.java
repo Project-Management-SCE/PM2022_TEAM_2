@@ -1,6 +1,5 @@
 package com.team2.finance.Utility.Payment;
 
-
 import androidx.annotation.Nullable;
 
 import com.team2.finance.Pages.CheckoutActivity;

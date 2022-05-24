@@ -138,12 +138,11 @@ public class Profile extends BaseActivity {
                         List<String> list = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d(TAG, document.getId());
-                            if (document.getData().get("Vip").toString().equals("true")){
+                            if (document.getData().get("Vip").toString().equals("true")) {
                                 String s = new String(Character.toChars(0x2B50));
-                                name.setText(s +document.getData().get("first_name").toString()+" "+document.getData().get("last_name").toString()+ s);
-                            }
-                            else{
-                                name.setText(document.getData().get("first_name").toString()+" "+document.getData().get("last_name").toString());
+                                name.setText(s + document.getData().get("first_name").toString() + " " + document.getData().get("last_name").toString() + s);
+                            } else {
+                                name.setText(document.getData().get("first_name").toString() + " " + document.getData().get("last_name").toString());
                             }
                             //name.setText(document.getData().get("first_name").toString() + " " + document.getData().get("last_name").toString());
                             email_address.setText(document.getData().get("email_address").toString());
@@ -293,5 +292,12 @@ public class Profile extends BaseActivity {
                         Log.d(TAG, "Error getting documents: ", task.getException());
                     }
                 });
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                finish();
+                startActivity(getIntent());
+            }
+        }, 1000);
     }
 }

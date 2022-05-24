@@ -1,8 +1,5 @@
 package com.team2.finance.exchnage;
 
-
-
-
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -31,6 +28,7 @@ import com.team2.finance.Utility.VolleySingleton;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 
@@ -70,8 +68,6 @@ public class StockMarket extends BaseActivity {
         }
 
 
-
-
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,15 +77,14 @@ public class StockMarket extends BaseActivity {
         });
     }
 
-    private void setAdapter()
-    {
+    private void setAdapter() {
         adapter = new StocksAdapter(StocksList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(),
-        DividerItemDecoration.VERTICAL));
+                DividerItemDecoration.VERTICAL));
 
         recyclerView.setAdapter(adapter);
 
@@ -149,106 +144,13 @@ public class StockMarket extends BaseActivity {
         CommonStocks_names.add("Carnival Corporation & plc");
     }
 
-
-//    private void getSymbols()
-//    {
-//        ArrayList<String> stocks_symbols = new ArrayList<>();
-//
-//        String url = "https://api.twelvedata.com/stocks?source=docs";
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-//                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        //create array of all the objects innside coins Jsonfile
-//                        JSONArray jsonArray = null;
-//                        try {
-//                            jsonArray = response.getJSONArray("data");
-//
-//                            for (int i = 0; i < jsonArray.length(); i++) {
-//                                JSONObject coin = jsonArray.getJSONObject(i);
-//                                String symbol = coin.getString("symbol");
-//
-//                                stocks_symbols.add(symbol);
-//
-//
-//
-//                            }
-//
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                            Log.e("initSpinners", "catch inside onResponse function");
-//                        }
-//
-//                        //text.setText(stocks_symbols.get(0));
-////
-//
-//
-//                    }
-//                }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        error.printStackTrace();
-//                    }
-//                });
-//
-//
-//        requestQueue.add(jsonObjectRequest);
-//
-//    }
-//
-//
-//    private void getStock()
-//    {
-//        ArrayList<String> test = new ArrayList<>();
-//        //final String[] test = new String[1];
-//
-//        String url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AAPL&apikey=8YYZIVV9WKAIA4NW";
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-//                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//
-//                        JSONObject jsonObject = null;
-//
-//                        try {
-//                            jsonObject = response.getJSONObject("Meta Data");
-//                            test.add(jsonObject.getString("2. Symbol"));
-//
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                            Log.e("initSpinners", "catch inside onResponse function");
-//                        }
-//
-//                        //text.setText(test.get(0));
-////
-//
-//
-//                    }
-//                }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        error.printStackTrace();
-//                    }
-//                });
-//
-//
-//        requestQueue.add(jsonObjectRequest);
-//
-//    }
-
-
-
     private void getStocks() throws InterruptedException {
 
 
-        for(int i = 0 ; i < CommonStocks_symbols.size() ; i++)
-        {
-            String url = "https://cloud.iexapis.com/stable/tops?token=pk_e6ffb40cd31543e78dae6296e3e740fa&symbols="+CommonStocks_symbols.get(i);
-            addToStockList(url,i);
+        for (int i = 0; i < CommonStocks_symbols.size(); i++) {
+            String url = "https://cloud.iexapis.com/stable/tops?token=pk_e6ffb40cd31543e78dae6296e3e740fa&symbols=" + CommonStocks_symbols.get(i);
+            addToStockList(url, i);
         }
-
     }
 
     private void addToStockList(String url, int i) {
@@ -261,13 +163,13 @@ public class StockMarket extends BaseActivity {
                         try {
                             JSONObject obj = (JSONObject) jsonArray.get(0);
 
-                            String data = obj.getString("lastSalePrice");;
-                            StocksList.add(new Stock(CommonStocks_symbols.get(i),CommonStocks_names.get(i),data));
+                            String data = obj.getString("lastSalePrice");
+                            ;
+                            StocksList.add(new Stock(CommonStocks_symbols.get(i), CommonStocks_names.get(i), data));
                             adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -278,7 +180,5 @@ public class StockMarket extends BaseActivity {
                 });
 
         requestQueue.add(jsonArrayRequest);
-
-
     }
 }

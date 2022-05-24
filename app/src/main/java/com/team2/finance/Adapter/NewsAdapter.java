@@ -16,7 +16,7 @@ import com.team2.finance.R;
 
 import java.util.List;
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>  {
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> {
 
     private List<Article> dataSet;
     private Context context;

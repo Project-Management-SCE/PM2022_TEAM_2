@@ -6,17 +6,15 @@ public class Stock {
 
     private String closeRate;
 
-    public Stock(String symbol, String name,  String closeRate) {
+    public Stock(String symbol, String name, String closeRate) {
         this.symbol = symbol;
         this.name = name;
         this.closeRate = closeRate;
     }
 
-
     public String getSymbol() {
         return symbol;
     }
-
 
     public String getName() {
         return name;
@@ -26,10 +24,8 @@ public class Stock {
         this.name = name;
     }
 
-
     public String getCloseRate() {
         return closeRate;
     }
-
 
 }

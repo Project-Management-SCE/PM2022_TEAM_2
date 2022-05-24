@@ -33,6 +33,10 @@
         <activity
             android:name=".FAQ_Activity"
             android:exported="false" />
+
+        <activity
+            android:name=".exchnage.StockMarket"
+            android:exported="false" />
       
         <activity
             android:name=".AboutActivity"

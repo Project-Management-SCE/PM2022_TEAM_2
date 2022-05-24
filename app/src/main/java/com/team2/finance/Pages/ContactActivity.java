@@ -1,19 +1,16 @@
 package com.team2.finance.Pages;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.team2.finance.R;
@@ -22,10 +19,11 @@ import com.team2.finance.Utility.Validation;
 
 public class ContactActivity extends BaseActivity {
     ImageButton menu;
-    TextInputLayout name,email,subject,msg;
+    EditText name, email, subject, msg;
     Button send_bt;
 
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +40,6 @@ public class ContactActivity extends BaseActivity {
             }
         });
 
-
         name = findViewById(R.id.contact_name_id);
         email = findViewById(R.id.contact_email_id);
         subject = findViewById(R.id.subject_id);
@@ -57,12 +54,6 @@ public class ContactActivity extends BaseActivity {
                 }
             }
         });
-
-    }
-
-    protected void mail(){
-
-
     }
 
     protected void sendEmail() {
@@ -70,10 +61,9 @@ public class ContactActivity extends BaseActivity {
         String[] TO = {"artiobo@ac.sce.ac.il"};
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
         emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject.getEditText().getText().toString());
-        emailIntent.putExtra(Intent.EXTRA_TEXT, name.getEditText().getText().toString()+
-                " send this massage:\n"+msg.getEditText().getText().toString());
-//        emailIntent.setType("message/rfc822");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject.getText().toString());
+        emailIntent.putExtra(Intent.EXTRA_TEXT, name.getText().toString() +
+                " send this massage:\n" + msg.getText().toString());
         emailIntent.setData(Uri.parse("mailto:"));
 
         try {
@@ -85,20 +75,20 @@ public class ContactActivity extends BaseActivity {
 
     private boolean checkValidation() {
         boolean validator = true;
-        if (!Validation.isAlpha(name.getEditText().getText().toString())) {
+        if (!Validation.isAlpha(name.getText().toString())) {
             name.setError("Invalid Name");
             validator = false;
         }
-        if (!Validation.isEmailValid(email.getEditText().getText().toString())) {
+        if (!Validation.isEmailValid(email.getText().toString())) {
             email.setError("Invalid Email Address");
             validator = false;
         }
-        if (subject.getEditText().getText().toString().isEmpty()){
+        if (subject.getText().toString().isEmpty()) {
             subject.setError("Please enter subject");
             validator = false;
         }
-        if (msg.getEditText().getText().toString().isEmpty()){
-            subject.setError("Please enter massage");
+        if (msg.getText().toString().isEmpty()) {
+            msg.setError("Please enter massage");
             validator = false;
         }
         return validator;

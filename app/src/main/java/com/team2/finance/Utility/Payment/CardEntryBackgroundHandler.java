@@ -22,10 +22,6 @@ public class CardEntryBackgroundHandler implements CardNonceBackgroundHandler {
 
     @Override
     public CardEntryActivityCommand handleEnteredCardInBackground(CardDetails cardDetails) {
-    /*if (!ConfigHelper.serverHostSet()) {
-      ConfigHelper.printCurlCommand(cardDetails.getNonce());
-      return new CardEntryActivityCommand.Finish();
-    }*/
 
         Call<ChargeResult> chargeCall = chargeCallFactory.create(cardDetails.getNonce());
         ChargeResult chargeResult = chargeCall.execute();

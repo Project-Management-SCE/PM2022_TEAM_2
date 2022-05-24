@@ -3,7 +3,6 @@ package com.team2.finance.Utility;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -24,6 +23,7 @@ import com.team2.finance.Pages.ContactActivity;
 import com.team2.finance.Pages.HomeActivity;
 import com.team2.finance.Pages.Profile;
 import com.team2.finance.R;
+import com.team2.finance.exchnage.StockMarket;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     protected FrameLayout frameLayout;
@@ -75,13 +75,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                                 if (currentUser.getUid().equals(String.valueOf(document.getData().get("Uid")))) {
                                     String first_name = (String) document.getData().get("first_name");
                                     String last_name = (String) document.getData().get("last_name");
-                                    if (document.getData().get("Vip").toString().equals("true")){
+                                    if (document.getData().get("Vip").toString().equals("true")) {
                                         String s = new String(Character.toChars(0x2B50));
-                                        name.setTitle(s+first_name + " " + last_name+s);
-                                    }
-                                    else{
+                                        name.setTitle(s + first_name + " " + last_name + s);
+                                    } else {
                                         name.setTitle(first_name + " " + last_name);
-                                    } }
+                                    }
+                                }
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -143,15 +143,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.profile) {
             Intent intent = new Intent(this, Profile.class);
             startActivity(intent);
-        }
-        else if ( id == R.id.contact){
+        } else if (id == R.id.contact) {
             Intent intent = new Intent(this, ContactActivity.class);
             startActivity(intent);
-        } else if (id == R.id.git) {
-            String url = "https://github.com/Project-Management-SCE/PM2022_TEAM_2";
-            Intent browserIntent =
-                    new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(browserIntent);
+        } else if (id == R.id.stocks) {
+            Intent intent = new Intent(this, StockMarket.class);
+            startActivity(intent);
+
         } else if (id == R.id.logout) {
             SingOut();
         } else if (id == R.id.about) {
@@ -163,9 +161,12 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.information) {
             Intent intent = new Intent(this, InformationActivity.class);
             startActivity(intent);
+        } else if (id == R.id.share) {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.facebook.com/profile.php?id=100081171311088");
+            startActivity(Intent.createChooser(shareIntent, "Share..."));
         }
-
-
         return true;
     }
 
