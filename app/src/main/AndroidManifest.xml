@@ -21,6 +21,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Finance">
+      
+        <activity
+            android:name=".Pages.ContactActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".InformationActivity"
+            android:exported="false" />
+      
+        <activity
+            android:name=".FAQ_Activity"
+            android:exported="false" />
+      
+        <activity
+            android:name=".AboutActivity"
+            android:exported="false"
+            android:label="@string/title_activity_about"
+            android:theme="@style/Theme.Finance.NoActionBar" />
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
@@ -35,29 +53,23 @@
 
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"
-            android:value="true"/>
-
+            android:value="true" />
         <meta-data
             android:name="sqip.SQUARE_APPLICATION_ID"
-            android:value="sandbox-sq0idb-i7un8hXYa-mH5ENdFSX-yQ"/>
-
+            android:value="sandbox-sq0idb-i7un8hXYa-mH5ENdFSX-yQ" />
 
         <activity
             android:name=".Pages.CheckoutActivity"
             android:exported="false" />
-      
         <activity
             android:name=".Pages.EditProfile"
             android:exported="false" />
-      
         <activity
             android:name=".Pages.Profile"
             android:exported="false" />
-      
-              <activity
+        <activity
             android:name=".exchnage.StockMarket"
             android:exported="false" />
-
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -91,15 +103,12 @@
         <activity
             android:name=".Utility.BaseActivity"
             android:exported="false" />
-
-
         <activity
             android:name=".exchnage.CryptoExchange"
             android:exported="false" />
         <activity
             android:name=".Login.MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

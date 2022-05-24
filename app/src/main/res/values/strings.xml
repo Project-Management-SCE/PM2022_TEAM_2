@@ -29,7 +29,7 @@
     <string name="login">Login</string>
     <string name="forgot_your_password">Forgot your password?</string>
     <string name="reset">Reset</string>
-         
+
     <string name="title_activity_profile">Profile</string>
 
     <string name="next">Next</string>
@@ -85,9 +85,37 @@
     <string name="total">Total</string>
     <string name="unsuccessful_order">Your order was not successful</string>
 
-
-
     <string name="facebook_app_id">301368972199713</string>
     <string name="fb_login_protocol_scheme">fb301368972199713</string>
     <string name="facebook_client_token">56789</string>
+
+    <string name="title_activity_about">\u0020 About App Finance</string>
+  
+    <string name="large_text">
+        <b>"App Finance. Powering you.\n\n"</b>
+        "We give you the power of our most up to date, reputable currency and general finance information, and offer you secure, reliable, easy to use products and services dedicated to making your life easier.\n\n"
+
+        <b>"Our history.\n\n"</b>
+        "Co-founded by Alon Teplitsky, Artiom Bodilovski, Anatoli(Toli) Kot, Sagi Biran, 3rd Year Software Engineering Students "
+        "at Sami Shamoon College of Engineering Be'er Sheva, the company was born out of the belief that the Internet and technology "
+        "would open up the markets for both currency and finance data.\n\n"
+
+        <b>"Our Culture.\n\n"</b>
+        "Our culture reflects our philosophy of respect, simplify, and solve. "
+        "Success is a result of our talented and dedicated team who live and exemplify our philosophy. "
+        "The Finance App team expects great things of each other, treat each other well, and are committed to "
+        "creating the best foreign exchange solutions for the world. "
+        "A 40-hour work week with flex time and health benefits, plus an on-site gym and games room, "
+        "and catered lunches every Friday supports App Finance employees with a relaxed but fun and motivated atmosphere.\n\n"
+
+        <b>"Our vision.\n\n"</b>
+        "We aim to transform all aspects of how the world interacts with currencies, "
+        "whether that be trading or utilizing currency data and information. "
+        "Your complete satisfaction is our commitment to you. We make sure you are completely satisfied with our services.\n\n"
+    </string>
+  
+    <string name="action_settings">Settings</string>
+  
+    <string name="cancel_vip_subscription">Cancel vip subscription</string>
+
 </resources>
