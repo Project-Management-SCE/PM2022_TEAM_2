@@ -138,7 +138,14 @@ public class Profile extends BaseActivity {
                         List<String> list = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d(TAG, document.getId());
-                            name.setText(document.getData().get("first_name").toString() + " " + document.getData().get("last_name").toString());
+                            if (document.getData().get("Vip").toString().equals("true")){
+                                String s = new String(Character.toChars(0x2B50));
+                                name.setText(s +document.getData().get("first_name").toString()+" "+document.getData().get("last_name").toString()+ s);
+                            }
+                            else{
+                                name.setText(document.getData().get("first_name").toString()+" "+document.getData().get("last_name").toString());
+                            }
+                            //name.setText(document.getData().get("first_name").toString() + " " + document.getData().get("last_name").toString());
                             email_address.setText(document.getData().get("email_address").toString());
                             phoneNumber.setText(document.getData().get("phone_number").toString());
                             if (document.getData().get("url") != null) {

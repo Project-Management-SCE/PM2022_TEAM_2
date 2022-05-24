@@ -21,12 +21,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Finance">
+      
+        <activity
+            android:name=".Pages.ContactActivity"
+            android:exported="false" />
+
         <activity
             android:name=".InformationActivity"
             android:exported="false" />
+      
         <activity
             android:name=".FAQ_Activity"
             android:exported="false" />
+      
         <activity
             android:name=".AboutActivity"
             android:exported="false"
