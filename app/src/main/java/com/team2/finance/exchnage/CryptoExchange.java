@@ -2,6 +2,7 @@ package com.team2.finance.exchnage;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,10 +24,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
+
+import com.facebook.share.model.ShareHashtag;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareButton;
 import com.github.mikephil.charting.charts.LineChart;
 
 
@@ -106,7 +107,7 @@ public class CryptoExchange extends BaseActivity {
 
     //facebook
     private CallbackManager callbackManager;
-    private LoginButton loginButton;
+    ShareButton sbLink;
 
 
 
@@ -118,7 +119,7 @@ public class CryptoExchange extends BaseActivity {
 
         //facebook
         callbackManager = CallbackManager.Factory.create();
-        loginButton = findViewById(R.id.login_button);
+        sbLink = findViewById(R.id.share_link);
 
 
 
@@ -212,27 +213,15 @@ public class CryptoExchange extends BaseActivity {
             }
         });
 
-        loginButton.setPermissions(Arrays.asList("user_gender , user_friends"));
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(getApplicationContext(),"GOOD",Toast.LENGTH_LONG).show();
 
-            }
 
-            @Override
-            public void onCancel() {
-                Toast.makeText(getApplicationContext(),"Cancel",Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            public void onError(@NonNull FacebookException e) {
-                Toast.makeText(getApplicationContext(),"EROOR",Toast.LENGTH_LONG).show();
-
-            }
-        });
+        ShareLinkContent shareLinkContent = new ShareLinkContent.Builder()
+                .setContentUrl(Uri.parse("https://www.facebook.com/profile.php?id=100081171311088"))
+                .setShareHashtag(new ShareHashtag.Builder()
+                        .setHashtag("FinanceApp").build())
+                .build();
+        sbLink.setShareContent(shareLinkContent);
 
 
     }
@@ -922,5 +911,6 @@ public class CryptoExchange extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
+
     }
 }

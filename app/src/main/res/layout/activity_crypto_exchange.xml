@@ -14,14 +14,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginLeft="100dp"/>
+        android:layout_height="wrap_content">
+
+
+        <com.facebook.share.widget.ShareButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share Link"
+            android:id="@+id/share_link"
+            android:layout_marginLeft="150dp">
+
+        </com.facebook.share.widget.ShareButton>
+
+
+
+    </LinearLayout>
 
 
     <!--#card1-->
